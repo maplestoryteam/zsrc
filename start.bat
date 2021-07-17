@@ -1,1 +1,1 @@
-java -cp "zsrc.jar;lib/*" gui.Start
+java -cp "zsrc.jar;lib/*" gui.Start & pause
