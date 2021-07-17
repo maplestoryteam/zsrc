@@ -1,0 +1,193 @@
+http://123.207.53.97:8082/ad1.png
+
+5064001//黑龙的眼泪
+5090000//消息
+5090100//请柬
+
+
+
+divine//排行榜
+Sell_goods//商城出售
+Upgrade_career//成就记录
+
+
+Capture_cs//夺旗参赛表
+Capture_zk//夺旗战状表
+Capture_zj//夺旗战绩表
+capture_jl//夺旗奖励表
+
+
+
+/*
+SELECT
+position,
+mxmxd_dakong_fumo
+FROM
+inventoryitems a,
+inventoryequipment b
+WHERE
+a.inventoryitemid = b.inventoryitemid
+AND a.characterid = 1
+AND a.inventorytype = - 1
+/*
+
+
+
+
+c.getSession().write(LoginPacket.getLoginFailed(1);//无返回
+c.getSession().write(LoginPacket.getLoginFailed(2);//38错误
+c.getSession().write(LoginPacket.getLoginFailed(3);//账号被封
+c.getSession().write(LoginPacket.getLoginFailed(4);//密码错误
+c.getSession().write(LoginPacket.getLoginFailed(5);//账号不存在
+c.getSession().write(LoginPacket.getLoginFailed(6);//系统错误，无法连接
+c.getSession().write(LoginPacket.getLoginFailed(7);//已经正在连接的账号
+c.getSession().write(LoginPacket.getLoginFailed(8);//系统错误，无法连接
+c.getSession().write(LoginPacket.getLoginFailed(9);//系统错误，无法连接
+c.getSession().write(LoginPacket.getLoginFailed(10);//系统繁忙，无法处理你的请求
+c.getSession().write(LoginPacket.getLoginFailed(11);//只有20岁以上的用户可以连接
+c.getSession().write(LoginPacket.getLoginFailed(12);//38错误
+c.getSession().write(LoginPacket.getLoginFailed(13);//你的IP不能链接
+c.getSession().write(LoginPacket.getLoginFailed(14);//韩文，奇怪的按钮
+c.getSession().write(LoginPacket.getLoginFailed(15);//韩文，奇怪的按钮
+c.getSession().write(LoginPacket.getLoginFailed(22);//最终协议
+
+
+if (chr.Getcharacterz("" + chr.getId() + "", 3) > 0) 
+Getcharacterz
+1.角色信息
+2.登陆游戏的提示
+3.显示Q群聊天信息
+4.显示游戏聊天信息
+5.清理物品开关
+6.决斗开关
+7.家族申请开关
+10.雪球赛
+100.登陆验证码
+101.登陆保护
+102.队列
+103.记录商城进入的角色
+200.角色掉线提醒
+200.扎昆记录
+201.黑龙记录
+202.黑龙开启
+300.充值点券反馈
+499.废弃第一关防止刷卡
+500.扎昆重返
+501.黑龙重返
+502.PB重返
+if (chr.Getcharactera("" + chr.getId() + "", 3) > 0) 
+Getcharactera
+1.钓鱼等级
+100,射手村
+
+if (chr.character7("" + chr.getId() + "", 3) > 0) 
+1,商城售出物品
+
+
+br，默认
+br1，钓鱼经验
+br2，挖矿
+br3，泡点
+br4，唠叨
+br5，炼金
+br6，能力，技能点
+br7，character7，养殖
+br8，积分排位
+br9, 巡查
+br10,神兵榜
+
+
+反馈信息
+·服务端信息文件
+··服务端报错信息·
+··服务端授权码记录
+··服务端反馈信息·
+··服务端登陆账号收集·
+
+                                    
+                    if (eachd >= 10000) {
+                        if (player.getEquippedFuMoMap().get(9) != null) {
+                            int 破上限 = 10000 + 10000 / 100 * player.getEquippedFuMoMap().get(9);
+                            if (eachd >= 破上限) {
+                                eachd = 破上限;
+                            }
+                        } else {
+                            eachd = 10000;
+                        }
+                    }
+                    if (20000 >= 10000) {
+                        if (player.getEquippedFuMoMap().get(9) == 20) {
+                            int 12000 = 10000 + 10000 / 100 * 20;
+                            if (eachd >= 12000) {
+                                eachd = 破上限;
+                            }
+                        } else {
+                            eachd = 10000;
+                        }
+                    }
+
+
+//引用客户端的动态WZ?
+c.getClient().getSession().write(MaplePacketCreator.showEffect("killing/first/start"));
+
+
+  private static void 还原物品摆放() {
+        try {
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT dataid, f, hide, fh, cy, rx0, rx1, type, x, y, mid FROM 物品摆放");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int npcId = rs.getInt("dataid");
+                    int xpos = rs.getInt("x");
+                    int ypos = rs.getInt("y");
+                    int fh = rs.getInt("fh");
+                    int mid = rs.getInt("mid");
+                    MapleNPC npc = MapleLifeFactory.getNPC(npcId);
+                    npc.setPosition(new Point(xpos, ypos));
+                    npc.setCy(ypos);
+                    npc.setRx0(xpos);
+                    npc.setRx1(xpos);
+                    npc.setFh(fh);
+                    npc.setCustom(true);
+                    for (ChannelServer cserv : ChannelServer.getAllInstances()) {
+                        cserv.getMapFactory().getMap(mid).addMapObject(npc);
+                        cserv.getMapFactory().getMap(mid).broadcastMessage(MaplePacketCreator.spawnNPC(npc, true));
+
+                    }
+                }
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.err.println("还原物品摆放出错：" + ex.getMessage());
+        }
+    }
+
+    private static void 还原家具() {
+        try {
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT dataid, f, hide, fh, cy, rx0, rx1, type, x, y, mid FROM 家具");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int npcId = rs.getInt("dataid");
+                    int xpos = rs.getInt("x");
+                    int ypos = rs.getInt("y");
+                    int fh = rs.getInt("fh");
+                    int mid = rs.getInt("mid");
+                    MapleNPC npc = MapleLifeFactory.getNPC(npcId);
+                    npc.setPosition(new Point(xpos, ypos));
+                    npc.setCy(ypos);
+                    npc.setRx0(xpos);
+                    npc.setRx1(xpos);
+                    npc.setFh(fh);
+                    npc.setCustom(true);
+                    for (ChannelServer cserv : ChannelServer.getAllInstances()) {
+                        cserv.getMapFactory().getMap(mid).addMapObject(npc);
+                        cserv.getMapFactory().getMap(mid).broadcastMessage(MaplePacketCreator.spawnNPC(npc, true));
+                    }
+                }
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.err.println("还原家具出错：" + ex.getMessage());
+        }
+    }

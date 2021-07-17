@@ -1,0 +1,640 @@
+
+
+        MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
+        int 商城SN编码, 上架物品ID, 上架金额, 是否置顶, 设置性别, 设置时间, 数量, 状态, 出售状态;
+        boolean resultA = this.商品代码.getText().matches("[0-9]+");
+        boolean resultB = this.商品价格.getText().matches("[0-9]+");
+
+        boolean resultE = this.商品时间.getText().matches("[0-9]+");
+        boolean resultF = this.商品数量.getText().matches("[0-9]+");
+
+        if (resultA && resultB && resultE && resultF) {
+            if (Integer.parseInt(this.商品编码.getText()) >= 10000000 && Integer.parseInt(this.商品编码.getText()) < 40000000
+                    || Integer.parseInt(this.商品编码.getText()) >= 50000000 && Integer.parseInt(this.商品编码.getText()) < 80000000) {
+                商城SN编码 = Integer.parseInt(this.商品编码.getText());
+            } else {
+                商城SN编码 = 0;
+            }
+            if (Integer.parseInt(this.商品代码.getText()) > 0) {
+                上架物品ID = Integer.parseInt(this.商品代码.getText());
+            } else {
+                上架物品ID = 0;
+            }
+            if (Integer.parseInt(this.商品价格.getText()) > 0 && Integer.parseInt(this.商品价格.getText()) <= 2147483647) {
+                上架金额 = Integer.parseInt(this.商品价格.getText());
+            } else {
+                上架金额 = 0;
+            }
+            if (Integer.parseInt(this.商品时间.getText()) >= 0 && Integer.parseInt(this.商品时间.getText()) <= 36500) {
+                设置时间 = Integer.parseInt(this.商品时间.getText());
+            } else {
+                设置时间 = 0;
+            }
+            if (Integer.parseInt(this.商品数量.getText()) >= 0 && Integer.parseInt(this.商品数量.getText()) <= 10000) {
+                if (GameConstants.getInventoryType(Integer.parseInt(this.商品代码.getText())) == MapleInventoryType.EQUIP) {
+                    数量 = 1;
+                } else {
+                    数量 = Integer.parseInt(this.商品数量.getText());
+                }
+            } else {
+                数量 = 0;
+            }
+            if (Integer.parseInt(this.商品出售状态.getText()) >= -1 && Integer.parseInt(this.商品出售状态.getText()) <= 3) {
+                状态 = Integer.parseInt(this.商品出售状态.getText());
+            } else {
+                状态 = -1;
+            }
+
+            if (Integer.parseInt(this.商品编码.getText()) >= 60200000 && Integer.parseInt(this.商品编码.getText()) <= 60299999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn6020 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn6020 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 60100000 && Integer.parseInt(this.商品编码.getText()) <= 60199999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn6010 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn6010 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 60000000 && Integer.parseInt(this.商品编码.getText()) <= 60099999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn6000 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn6000 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 50500000 && Integer.parseInt(this.商品编码.getText()) <= 50599999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn5050 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn5050 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 50400000 && Integer.parseInt(this.商品编码.getText()) <= 50499999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn5040 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn5040 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 50300000 && Integer.parseInt(this.商品编码.getText()) <= 50399999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn5030 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn5030 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 50200000 && Integer.parseInt(this.商品编码.getText()) <= 50299999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn5020 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn5020 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 50100000 && Integer.parseInt(this.商品编码.getText()) <= 50199999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn5010 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn5010 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 50000000 && Integer.parseInt(this.商品编码.getText()) <= 50099999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn5000 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn5000 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 30200000 && Integer.parseInt(this.商品编码.getText()) <= 30299999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn3020 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn3020 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 30100000 && Integer.parseInt(this.商品编码.getText()) <= 30199999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn3010 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn3010 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 30000000 && Integer.parseInt(this.商品编码.getText()) <= 30099999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn3000 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn3000(SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 21200000 && Integer.parseInt(this.商品编码.getText()) <= 21299999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2120 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2120 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 21100000 && Integer.parseInt(this.商品编码.getText()) <= 21199999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2110 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2110 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 21000000 && Integer.parseInt(this.商品编码.getText()) <= 21099999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2100 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2100 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20900000 && Integer.parseInt(this.商品编码.getText()) <= 20999999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2090 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2090 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20800000 && Integer.parseInt(this.商品编码.getText()) <= 20899999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2080 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2080 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20700000 && Integer.parseInt(this.商品编码.getText()) <= 20799999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2070 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2070 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20600000 && Integer.parseInt(this.商品编码.getText()) <= 20699999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2060 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2060 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20500000 && Integer.parseInt(this.商品编码.getText()) <= 20599999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2050 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2050 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20400000 && Integer.parseInt(this.商品编码.getText()) <= 20499999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2040 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2040 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20300000 && Integer.parseInt(this.商品编码.getText()) <= 20399999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2030 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2030 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20200000 && Integer.parseInt(this.商品编码.getText()) <= 20299999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2020 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2020 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20100000 && Integer.parseInt(this.商品编码.getText()) <= 20199999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2010 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2010 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 20000000 && Integer.parseInt(this.商品编码.getText()) <= 20099999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn2000 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn2000 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 10200000 && Integer.parseInt(this.商品编码.getText()) <= 10299999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn1020 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn1020 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 10100000 && Integer.parseInt(this.商品编码.getText()) <= 10199999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn1010 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn1010 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (Integer.parseInt(this.商品编码.getText()) >= 10000000 && Integer.parseInt(this.商品编码.getText()) <= 10099999) {
+                PreparedStatement ps1 = null;
+                ResultSet rs2 = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM sn1000 WHERE SN = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs2 = ps1.executeQuery();
+                    if (!rs2.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO sn1000 (SN) VALUES (?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (商城SN编码 == 0 || 上架物品ID == 0 || 数量 == 0) {
+                if (商城SN编码 == 0) {
+                    商城提示语言.setText("[信息]:商城SN编码[编码必须是8位数] 只能填入数字！其他字符均无效。");
+                } else if (上架物品ID == 0) {
+                    商城提示语言.setText("[信息]:上架物品ID 只能填入数字！其他字符均无效。");
+                } else if (数量 == 0) {
+                    商城提示语言.setText("[信息]:数量 只能填入数字！其他字符均无效。");
+                }
+            } else {
+                //清楚table数据
+                for (int i = ((DefaultTableModel) (this.charTable.getModel())).getRowCount() - 1; i >= 0; i--) {
+                    ((DefaultTableModel) (this.charTable.getModel())).removeRow(i);
+                }
+
+                PreparedStatement ps1 = null;
+                ResultSet rs = null;
+                try {
+                    ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM cashshop_modified_items WHERE serial = ?");
+                    ps1.setInt(1, 商城SN编码);
+                    rs = ps1.executeQuery();
+                    if (!rs.next()) {
+                        try (Connection con = DatabaseConnection.getConnection(); PreparedStatement ps = con.prepareStatement("INSERT INTO cashshop_modified_items (serial, showup,itemid,priority,period,gender,count,meso,discount_price,mark, unk_1, unk_2, unk_3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+                            ps.setInt(1, 商城SN编码);
+                            ps.setInt(2, 1);
+                            ps.setInt(3, 上架物品ID);
+                            ps.setInt(4, 1);
+                            ps.setInt(5, 设置时间);
+                            ps.setInt(6, 2);
+                            ps.setInt(7, 数量 >= 1 ? 数量 : 0);
+                            ps.setInt(8, 0);
+                            ps.setInt(9, 上架金额);
+                            ps.setInt(10, 状态);
+                            ps.setInt(11, 0);
+                            ps.setInt(12, 0);
+                            ps.setInt(13, 0);
+                            //ps.setString(14, MapleItemInformationProvider.getInstance().getName(itemId));
+                            //String sql = ps.toString().split(":")[1].trim() + ";";
+                            ps.executeUpdate();
+                            //   ps.toString();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CashGui.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                        }
+                        initCharacterPannel();
+                        商城提示语言.setText("[信息]:新物品载入成功。");
+                    } else {
+                        商城提示语言.setText("[信息]:已存在的SN编码无法成功载入。");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CashGui.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            商城提示语言.setText("[信息]:只能填入数字！其他字符均无效。");
+        }
