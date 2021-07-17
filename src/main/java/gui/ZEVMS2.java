@@ -89,16 +89,16 @@ import tools.Pair;
 
 public final class ZEVMS2 extends javax.swing.JFrame {
 
-    private static final MapleDataProvider Mobdata = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/Mob.wz"));
-    private static final MapleDataProvider npcData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/Npc.wz"));
-    private static final MapleDataProvider stringDataWZ = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
-    private static final MapleDataProvider etcDataWZ = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/Etc.wz"));
+    private static final MapleDataProvider Mobdata = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Mob.wz"));
+    private static final MapleDataProvider npcData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Npc.wz"));
+    private static final MapleDataProvider stringDataWZ = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
+    private static final MapleDataProvider etcDataWZ = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Etc.wz"));
     private static final MapleData mobStringData = stringDataWZ.getData("Mob.img");
     private static final MapleData npcStringData = stringDataWZ.getData("Npc.img");
     private static final MapleData npclocData = etcDataWZ.getData("NpcLocation.img");
     private static Object jButton11117;
 
-    MapleDataProvider stringProvider = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+    MapleDataProvider stringProvider = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
     MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
     MapleData cash = stringProvider.getData("Cash.img");
     MapleData consume = stringProvider.getData("Consume.img");
@@ -111,7 +111,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     MapleData skill = stringProvider.getData("Skill.img");
     MapleData npc = stringProvider.getData("Npc.img");
 
-    private MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/Etc.wz"));
+    private MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Etc.wz"));
     private MapleData commodities = this.data.getData("Commodity.img");
 
     public ZEVMS2() {
@@ -4940,7 +4940,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 ps = con.prepareStatement("SELECT * FROM skills  WHERE characterid =" + this.½ÇÉ«ID.getText() + "");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                    MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                     MapleData itemsData;
                     int itemId;
                     String itemName = "";
@@ -8443,7 +8443,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM pvpskills WHERE name = " + ¼¼ÄÜPVPID.getText() + "");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -8734,7 +8734,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM pvpskills ");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";

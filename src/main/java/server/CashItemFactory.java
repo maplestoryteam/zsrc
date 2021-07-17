@@ -22,9 +22,9 @@ public class CashItemFactory {
   private final Map<Integer, CashItemInfo> itemStats = new HashMap<>();
   private final Map<Integer, List<CashItemInfo>> itemPackage = new HashMap<>();
   private final Map<Integer, CashItemInfo.CashModInfo> itemMods = new HashMap<>();
-  private final MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/Etc.wz"));
+  private final MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Etc.wz"));
   
-  private final MapleDataProvider itemStringInfo = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+  private final MapleDataProvider itemStringInfo = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
   private Map<Integer, Integer> idLookup = new HashMap<>();
 
   

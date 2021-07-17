@@ -147,9 +147,9 @@ public class ZEVMS extends javax.swing.JFrame {
         System.out.println("○ 开始检测数据库");
         //附魔显示表更新
         try {
-            下载文件("http://123.207.53.97:8082/魔改文件相关/数据库/mxmxd_fumo_info.zip", "mxmxd_fumo_info.zip", "" + 数据库下载目录() + "/");
-            解压文件.解压文件(数据库解压目录("mxmxd_fumo_info"), 数据库导入目录("zevms"));
-            删除文件(数据库解压目录("mxmxd_fumo_info"));
+//            下载文件("http://123.207.53.97:8082/魔改文件相关/数据库/mxmxd_fumo_info.zip", "mxmxd_fumo_info.zip", "" + 数据库下载目录() + "/");
+//            解压文件.解压文件(数据库解压目录("mxmxd_fumo_info"), 数据库导入目录("zevms"));
+//            删除文件(数据库解压目录("mxmxd_fumo_info"));
         } catch (Exception e) {
 
         }
@@ -180,7 +180,8 @@ public class ZEVMS extends javax.swing.JFrame {
     }
 
     //服务端启动窗口
-    public ZEVMS() {
+    public ZEVMS() {}
+    public void ZEVMS2() {
         Properties 設定檔 = System.getProperties();
         //设置窗口
         setTitle("");
@@ -211,7 +212,7 @@ public class ZEVMS extends javax.swing.JFrame {
         //设置版本检测数值为0
         MapleParty.版本检测 = 0;
         //加载窗口图标
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("gui/图片/pp/2.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/gui/图片/pp/2.png"));
         setIconImage(icon.getImage());
         GetConfigValues();
     //    账号.setText("" + gui.Start.ConfigValuesMap.get("记录账号") + "");
@@ -236,7 +237,7 @@ public class ZEVMS extends javax.swing.JFrame {
 
         启动服务端.setBackground(new java.awt.Color(255, 255, 255));
         启动服务端.setFont(new java.awt.Font("幼圆", 0, 16)); // NOI18N
-        启动服务端.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/图片/pp/开机.png"))); // NOI18N
+     //   启动服务端.setIcon(new javax.swing.ImageIcon(getClass().getClassLoader().getResource("gui/图片/pp/开机.png"))); // NOI18N
         启动服务端.setText("启动服务端");
         启动服务端.setToolTipText("");
         启动服务端.setActionCommand("");

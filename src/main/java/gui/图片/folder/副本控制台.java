@@ -6615,7 +6615,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM 测试奖励");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -6673,7 +6673,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM 海盗副本奖励");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -6731,7 +6731,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM 月妙副本奖励");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -7009,7 +7009,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM 废都副本奖励");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -7331,7 +7331,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM 玩具塔副本奖励");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -7650,7 +7650,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM reactordrops WHERE reactorid = 2202004");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -7692,7 +7692,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM 毒雾副本奖励");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -7749,7 +7749,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM 女神塔副本奖励");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";
@@ -8043,7 +8043,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM reactordrops WHERE reactorid = 2002014");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";

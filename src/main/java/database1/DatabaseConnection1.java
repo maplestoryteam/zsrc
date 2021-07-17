@@ -285,7 +285,7 @@ public class DatabaseConnection1 {
 
     public static void InitDB() {
         检测数据库是否启动();
-        dbDriver = "com.mysql.jdvc.Driver";
+        dbDriver = "com.mysql.jdbc.Driver";
         String db = "zxms";
         String ip = "127.0.0.1";
         String port = "3306";
@@ -301,7 +301,7 @@ public class DatabaseConnection1 {
     }
 
     public static void 远程网络数据库() {
-        dbDriver = "com.mysql.jdvc.Driver";
+        dbDriver = "com.mysql.jdbc.Driver";
         String db = "zxms";//ZEVMSms
         String ip = "127.0.0.1";
         String port = "3306";

@@ -284,12 +284,12 @@ public class DatabaseConnection {
 
     public static void InitDB() {
         检测数据库是否启动();
-        dbDriver = "com.mysql.jdvc.Driver";
-        String db = "zxms";
-        String ip = "127.0.0.1";
+        dbDriver = "com.mysql.jdbc.Driver";
+        String db = "zevms";
+        String ip = "81.68.77.156";
         String port = "3306";
         dbUser = "root";
-        dbPass = "root";
+        dbPass = "zevms";
         dbUrl = "jdbc:mysql://" + ip + ":" + port + "/" + db + "?autoReconnect=true&characterEncoding=UTF8&maxReconnects=2147483640&connectTimeout=3600 000&socketTimeout=3600000";//+ "?autoReconnect=true&characterEncoding=UTF8&connectTimeout=120000000";
 //        String db = ServerProperties.getProperty("database", "twms");
 //        String ip = ServerProperties.getProperty("ip", "localhost");
@@ -301,7 +301,7 @@ public class DatabaseConnection {
 
     public static void 远程网络数据库() {
         //System.err.println("远程网络数据库");
-        dbDriver = "com.mysql.jdvc.Driver";
+        dbDriver = "com.mysql.jdbc.Driver";
         String db = "zxms";//ZEVMSms
         String ip = "123.207.53.97";
         String port = "3306";

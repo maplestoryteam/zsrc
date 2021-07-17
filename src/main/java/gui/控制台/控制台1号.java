@@ -4481,7 +4481,7 @@ public class 控制台1号 extends javax.swing.JFrame {
             ps = con.prepareStatement("SELECT * FROM 技能范围检测 ");
             rs = ps.executeQuery();
             while (rs.next()) {
-                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
+                MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
                 MapleData itemsData;
                 int itemId;
                 String itemName = "";

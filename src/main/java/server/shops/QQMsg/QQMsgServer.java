@@ -90,8 +90,8 @@
 ////    private byte[] buf = new byte[1024];
 ////    private DatagramPacket dp = new DatagramPacket(buf, buf.length);
 ////    private static DatagramSocket socket;
-////    private static final MapleDataProvider stringDataWZ = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/String.wz"));
-////    private static final MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath") + "/Mob.wz"));
+////    private static final MapleDataProvider stringDataWZ = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
+////    private static final MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Mob.wz"));
 ////    private static final MapleData mobStringData = stringDataWZ.getData("Mob.img");
 ////    private static final QQMsgServer instance = new QQMsgServer();
 ////

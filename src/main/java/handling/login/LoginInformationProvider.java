@@ -22,8 +22,8 @@ public class LoginInformationProvider {
     }
 
     protected LoginInformationProvider() {
-     //   System.out.println("");//商 城 已 加 载 完 成 : : :
-        final String WZpath = System.getProperty("net.sf.odinms.wzpath");
+        //   System.out.println("");//商 城 已 加 载 完 成 : : :
+        final String WZpath = System.getProperty("net.sf.odinms.wzpath", "wz");
         final MapleData nameData = MapleDataProviderFactory.getDataProvider(new File(WZpath + "/Etc.wz")).getData("ForbiddenName.img");
         for (final MapleData data : nameData.getChildren()) {
             ForbiddenName.add(MapleDataTool.getString(data));
