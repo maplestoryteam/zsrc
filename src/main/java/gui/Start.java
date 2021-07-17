@@ -108,7 +108,7 @@ public class Start {
         startServer();
     }
 
-    public static void startServer() throws InterruptedException, SocketException, UnsupportedEncodingException, IOException {
+    public static void startServer() throws InterruptedException, IOException {
         MapleParty.每日清理 = 0;
         long start = System.currentTimeMillis();
         数据库数据导入();

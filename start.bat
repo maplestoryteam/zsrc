@@ -1,1 +1,1 @@
-java -cp "target/zsrc.jar;lib/*" gui.Start
+java -cp "zsrc.jar;lib/*" gui.Start
