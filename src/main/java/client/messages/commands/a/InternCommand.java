@@ -3,11 +3,12 @@ package client.messages.commands.a;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.messages.commands.CommandExecute;
-import static gui.QQMsgServer.sendMsgToQQGroup;
 import handling.channel.ChannelServer;
 import handling.world.World;
 import tools.MaplePacketCreator;
 import tools.StringUtil;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
 
 public class InternCommand {//管理权限1
 

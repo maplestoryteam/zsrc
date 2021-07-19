@@ -3,48 +3,43 @@
  */
 package handling;
 
-import static abc.Game.检测客户端版本1;
-import constants.ServerConstants;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
 import client.MapleClient;
+import constants.ServerConstants;
 import handling.cashshop.CashShopServer;
+import handling.cashshop.handler.CashShopOperation;
+import handling.cashshop.handler.MTSOperation;
 import handling.channel.ChannelServer;
-import handling.cashshop.handler.*;
 import handling.channel.handler.*;
 import handling.login.LoginServer;
-import handling.login.handler.*;
+import handling.login.handler.CharLoginHandler;
 import handling.netty.MaplePacketDecoder;
 import handling.world.MapleParty;
 import handling.world.World;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.timeout.IdleState;
-import static io.netty.handler.timeout.IdleState.WRITER_IDLE;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import server.Randomizer;
-import tools.MapleAESOFB;
-import tools.packet.LoginPacket;
-import tools.data.ByteArrayByteStream;
-import tools.data.LittleEndianAccessor;
-import tools.Pair;
-
 import server.MTSStorage;
+import server.Randomizer;
 import server.ServerProperties;
 import tools.FileoutputUtil;
+import tools.MapleAESOFB;
+import tools.MaplePacketCreator;
+import tools.Pair;
+import tools.data.ByteArrayByteStream;
+import tools.data.LittleEndianAccessor;
+import tools.packet.LoginPacket;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import static abc.Game.检测客户端版本1;
 import static tools.FileoutputUtil.CurrentReadable_Date;
 import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
 
 public class MapleServerHandler extends ChannelDuplexHandler {
 
@@ -56,7 +51,7 @@ public class MapleServerHandler extends ChannelDuplexHandler {
     //private static final ReentrantReadWriteLock IPLoggingLock = new ReentrantReadWriteLock();
     private static final String nl = System.getProperty("line.separator");
     private static final HashMap<String, FileWriter> logIPMap = new HashMap<>();
-    private static boolean debugMode = Boolean.parseBoolean(ServerProperties.getProperty("mxmxd.调试模式", "false"));
+    private static final boolean debugMode = Boolean.parseBoolean(ServerProperties.getProperty("mxmxd.调试模式", "false"));
     //Note to Zero: Use an enumset. Don't iterate through an array.
     private static final EnumSet<RecvPacketOpcode> blocked = EnumSet.noneOf(RecvPacketOpcode.class);
 
@@ -221,7 +216,7 @@ public class MapleServerHandler extends ChannelDuplexHandler {
             }
         }
         tracker.put(address, new Pair<>(System.currentTimeMillis(), count));
-        String IP = address.substring(address.indexOf('/') + 1, address.length());
+        String IP = address.substring(address.indexOf('/') + 1);
         if (channel > -1) {
             if (ChannelServer.getInstance(channel).isShutdown()) {
                 //System.out.print("自动断开连接B");
@@ -248,10 +243,10 @@ public class MapleServerHandler extends ChannelDuplexHandler {
             ctx.channel().close();
             return;
         }
-        final byte serverRecv[] = new byte[]{70, 114, 12, (byte) Randomizer.nextInt(255)};
-        final byte serverSend[] = new byte[]{82, 48, 120, (byte) Randomizer.nextInt(255)};
-        final byte ivRecv[] = ServerConstants.Use_Fixed_IV ? new byte[]{9, 0, 0x5, 0x5F} : serverRecv;
-        final byte ivSend[] = ServerConstants.Use_Fixed_IV ? new byte[]{1, 0x5F, 4, 0x3F} : serverSend;
+        final byte[] serverRecv = new byte[]{70, 114, 12, (byte) Randomizer.nextInt(255)};
+        final byte[] serverSend = new byte[]{82, 48, 120, (byte) Randomizer.nextInt(255)};
+        final byte[] ivRecv = ServerConstants.Use_Fixed_IV ? new byte[]{9, 0, 0x5, 0x5F} : serverRecv;
+        final byte[] ivSend = ServerConstants.Use_Fixed_IV ? new byte[]{1, 0x5F, 4, 0x3F} : serverSend;
 
         final MapleClient client = new MapleClient(new MapleAESOFB(ivSend, (short) (0xFFFF - 检测客户端版本1)), new MapleAESOFB(ivRecv, 检测客户端版本1), ctx.channel());
         client.setChannel(channel);
@@ -283,7 +278,7 @@ public class MapleServerHandler extends ChannelDuplexHandler {
         if (MapleParty.调试3 > 0) {
             System.out.println("sessionClosed");
         }
-       MapleClient client = (MapleClient) ctx.channel().attr(MapleClient.CLIENT_KEY).get();
+       MapleClient client = ctx.channel().attr(MapleClient.CLIENT_KEY).get();
 
         if (client != null) {
             try {
@@ -318,11 +313,11 @@ public class MapleServerHandler extends ChannelDuplexHandler {
             for (final RecvPacketOpcode recv : RecvPacketOpcode.values()) {
                 if (recv.getValue() == header_num) {
                     if (debugMode && !RecvPacketOpcode.isSpamHeader(recv)) {
-                        final StringBuilder sb = new StringBuilder("接收数据 - 已处理: " + String.valueOf(recv) + "\n");
+                        final StringBuilder sb = new StringBuilder("接收数据 - 已处理: " + recv + "\n");
                         //sb.append(tools.HexTool.toString((byte[]) message)).append("\n").append(tools.HexTool.toStringFromAscii((byte[]) message));
-                        System.out.println("b" + sb.toString());
+                        System.out.println("b" + sb);
                     }
-                    final MapleClient c = (MapleClient) ctx.channel().attr(MapleClient.CLIENT_KEY).get();
+                    final MapleClient c = ctx.channel().attr(MapleClient.CLIENT_KEY).get();
                     if (!c.isReceiving()) {
                         return;
                     }
@@ -333,7 +328,7 @@ public class MapleServerHandler extends ChannelDuplexHandler {
                     }
                     if (c.getPlayer() != null && c.isMonitored()) {
                         if (!blocked.contains(recv)) {
-                            FileoutputUtil.log("log\\Monitored\\" + c.getPlayer().getName() + ".log", String.valueOf(recv) + " (" + Integer.toHexString(header_num) + ") Handled: \r\n" + slea.toString() + "\r\n");
+                            FileoutputUtil.log("log\\Monitored\\" + c.getPlayer().getName() + ".log", recv + " (" + Integer.toHexString(header_num) + ") Handled: \r\n" + slea + "\r\n");
                         }
                     }
                     if (Log_Packets) {
@@ -368,7 +363,7 @@ public class MapleServerHandler extends ChannelDuplexHandler {
             if (debugMode) {
                 final StringBuilder sb = new StringBuilder("已接收数据 - 未處理: ");
                 sb.append(tools.HexTool.toString((byte[]) message)).append("\n").append(tools.HexTool.toStringFromAscii((byte[]) message));
-                System.out.println("r" + sb.toString());
+                System.out.println("r" + sb);
             }
         } catch (RejectedExecutionException ex) {
         } catch (Exception e) {
@@ -383,7 +378,7 @@ public class MapleServerHandler extends ChannelDuplexHandler {
         if (MapleParty.调试3 > 0) {
             System.out.println("sessionIdle");
         }
-        MapleClient client = (MapleClient) ctx.channel().attr(MapleClient.CLIENT_KEY).get();
+        MapleClient client = ctx.channel().attr(MapleClient.CLIENT_KEY).get();
         /**
          * <设置心跳>
          */
@@ -1194,7 +1189,7 @@ public class MapleServerHandler extends ChannelDuplexHandler {
             //???????????
             case COUPON_CODE:
                 FileoutputUtil.log(FileoutputUtil.PacketEx_Log, "Coupon : \n" + slea.toString(true));
-                System.out.println("33" + slea.toString());
+                System.out.println("33" + slea);
                 slea.skip(2);
                 CashShopOperation.CouponCode(slea.readMapleAsciiString(), c);
                 if (MapleParty.调试3 > 0) {
@@ -1561,8 +1556,8 @@ public class MapleServerHandler extends ChannelDuplexHandler {
                 break;
 
             default:
-                FileoutputUtil.logToZev("服务端信息文件/服务端报错信息/" + CurrentReadable_Date() + "/handling.txt", "[未经处理的] 客户端包 [" + header.toString() + "] 发现了\r\n");
-                System.out.println("[未经处理的] 客户端包 [" + header.toString() + "] 发现了");
+                FileoutputUtil.logToZev("服务端信息文件/服务端报错信息/" + CurrentReadable_Date() + "/handling.txt", "[未经处理的] 客户端包 [" + header + "] 发现了\r\n");
+                System.out.println("[未经处理的] 客户端包 [" + header + "] 发现了");
                 break;
         }
     }

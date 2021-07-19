@@ -1,75 +1,39 @@
 package client.messages.commands;
 
-import static abc.Game.人气设置;
-import static abc.Game.传送;
-import static abc.Game.刷;
-import static abc.Game.刷技能点;
-import static abc.Game.刷新;
-import static abc.Game.刷能力点;
-import static abc.Game.召唤怪物;
-import static abc.Game.吸怪;
-import static abc.Game.我的位置;
-import static abc.Game.无敌;
-import static abc.Game.清怪;
-import static abc.Game.清怪2;
-import static abc.Game.清物;
-import client.ISkill;
-import client.MapleCharacter;
-import client.MapleCharacterUtil;
-import constants.ServerConstants.PlayerGMRank;
-import client.MapleClient;
-import client.MapleStat;
-import client.SkillFactory;
-import client.inventory.Equip;
-import client.inventory.IItem;
-import client.inventory.ItemFlag;
-import client.inventory.MapleInventoryIdentifier;
-import client.inventory.MapleInventoryType;
-import client.inventory.MaplePet;
+import client.*;
+import client.inventory.*;
 import client.messages.CommandProcessorUtil;
 import constants.GameConstants;
+import constants.ServerConstants.PlayerGMRank;
 import database.DatabaseConnection;
 import handling.channel.ChannelServer;
+import handling.world.MapleParty;
 import handling.world.World;
-import java.awt.Point;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import server.MaplePortal;
-import server.MapleShopFactory;
-import server.life.MapleLifeFactory;
-import server.life.MapleMonster;
-import server.life.MapleNPC;
-import server.life.OverrideMonsterStats;
+import scripting.NPCScriptManager;
+import server.*;
+import server.life.*;
 import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
+import server.quest.MapleQuest;
+import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.StringUtil;
 import tools.packet.MobPacket;
-import java.sql.Connection;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import scripting.NPCScriptManager;
-import server.Randomizer;
-import server.ServerProperties;
-import tools.*;
-import static tools.FileoutputUtil.CurrentReadable_Time;
 import tools.packet.UIPacket;
-import static abc.Game.等级;
-import client.DebugWindow;
-import handling.world.MapleParty;
+
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DateFormat;
-import java.util.Calendar;
+import java.util.List;
+import java.util.*;
+
+import static abc.Game.*;
 import static gui.QQMsgServer.sendMsgToQQGroup;
 import static gui.Start.CashShopServer;
-import server.life.PlayerNPC;
-import server.quest.MapleQuest;
 import static gui.进阶BOSS.进阶BOSS线程.开启进阶BOSS线程;
+import static tools.FileoutputUtil.CurrentReadable_Time;
 
 /**
  *
@@ -132,7 +96,7 @@ public class 游戏管理 {
 
     public static class 重置任务 extends CommandExecute {///////resetquest
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 return 0;
             }
@@ -148,7 +112,7 @@ public class 游戏管理 {
 
     public static class 开始任务 extends CommandExecute {////////StartQuest
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 return 0;
             }
@@ -164,7 +128,7 @@ public class 游戏管理 {
 
     public static class 完成任务 extends CommandExecute {//CompleteQuest
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 return 0;
             }
@@ -180,7 +144,7 @@ public class 游戏管理 {
 
     public static class 分身 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().cloneLook();
             return 1;
         }
@@ -192,7 +156,7 @@ public class 游戏管理 {
 
     public static class 克隆 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (c.getPlayer().getCloneSize() == 0) {
                 c.getPlayer().cloneLook2();
             } else {
@@ -208,7 +172,7 @@ public class 游戏管理 {
 
     public static class 取消克隆 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().dropMessage(6, c.getPlayer().getCloneSize() + "个克隆体消失了.");
             c.getPlayer().disposeClones();
             return 1;
@@ -221,7 +185,7 @@ public class 游戏管理 {
 
     public static class 大逃杀活动测试开启 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleParty.大逃杀活动++;
             return 1;
         }
@@ -230,7 +194,7 @@ public class 游戏管理 {
 
     public static class 大逃杀活动测试结束 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleParty.大逃杀活动 = 0;
             return 1;
         }
@@ -239,7 +203,7 @@ public class 游戏管理 {
 
     public static class 测试 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             开启进阶BOSS线程();
             /*  MobSkill mobSkill = MobSkillFactory.getMobSkill(129, 3);
             MapleDisease disease = null;
@@ -287,7 +251,7 @@ public class 游戏管理 {
      */
     public static class 玩家NPC extends CommandExecute {/////////MakePNPC
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 3) {
                 return 0;
             }
@@ -329,7 +293,7 @@ public class 游戏管理 {
 
     public static class 测试2 extends CommandExecute {///////////Letter
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 3) {
                 c.getPlayer().dropMessage(6, "指令规则: ");
                 return 0;
@@ -386,7 +350,7 @@ public class 游戏管理 {
 
     public static class 发福利了 extends CommandExecute {///////////Letter
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 3) {
                 c.getPlayer().dropMessage(6, "指令规则: ");
                 return 0;
@@ -443,7 +407,7 @@ public class 游戏管理 {
 
     public static class 测试1 extends CommandExecute {///////////Letter
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             client.inventory.Item item = new client.inventory.Item(2000005, (byte) 0, (short) 1);
             c.getPlayer().getMap().物品掉落(c.getPlayer(), c.getPlayer(), item, new Point(c.getPlayer().getPosition().x, c.getPlayer().getPosition().y + 1000), false, false);
             return 1;
@@ -490,7 +454,7 @@ public class 游戏管理 {
 
     public static class 升级 extends CommandExecute {//LevelUp
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 c.getPlayer().levelUp();
             } else {
@@ -515,7 +479,7 @@ public class 游戏管理 {
 
     public static class 人气设置 extends CommandExecute {////////////Fame
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (人气设置 == "关") {
                 return 1;
             }
@@ -555,7 +519,7 @@ public class 游戏管理 {
 
     public static class 无敌 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (无敌 == "关") {
                 return 1;
             }
@@ -577,7 +541,7 @@ public class 游戏管理 {
 
     public static class 刷技能点 extends CommandExecute {//SP
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (刷技能点 == "关") {
                 return 1;
             }
@@ -594,7 +558,7 @@ public class 游戏管理 {
 
     public static class 刷能力点 extends CommandExecute {//AP
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (刷能力点 == "关") {
                 return 1;
             }
@@ -611,7 +575,7 @@ public class 游戏管理 {
 
     public static class 刷 extends CommandExecute {//Item
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (刷 == "关") {
                 return 1;
             }
@@ -665,7 +629,7 @@ public class 游戏管理 {
 
     public static class 吸怪 extends CommandExecute {////////////MobVac
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (吸怪 == "关") {
                 return 1;
             }
@@ -684,7 +648,7 @@ public class 游戏管理 {
 
     public static class 刷新 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (刷新 == "关") {
                 return 1;
             }
@@ -706,7 +670,7 @@ public class 游戏管理 {
 
     public static class 清物 extends CommandExecute {//RemoveDrops
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (清物 == "关") {
                 return 1;
             }
@@ -726,7 +690,7 @@ public class 游戏管理 {
 
     public static class 清怪 extends CommandExecute {//KillAll
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (清怪 == "关") {
                 return 1;
             }
@@ -772,7 +736,7 @@ public class 游戏管理 {
             }*/
     public static class 清怪2 extends CommandExecute {//KillAll
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (清怪2 == "关") {
                 return 1;
             }
@@ -806,7 +770,7 @@ public class 游戏管理 {
 
     public static class 我的位置 extends CommandExecute {//////MyPos
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (我的位置 == "关") {
                 return 1;
             }
@@ -825,7 +789,7 @@ public class 游戏管理 {
 
     public static class 召唤怪物 extends CommandExecute {//Spawn
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (召唤怪物 == "关") {
                 return 1;
             }
@@ -895,7 +859,7 @@ public class 游戏管理 {
 
     public static class 传送 extends CommandExecute {//Map
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (传送 == "关") {
                 return 1;
             }
@@ -994,7 +958,7 @@ public class 游戏管理 {
 
     public static class 拉所有人 extends CommandExecute {//WarpAllHere
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             for (ChannelServer CS : ChannelServer.getAllInstances()) {
                 for (MapleCharacter mch : CS.getPlayerStorage().getAllCharactersThreadSafe()) {
                     if (mch.getMapId() != c.getPlayer().getMapId()) {
@@ -1018,7 +982,7 @@ public class 游戏管理 {
 
     public static class 满技能 extends CommandExecute {//maxSkills
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter player = c.getPlayer();
             player.maxSkills();
             if (gui.Start.ConfigValuesMap.get("指令通知开关") <= 0) {
@@ -1030,7 +994,7 @@ public class 游戏管理 {
 
     public static class 丢 extends CommandExecute {//Drop
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 return 0;
             }
@@ -1053,7 +1017,7 @@ public class 游戏管理 {
 
                     toDrop = ii.randomizeStats((Equip) ii.getEquipById(itemId));
                 } else {
-                    toDrop = new client.inventory.Item(itemId, (byte) 0, (short) quantity, (byte) 0);
+                    toDrop = new client.inventory.Item(itemId, (byte) 0, quantity, (byte) 0);
                 }
                 //toDrop.setOwner(c.getPlayer().getName());
                 toDrop.setGMLog(c.getPlayer().getName());
@@ -1068,7 +1032,7 @@ public class 游戏管理 {
 
     public static class 祝福 extends CommandExecute {//buff
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter player = c.getPlayer();
             SkillFactory.getSkill(9001002).getEffect(1).applyTo(player);
             SkillFactory.getSkill(9001003).getEffect(1).applyTo(player);
@@ -1083,7 +1047,7 @@ public class 游戏管理 {
 
     public static class 满属性 extends CommandExecute {//maxstats
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter player = c.getPlayer();
             player.getStat().setMaxHp((short) 30000);
             player.getStat().setMaxMp((short) 30000);
@@ -1106,7 +1070,7 @@ public class 游戏管理 {
 
     public static class 破攻伤害显示 extends CommandExecute {//maxstats
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (MapleParty.伤害显示 == 0) {
                 MapleParty.伤害显示 = 1;
                 c.getPlayer().dropMessage(5, "开启破攻伤害显示");
@@ -1123,7 +1087,7 @@ public class 游戏管理 {
 
     public static class 加属性 extends CommandExecute {//maxstats
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter player = c.getPlayer();
             player.getStat().setMaxHp((short) 10000);
             player.getStat().setMaxMp((short) 10000);
@@ -1147,14 +1111,14 @@ public class 游戏管理 {
     public static class 挖矿 extends CommandExecute {//WhereAmI
 
         @Override
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             int r = Randomizer.nextInt(100000);
             c.getPlayer().dropMessage(5, "矿点记录成功,矿点代码:" + r + "");
             FileoutputUtil.logToFile("矿点坐标生成表/" + c.getPlayer().getMap().getId() + ".txt",
                     "<imgdir name=\"" + r + "\">\r\n"
                     + "<string name=\"id\" value=\"2112012\"/>\r\n"
-                    + "<int name=\"x\" value=\"" + String.valueOf(c.getPlayer().getPosition().x) + "\"/>\r\n"
-                    + "<int name=\"y\" value=\"" + String.valueOf(c.getPlayer().getPosition().y) + "\"/>\r\n"
+                    + "<int name=\"x\" value=\"" + c.getPlayer().getPosition().x + "\"/>\r\n"
+                    + "<int name=\"y\" value=\"" + c.getPlayer().getPosition().y + "\"/>\r\n"
                     + "<int name=\"reactorTime\" value=\"300\"/>\r\n"
                     + "<int name=\"f\" value=\"0\"/>\r\n"
                     + "<string name=\"name\" value=\"\"/>\r\n"
@@ -1170,14 +1134,14 @@ public class 游戏管理 {
     public static class 采药 extends CommandExecute {//WhereAmI
 
         @Override
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             int r = Randomizer.nextInt(100000);
             c.getPlayer().dropMessage(5, "采药记录成功,采药点代码:" + r + "");
             FileoutputUtil.logToFile("采药点坐标生成表/" + c.getPlayer().getMap().getId() + ".txt",
                     "<imgdir name=\"" + r + "\">\r\n"
                     + "<string name=\"id\" value=\"1072000\"/>\r\n"
-                    + "<int name=\"x\" value=\"" + String.valueOf(c.getPlayer().getPosition().x) + "\"/>\r\n"
-                    + "<int name=\"y\" value=\"" + String.valueOf(c.getPlayer().getPosition().y) + "\"/>\r\n"
+                    + "<int name=\"x\" value=\"" + c.getPlayer().getPosition().x + "\"/>\r\n"
+                    + "<int name=\"y\" value=\"" + c.getPlayer().getPosition().y + "\"/>\r\n"
                     + "<int name=\"reactorTime\" value=\"300\"/>\r\n"
                     + "<int name=\"f\" value=\"0\"/>\r\n"
                     + "<string name=\"name\" value=\"\"/>\r\n"
@@ -1197,7 +1161,7 @@ public class 游戏管理 {
             for (final MapleMapObject monstermo : c.getPlayer().getMap().getMapObjectsInRange(c.getPlayer().getPosition(), 100000, Arrays.asList(MapleMapObjectType.MONSTER))) {
                 monster = (MapleMonster) monstermo;
                 if (monster.isAlive()) {
-                    c.getPlayer().dropMessage(6, "怪物 " + monster.toString());
+                    c.getPlayer().dropMessage(6, "怪物 " + monster);
                 }
             }
             if (monster == null) {
@@ -1270,11 +1234,11 @@ public class 游戏管理 {
     public static class 地图代码 extends CommandExecute {//WhereAmI
 
         @Override
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().dropMessage(6, "-------------------------------------------------------------------------------------");
             c.getPlayer().dropMessage(5, "地图: " + c.getPlayer().getMap().getMapName() + " ");
             c.getPlayer().dropMessage(5, "代码: " + c.getPlayer().getMap().getId() + " ");
-            c.getPlayer().dropMessage(5, "坐标: " + String.valueOf(c.getPlayer().getPosition().x) + " , " + String.valueOf(c.getPlayer().getPosition().y) + "");
+            c.getPlayer().dropMessage(5, "坐标: " + c.getPlayer().getPosition().x + " , " + c.getPlayer().getPosition().y + "");
 
             c.getPlayer().dropMessage(5, "使用 *传送+<空格>+<地图ID> 可直接传送到目标地图");
             c.getPlayer().dropMessage(6, "-------------------------------------------------------------------------------------");
@@ -1316,11 +1280,11 @@ public class 游戏管理 {
                 for (MapleCharacter chr : cmc) {
                     if (sb.length() > 150) {
                         sb.setLength(sb.length() - 2);
-                        c.getPlayer().dropMessage(5, sb + "\r\n".toString());
+                        c.getPlayer().dropMessage(5, sb + "\r\n");
                         sb = new StringBuilder();
                     }
                     //if (!chr.isGM()) {
-                    c.getPlayer().dropMessage(5, sb + "\r\n".toString());
+                    c.getPlayer().dropMessage(5, sb + "\r\n");
                     sb.append(MapleCharacterUtil.makeMapleReadable("-[角色ID: " + chr.getId() + " ][名字: " + chr.getName() + " ][等级: " + chr.getLevel() + " ] [地图: " + chr.getMapId() + " / " + chr.getMap().getMapName() + " ]\r\n"));
                     // }
                 }
@@ -1430,7 +1394,7 @@ public class 游戏管理 {
 
     public static class 修改当前频道经验倍率 extends CommandExecute {//ExpRate
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length > 1) {
                 final int rate = Integer.parseInt(splitted[1]);
                 if (splitted.length > 2 && splitted[2].equalsIgnoreCase("all")) {
@@ -1461,7 +1425,7 @@ public class 游戏管理 {
 
     public static class 修改当前频道物品爆率 extends CommandExecute {//DropRate
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length > 1) {
                 final int rate = Integer.parseInt(splitted[1]);
                 if (splitted.length > 2 && splitted[2].equalsIgnoreCase("all")) {
@@ -1492,7 +1456,7 @@ public class 游戏管理 {
 
     public static class 修改当前频道金币倍率 extends CommandExecute {//MesoRate
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length > 1) {
                 final int rate = Integer.parseInt(splitted[1]);
                 if (splitted.length > 2 && splitted[2].equalsIgnoreCase("all")) {
@@ -1687,7 +1651,7 @@ public class 游戏管理 {
 
     public static class 断线 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             int range = -1;
             if (splitted.length < 2) {
                 return 0;
@@ -1746,7 +1710,7 @@ public class 游戏管理 {
 
     public static class 给所有人经验 extends CommandExecute {//ExpEveryone
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 c.getPlayer().dropMessage(splitted[0] + " <经验量>");
                 return 0;
@@ -1774,7 +1738,7 @@ public class 游戏管理 {
 
     public static class 给所有人金币 extends CommandExecute {//mesoEveryone
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 c.getPlayer().dropMessage(splitted[0] + " <金币量>");
                 return 0;
@@ -1799,7 +1763,7 @@ public class 游戏管理 {
 
     public static class 给所有人点券 extends CommandExecute {//CashEveryone
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 c.getPlayer().dropMessage(splitted[0] + " <点券>");
                 return 0;
@@ -1825,7 +1789,7 @@ public class 游戏管理 {
 
     public static class 给所有人抵用券 extends CommandExecute {//CashEveryone
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 c.getPlayer().dropMessage(splitted[0] + " <点券>");
                 return 0;
@@ -1851,7 +1815,7 @@ public class 游戏管理 {
 
     public static class 给当前地图所有人 extends CommandExecute {//GainMap
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 1) {
                 return 0;
             }
@@ -1906,7 +1870,7 @@ public class 游戏管理 {
 
     public static class 给金币 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 return 0;
             }
@@ -1931,7 +1895,7 @@ public class 游戏管理 {
 
     public static class 给经验 extends CommandExecute {//GainExp
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 3) {
                 return 0;
             }
@@ -1963,7 +1927,7 @@ public class 游戏管理 {
 
     public static class 给点券 extends CommandExecute {//GainExp
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 3) {
                 return 0;
             }
@@ -1995,7 +1959,7 @@ public class 游戏管理 {
 
     public static class 给抵用券 extends CommandExecute {//GainExp
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 3) {
                 return 0;
             }
@@ -2027,7 +1991,7 @@ public class 游戏管理 {
 
     public static class 本地图的人跟我说 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             for (MapleCharacter victim : c.getPlayer().getMap().getCharactersThreadsafe()) {
                 if (victim.getId() != c.getPlayer().getId()) {
                     victim.getMap().broadcastMessage(MaplePacketCreator.getChatText(victim.getId(), StringUtil.joinStringFrom(splitted, 1), victim.isGM(), 0));
@@ -2039,7 +2003,7 @@ public class 游戏管理 {
 
     public static class 本频道的人跟我说 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             for (MapleCharacter victim : c.getChannelServer().getPlayerStorage().getAllCharacters()) {
                 if (victim.getId() != c.getPlayer().getId()) {
                     victim.getMap().broadcastMessage(MaplePacketCreator.getChatText(victim.getId(), StringUtil.joinStringFrom(splitted, 1), victim.isGM(), 0));
@@ -2051,7 +2015,7 @@ public class 游戏管理 {
 
     public static class 整个服的人跟我说 extends CommandExecute {//SpeakWorld
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             for (ChannelServer cserv : ChannelServer.getAllInstances()) {
                 for (MapleCharacter victim : cserv.getPlayerStorage().getAllCharacters()) {
                     if (victim.getId() != c.getPlayer().getId()) {
@@ -2065,7 +2029,7 @@ public class 游戏管理 {
 
     public static class 解锁 extends CommandExecute {//////UnbanIP
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 2) {
                 return 0;
             }
@@ -2091,7 +2055,7 @@ public class 游戏管理 {
 
     public static class 封锁 extends CommandExecute {///////TempBan
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter victim;
             String name = splitted[1];
             int ch = World.Find.findChannel(name);
@@ -2123,7 +2087,7 @@ public class 游戏管理 {
 
     public static class 杀 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter player = c.getPlayer();
             if (splitted.length < 2) {
                 return 0;
@@ -2151,7 +2115,7 @@ public class 游戏管理 {
 
     public static class 给予技能 extends CommandExecute {//GiveSkill
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (splitted.length < 3) {
                 return 0;
             }
@@ -2181,7 +2145,7 @@ public class 游戏管理 {
 
     public static class 打开商店 extends CommandExecute {//Shop
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleShopFactory shop = MapleShopFactory.getInstance();
             int shopId;
             try {
@@ -2200,7 +2164,7 @@ public class 游戏管理 {
 
     public static class 群体治愈 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter player = c.getPlayer();
             for (MapleCharacter mch : player.getMap().getCharacters()) {
                 if (mch != null) {
@@ -2217,7 +2181,7 @@ public class 游戏管理 {
 
     public static class 删除NPC extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().getMap().resetNPCs();
             return 1;
         }
@@ -2225,7 +2189,7 @@ public class 游戏管理 {
 
     public static class 测试C extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().spawnSavedPets();
             // c.sendPacket(LoginPacket.getLoginFailed(1));
             return 1;
@@ -2234,7 +2198,7 @@ public class 游戏管理 {
 
     public static class 游戏流畅模式 extends CommandExecute {//maxstats
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             if (MapleParty.伤害显示 == 0) {
                 MapleParty.流畅模式 = 1;
                 c.getPlayer().dropMessage(5, "开启游戏流畅模式");

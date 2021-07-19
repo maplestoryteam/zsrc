@@ -1,30 +1,32 @@
 package tools.packet;
 
-import client.*;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-
-import java.util.List;
+import client.ISkill;
+import client.MapleCharacter;
+import client.MapleClient;
+import client.SkillEntry;
 import client.inventory.IItem;
 import client.inventory.Item;
 import client.inventory.MapleInventory;
 import client.inventory.MapleInventoryType;
-import server.CashShop;
+import constants.ServerConstants;
+import database.DatabaseConnection;
+import handling.SendPacketOpcode;
 import server.CashItemFactory;
 import server.CashItemInfo;
 import server.CashItemInfo.CashModInfo;
-import handling.SendPacketOpcode;
-import constants.ServerConstants;
-import database.DatabaseConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.util.*;
-import tools.Pair;
-import java.util.Map.Entry;
+import server.CashShop;
 import server.MTSStorage.MTSItemInfo;
 import tools.HexTool;
 import tools.KoreanDateUtil;
+import tools.Pair;
 import tools.data.MaplePacketLittleEndianWriter;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class MTSCSPacket {
 
@@ -181,7 +183,7 @@ public static byte[] warpCS(MapleClient c) {
         mplew.write(HexTool.getByteArrayFromHexString("00 00 00 00 00"));
         if (ServerConstants.PACKET_ERROR_OFF) {
             ServerConstants ERROR = new ServerConstants();
-            ERROR.setPACKET_ERROR("warpCS-201" + "£º\r\n" + mplew.getPacket() + "\r\n\r\n");
+            ServerConstants.setPACKET_ERROR("warpCS-201" + "£º\r\n" + mplew.getPacket() + "\r\n\r\n");
         }
         return mplew.getPacket();
     }

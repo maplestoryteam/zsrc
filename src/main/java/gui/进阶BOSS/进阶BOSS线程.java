@@ -4,8 +4,6 @@ import client.MapleCharacter;
 import client.MapleDisease;
 import handling.channel.ChannelServer;
 import handling.world.MapleParty;
-import java.awt.Point;
-import java.util.concurrent.ScheduledFuture;
 import server.MapleItemInformationProvider;
 import server.Timer;
 import server.life.MapleLifeFactory;
@@ -13,6 +11,9 @@ import server.life.MapleMonster;
 import server.life.MobSkill;
 import server.life.MobSkillFactory;
 import server.maps.MapleMap;
+
+import java.awt.*;
+import java.util.concurrent.ScheduledFuture;
 
 public class ½ø½×BOSSÏß³Ì {
 
@@ -231,7 +232,7 @@ public class ½ø½×BOSSÏß³Ì {
                     if (y == -355 || y == -85 || y == 185 || y == 455 || y == 395 || y == 335 || y == 515) {
                         int ÑªÁ¿ = (int) Math.ceil(Math.random() * 30000);
                         if (chr.getEquippedFuMoMap().get(21) != null) {
-                            long ¸½Ä§¼õÉË = (long) (ÑªÁ¿ / 100 * chr.getEquippedFuMoMap().get(21));
+                            long ¸½Ä§¼õÉË = ÑªÁ¿ / 100 * chr.getEquippedFuMoMap().get(21);
                             ÑªÁ¿ -= ¸½Ä§¼õÉË;
                         }
                         chr.addHP(-ÑªÁ¿);
@@ -239,7 +240,7 @@ public class ½ø½×BOSSÏß³Ì {
                     } else {
                         int ÑªÁ¿ = (int) Math.ceil(Math.random() * 30000);
                         if (chr.getEquippedFuMoMap().get(21) != null) {
-                            long ¸½Ä§¼õÉË = (long) (ÑªÁ¿ / 100 * chr.getEquippedFuMoMap().get(21));
+                            long ¸½Ä§¼õÉË = ÑªÁ¿ / 100 * chr.getEquippedFuMoMap().get(21);
                             ÑªÁ¿ -= ¸½Ä§¼õÉË;
                         }
                         chr.addHP(-ÑªÁ¿ / 2);

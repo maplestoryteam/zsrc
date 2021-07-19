@@ -35,13 +35,9 @@ public class FileDemo_05 {
 		File file = new File(fileName);
 		// 如果文件路径对应的文件存在，并且是一个文件，则直接删除。
 		if (file.exists() && file.isFile()) {
-			if (file.delete()) {
-				//System.out.println("文件：" + fileName + "删除成功！");
-				return true;
-			} else {
-				//System.out.println("文件" + fileName + "删除失败！");
-				return false;
-			}
+            //System.out.println("文件：" + fileName + "删除成功！");
+            //System.out.println("文件" + fileName + "删除失败！");
+            return file.delete();
 		} else {
 			//System.out.println("文件删除失败：" + fileName + "文件不存在！");
 			return false;

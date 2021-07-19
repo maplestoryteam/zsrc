@@ -6,8 +6,8 @@ import tools.MaplePacketCreator;
 
 public class MapleDragon extends AbstractAnimatedMapleMapObject {
 
-    private int owner;
-    private int jobid;
+    private final int owner;
+    private final int jobid;
 
     public MapleDragon(MapleCharacter owner) {
         super();

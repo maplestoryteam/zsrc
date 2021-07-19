@@ -1,27 +1,27 @@
 package server.quest;
 
 import client.ISkill;
-import java.util.Calendar;
-import java.util.List;
-import java.util.LinkedList;
-import java.io.Serializable;
-import client.inventory.IItem;
-import client.SkillFactory;
-import constants.GameConstants;
 import client.MapleCharacter;
-import client.inventory.MaplePet;
-import client.inventory.MapleInventoryType;
 import client.MapleQuestStatus;
+import client.SkillFactory;
+import client.inventory.IItem;
+import client.inventory.MapleInventoryType;
+import client.inventory.MaplePet;
+import constants.GameConstants;
 import provider.MapleData;
 import provider.MapleDataTool;
-
 import tools.Pair;
+
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MapleQuestRequirement implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;
-    private MapleQuest quest;
-    private MapleQuestRequirementType type;
+    private final MapleQuest quest;
+    private final MapleQuestRequirementType type;
     private int intStore;
     private String stringStore;
     private List<Pair<Integer, Integer>> dataStore;
@@ -220,10 +220,7 @@ public class MapleQuestRequirement implements Serializable {
                 }
                 return false;
             case mbmin:
-                if (c.getMonsterBook().getTotalCards() >= intStore) {
-                    return true;
-                }
-                return false;
+                return c.getMonsterBook().getTotalCards() >= intStore;
             case mbcard:
                 for (Pair<Integer, Integer> a : dataStore) {
                     final int cardId = a.getLeft();

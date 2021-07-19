@@ -1,13 +1,13 @@
 package server.custom.forum;
 
 import database.DatabaseConnection;
+import tools.FileoutputUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import tools.FileoutputUtil;
 
 public class Forum_Section {
 

@@ -1,13 +1,12 @@
 package scripting;
 
-import java.io.File;
-import java.io.IOException;
+import client.MapleClient;
+import tools.MaplePacketCreator;
+
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import client.MapleClient;
 import java.io.*;
-import tools.MaplePacketCreator;
 
 public abstract class AbstractScriptManager {
 

@@ -3,22 +3,16 @@ package tools;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.Thread.State;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.Map.Entry;
 
 public class CPUSampler {
 
-    private List<String> included = new LinkedList<String>();
-    private static CPUSampler instance = new CPUSampler();
+    private final List<String> included = new LinkedList<String>();
+    private static final CPUSampler instance = new CPUSampler();
     private long interval = 5;
     private SamplerThread sampler = null;
-    private Map<StackTrace, Integer> recorded = new HashMap<StackTrace, Integer>();
+    private final Map<StackTrace, Integer> recorded = new HashMap<StackTrace, Integer>();
     private int totalSamples = 0;
 
     public static CPUSampler getInstance() {
@@ -122,8 +116,8 @@ public class CPUSampler {
 
     private static class StackTrace {
 
-        private StackTraceElement[] trace;
-        private State state;
+        private final StackTraceElement[] trace;
+        private final State state;
 
         public StackTrace(StackTraceElement[] trace, int startAt, State state) {
             this.state = state;
@@ -238,8 +232,8 @@ public class CPUSampler {
 
     public static class StacktraceWithCount implements Comparable<StacktraceWithCount> {
 
-        private int count;
-        private StackTrace trace;
+        private final int count;
+        private final StackTrace trace;
 
         public StacktraceWithCount(int count, StackTrace trace) {
             super();

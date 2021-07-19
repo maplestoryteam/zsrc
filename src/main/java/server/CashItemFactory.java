@@ -1,19 +1,16 @@
 package server;
+
 import database.DatabaseConnection;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
+
+import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.*;
 
 public class CashItemFactory {
   private static final CashItemFactory instance = new CashItemFactory();
@@ -25,7 +22,7 @@ public class CashItemFactory {
   private final MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Etc.wz"));
   
   private final MapleDataProvider itemStringInfo = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
-  private Map<Integer, Integer> idLookup = new HashMap<>();
+  private final Map<Integer, Integer> idLookup = new HashMap<>();
 
   
   public static final CashItemFactory getInstance() { return instance; }
@@ -82,7 +79,7 @@ public class CashItemFactory {
         itemids.add(Integer.valueOf(itemId));
       }
     } 
-    for (Iterator<Integer> i$ = itemids.iterator(); i$.hasNext(); ) { int i = ((Integer)i$.next()).intValue();
+    for (Iterator<Integer> i$ = itemids.iterator(); i$.hasNext(); ) { int i = i$.next().intValue();
       getPackageItems(i); }
     
     try {
@@ -108,7 +105,7 @@ public class CashItemFactory {
     } catch (Exception e) {
       e.printStackTrace();
     } 
-    for (Iterator<Integer> i$ = this.itemStats.keySet().iterator(); i$.hasNext(); ) { int i = ((Integer)i$.next()).intValue();
+    for (Iterator<Integer> i$ = this.itemStats.keySet().iterator(); i$.hasNext(); ) { int i = i$.next().intValue();
       
       getItem(i); }
     
@@ -197,7 +194,7 @@ public class CashItemFactory {
 
 
   
-  public int getSnFromId(int itemId) { return ((Integer)this.idLookup.get(Integer.valueOf(itemId))).intValue(); }
+  public int getSnFromId(int itemId) { return this.idLookup.get(Integer.valueOf(itemId)).intValue(); }
   
   public final void clearCashShop() {
     this.itemStats.clear();
@@ -210,8 +207,8 @@ public class CashItemFactory {
   
   public final int getItemSN(int itemid) {
     for (Map.Entry<Integer, CashItemInfo> ci : this.itemStats.entrySet()) {
-      if (((CashItemInfo)ci.getValue()).getId() == itemid) {
-        return ((CashItemInfo)ci.getValue()).getSN();
+      if (ci.getValue().getId() == itemid) {
+        return ci.getValue().getSN();
       }
     } 
     return 0;

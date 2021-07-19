@@ -5,24 +5,11 @@
  */
 package gui.控制台;
 
-import gui.控制台.控制台2号;
-import static abc.Game.窗口标题;
-import database.DatabaseConnection;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import server.MapleItemInformationProvider;
+
+import javax.swing.*;
+
+import static abc.Game.窗口标题;
 
 /**
  *
@@ -75,7 +62,7 @@ public class 强化控制台 extends javax.swing.JFrame {
                 "序号", "强化编号", "强化名称"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -103,7 +90,7 @@ public class 强化控制台 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
  
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

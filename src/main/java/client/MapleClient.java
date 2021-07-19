@@ -2,56 +2,42 @@ package client;
 
 import constants.GameConstants;
 import constants.ServerConstants;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ScheduledFuture;
-import java.io.Serializable;
-import javax.script.ScriptEngine;
 import database.DatabaseConnection;
 import database.DatabaseException;
 import handling.cashshop.CashShopServer;
 import handling.channel.ChannelServer;
-import handling.login.LoginServer;
-import handling.world.MapleMessengerCharacter;
-import handling.world.MapleParty;
-import handling.world.MaplePartyCharacter;
-import handling.world.PartyOperation;
-import handling.world.World;
+import handling.world.*;
 import handling.world.family.MapleFamilyCharacter;
 import handling.world.guild.MapleGuildCharacter;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
+import server.Timer.PingTimer;
+import server.maps.MapleMap;
+import server.quest.MapleQuest;
+import server.shops.IMaplePlayerShop;
+import tools.FileoutputUtil;
+import tools.MapleAESOFB;
+import tools.MaplePacketCreator;
+import tools.packet.LoginPacket;
+
+import javax.script.ScriptEngine;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
-import static java.lang.Thread.sleep;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Formatter;
-import java.util.Locale;
-import server.maps.MapleMap;
-import server.shops.IMaplePlayerShop;
-import tools.FileoutputUtil;
-import tools.MapleAESOFB;
-import tools.packet.LoginPacket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-//import client.MapleCharacter.IoSession;
-import server.Timer.PingTimer;
-import server.quest.MapleQuest;
+
 import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
 
 public class MapleClient implements Serializable {
 
@@ -65,8 +51,9 @@ public class MapleClient implements Serializable {
             CHANGE_CHANNEL = 6;
     public static final int DEFAULT_CHARSLOT = 6;
     public static final AttributeKey<MapleClient> CLIENT_KEY = AttributeKey.valueOf("Client");
-    private transient MapleAESOFB send, receive;
-    private transient Channel session;
+    private final transient MapleAESOFB send;
+    private final transient MapleAESOFB receive;
+    private final transient Channel session;
     private MapleCharacter player;
     private int channel = 1, accId = 1, world, birthday;
     private int charslots = DEFAULT_CHARSLOT;
@@ -79,9 +66,9 @@ public class MapleClient implements Serializable {
     public boolean gm;
     private byte greason = 1, gender = -1;
     public transient short loginAttempt = 0;
-    private transient List<Integer> allowedChar = new LinkedList<Integer>();
-    private transient Set<String> macs = new HashSet<String>();
-    private transient Map<String, ScriptEngine> engines = new HashMap<String, ScriptEngine>();
+    private final transient List<Integer> allowedChar = new LinkedList<Integer>();
+    private final transient Set<String> macs = new HashSet<String>();
+    private final transient Map<String, ScriptEngine> engines = new HashMap<String, ScriptEngine>();
     private transient ScheduledFuture<?> idleTask = null;
     private transient String secondPassword, salt2; // To be used only on login
     private final transient Lock mutex = new ReentrantLock(true);
@@ -1046,11 +1033,7 @@ public class MapleClient implements Serializable {
             }
             rs.close();
             ps.close();
-            if (state == MapleClient.LOGIN_LOGGEDIN) {
-                loggedIn = true;
-            } else {
-                loggedIn = false;
-            }
+            loggedIn = state == MapleClient.LOGIN_LOGGEDIN;
             return state;
         } catch (SQLException e) {
             loggedIn = false;

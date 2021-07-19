@@ -1,18 +1,9 @@
 package server.quest;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.io.Serializable;
-import client.ISkill;
-import constants.GameConstants;
+import client.*;
 import client.inventory.InventoryException;
-import client.MapleCharacter;
 import client.inventory.MapleInventoryType;
-import client.MapleQuestStatus;
-import client.MapleStat;
-import client.SkillFactory;
-import java.util.ArrayList;
-import java.util.List;
+import constants.GameConstants;
 import provider.MapleData;
 import provider.MapleDataTool;
 import server.MapleInventoryManipulator;
@@ -20,12 +11,18 @@ import server.MapleItemInformationProvider;
 import server.Randomizer;
 import tools.MaplePacketCreator;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MapleQuestAction implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;
-    private MapleQuestActionType type;
-    private MapleData data;
-    private MapleQuest quest;
+    private final MapleQuestActionType type;
+    private final MapleData data;
+    private final MapleQuest quest;
 
     /**
      * Creates a new instance of MapleQuestAction

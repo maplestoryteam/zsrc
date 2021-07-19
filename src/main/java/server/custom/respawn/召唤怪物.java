@@ -1,6 +1,6 @@
 package server.custom.respawn;
 
-import java.awt.Point;
+import java.awt.*;
 
 public class ÕÙ»½¹ÖÎï {
 

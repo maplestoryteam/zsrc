@@ -3,26 +3,17 @@
  */
 package handling.channel.handler;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-import client.ISkill;
-import constants.GameConstants;
-import client.inventory.IItem;
-import client.MapleBuffStat;
-import client.MapleCharacter;
-import client.inventory.MapleInventoryType;
-import client.PlayerStats;
-import client.SkillFactory;
+import client.*;
 import client.anticheat.CheatingOffense;
+import client.inventory.IItem;
+import client.inventory.MapleInventoryType;
 import client.status.MonsterStatus;
 import client.status.MonsterStatusEffect;
-import static fumo.FumoSkill.FM;
-import static gui.QQMsgServer.sendMsgToQQGroup;
+import constants.GameConstants;
 import handling.channel.ChannelServer;
 import handling.world.MapleParty;
 import handling.world.World;
-import java.util.Map;
+import pvp.MaplePvp;
 import server.MapleStatEffect;
 import server.Randomizer;
 import server.life.Element;
@@ -32,12 +23,19 @@ import server.maps.MapleMap;
 import server.maps.MapleMapItem;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
-import pvp.MaplePvp;
-import static scripting.NPCConversationManager.角色ID取名字;
-import tools.MaplePacketCreator;
 import tools.AttackPair;
+import tools.MaplePacketCreator;
 import tools.Pair;
 import tools.data.LittleEndianAccessor;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static fumo.FumoSkill.FM;
+import static gui.QQMsgServer.sendMsgToQQGroup;
+import static scripting.NPCConversationManager.角色ID取名字;
 
 public class DamageParse {
 
@@ -1000,7 +998,7 @@ public class DamageParse {
 
         elemMaxDamagePerMob -= mobstats.getMagicDefense() * 0.5;
 
-        elemMaxDamagePerMob += ((double) elemMaxDamagePerMob / 100) * sharpEye;
+        elemMaxDamagePerMob += (elemMaxDamagePerMob / 100) * sharpEye;
 
         elemMaxDamagePerMob += (elemMaxDamagePerMob * (mobstats.isBoss() ? stats.bossdam_r : stats.dam_r)) / 100;
         switch (skill.getId()) {
@@ -1219,7 +1217,7 @@ public class DamageParse {
         elementalMaxDamagePerMonster = elementalMaxDamagePerMonster * (1 - 0.01 * d) - monster.getStats().getPhysicalDefense() * 0.5;
 
         // Calculate passive bonuses + Sharp Eye
-        elementalMaxDamagePerMonster += ((double) elementalMaxDamagePerMonster / 100.0) * CriticalDamagePercent;
+        elementalMaxDamagePerMonster += (elementalMaxDamagePerMonster / 100.0) * CriticalDamagePercent;
 
 //	if (theSkill.isChargeSkill()) {
 //	    elementalMaxDamagePerMonster = (double) (90 * (System.currentTimeMillis() - player.getKeyDownSkill_Time()) / 2000 + 10) * elementalMaxDamagePerMonster * 0.01;
@@ -1613,10 +1611,7 @@ public class DamageParse {
 
         String reason = "null";
         int last = attackCount;
-        boolean mirror_fix = false;
-        if (player.getJob() >= 411 && player.getJob() <= 412) {
-            mirror_fix = true;
-        }
+        boolean mirror_fix = player.getJob() >= 411 && player.getJob() <= 412;
         if (mirror_fix) {
             last *= 2;
         }

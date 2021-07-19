@@ -1,22 +1,22 @@
 package server.life;
 
-import java.awt.Point;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import server.Randomizer;
 import server.maps.MapleMap;
 import tools.MaplePacketCreator;
 
+import java.awt.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class SpawnPointAreaBoss extends Spawns {
 
-    private MapleMonster monster;
-    private Point pos1;
-    private Point pos2;
-    private Point pos3;
+    private final MapleMonster monster;
+    private final Point pos1;
+    private final Point pos2;
+    private final Point pos3;
     private long nextPossibleSpawn;
-    private int mobTime;
-    private AtomicBoolean spawned = new AtomicBoolean(false);
-    private String msg;
+    private final int mobTime;
+    private final AtomicBoolean spawned = new AtomicBoolean(false);
+    private final String msg;
 
     public SpawnPointAreaBoss(final MapleMonster monster, final Point pos1, final Point pos2, final Point pos3, final int mobTime, final String msg) {
         this.monster = monster;

@@ -3,78 +3,20 @@ NPC用法调用大全
  */
 package scripting;
 
-import static abc.Game.主城;
 import client.*;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Map.Entry;
-import client.inventory.Equip;
-import client.inventory.IItem;
-import constants.GameConstants;
-import client.inventory.ItemFlag;
-import client.inventory.MapleInventory;
-import client.inventory.MapleInventoryType;
 import client.inventory.*;
-//import static constants.GameConstants.绑定IP;
-import server.MapleCarnivalParty;
-import server.Randomizer;
-import server.MapleInventoryManipulator;
-import server.MapleShopFactory;
-import server.MapleSquad;
-import server.maps.MapleMap;
-import server.maps.Event_DojoAgent;
-import server.maps.AramiaFireWorks;
-import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
-import tools.Pair;
-import tools.packet.PlayerShopPacket;
-import server.MapleItemInformationProvider;
+import constants.GameConstants;
+import database.DatabaseConnection;
+import gui.Start;
+import handling.cashshop.CashShopServer;
 import handling.channel.ChannelServer;
 import handling.channel.MapleGuildRanking;
-import database.DatabaseConnection;
-import static download.Toupdate.readInputStream;
-import handling.cashshop.CashShopServer;
 import handling.login.handler.AutoRegister;
-import handling.world.CharacterTransfer;
-import handling.world.MapleMessengerCharacter;
-import handling.world.MapleParty;
-import handling.world.MaplePartyCharacter;
-import handling.world.PlayerBuffStorage;
-import handling.world.World;
+import handling.world.*;
 import handling.world.guild.MapleGuild;
-import server.MapleCarnivalChallenge;
-import java.util.HashMap;
 import handling.world.guild.MapleGuildAlliance;
-import java.awt.Point;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Properties;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.script.Invocable;
+import server.Timer;
 import server.*;
-import static server.MapleCarnivalChallenge.getJobNameById;
-import static gui.QQMsgServer.sendMsg;
-import static gui.QQMsgServer.sendMsgToQQGroup;
-import gui.Start;
-import static gui.Start.GetConfigValues;
-import static gui.Start.GetFuMoInfo;
-import static gui.Start.读取技个人信息设置;
-import java.text.DecimalFormat;
-import server.maps.SpeedRunType;
 import server.Timer.CloneTimer;
 import server.custom.bossrank8.BossRankInfo8;
 import server.custom.bossrank8.BossRankManager8;
@@ -85,22 +27,53 @@ import server.custom.rank.MiniGamePoints;
 import server.custom.rank.RankManager;
 import server.life.*;
 import server.maps.*;
+import server.quest.MapleQuest;
 import tools.FileoutputUtil;
+import tools.MaplePacketCreator;
+import tools.Pair;
+import tools.StringUtil;
+import tools.packet.PlayerShopPacket;
+import tools.packet.UIPacket;
+
+import javax.script.Invocable;
+import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static abc.Game.主城;
+import static download.Toupdate.readInputStream;
+import static gui.QQMsgServer.sendMsg;
+import static gui.QQMsgServer.sendMsgToQQGroup;
+import static gui.Start.*;
+import static server.MapleCarnivalChallenge.getJobNameById;
 import static tools.FileoutputUtil.CurrentReadable_Date;
 import static tools.FileoutputUtil.CurrentReadable_Time;
 import static tools.MaplePacketCreator.showSpecialEffect;
-import tools.StringUtil;
-import tools.packet.UIPacket;
 
 public class NPCConversationManager extends AbstractPlayerInteraction {
 
-    private MapleClient c;
-    private int npc, questid;
+    private final MapleClient c;
+    private final int npc;
+    private final int questid;
     private String getText;
-    private byte type; // -1 = NPC, 0 = start quest, 1 = end quest
+    private final byte type; // -1 = NPC, 0 = start quest, 1 = end quest
     private byte lastMsg = -1;
     public boolean pendingDisposal = false;
-    private Invocable iv;
+    private final Invocable iv;
     private int wh = 0;
 
     /*
@@ -472,7 +445,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
             sendNextS(text, type);
             return;
         }
-        c.sendPacket(MaplePacketCreator.getNPCTalk(npc, (byte) 4, text, "", (byte) type));
+        c.sendPacket(MaplePacketCreator.getNPCTalk(npc, (byte) 4, text, "", type));
         lastMsg = 4;
     }
 
@@ -480,7 +453,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         this.c.sendPacket(MaplePacketCreator.openWeb(web));
     }
 
-    public void sendStyle(String text, int caid, int styles[]) {
+    public void sendStyle(String text, int caid, int[] styles) {
         if (lastMsg > -1) {
             return;
         }
@@ -993,11 +966,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public boolean 百分率(int q) {
         int a = (int) Math.ceil(Math.random() * 100);
-        if (a <= q) {
-            return true;
-        } else {
-            return false;
-        }
+        return a <= q;
     }
 
     public void 重置目标地图(int a) {
@@ -1009,11 +978,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         double range = Double.POSITIVE_INFINITY;
         MapleMap map = getMap(a);
         boolean drop = false;
-        if (b == 0) {
-            drop = true;
-        } else {
-            drop = false;
-        }
+        drop = b == 0;
         for (MapleMapObject monstermo : map.getMapObjectsInRange(c.getPlayer().getPosition(), range, Arrays.asList(MapleMapObjectType.MONSTER))) {
             mob = (MapleMonster) monstermo;
             map.killMonster(mob, c.getPlayer(), drop, false, (byte) 1);
@@ -1365,10 +1330,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public boolean isPlayerInstance() {
-        if (c.getPlayer().getEventInstance() != null) {
-            return true;
-        }
-        return false;
+        return c.getPlayer().getEventInstance() != null;
     }
 
     public void changeStat(byte slot, int type, short amount) {//修改装备的脚本
@@ -1469,8 +1431,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     public void giveMerchantMesos() {//金币类？
         long mesos = 0;
         try {
-            Connection con = (Connection) DatabaseConnection.getConnection();
-            PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM hiredmerchants WHERE merchantid = ?");
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM hiredmerchants WHERE merchantid = ?");
             ps.setInt(1, getPlayer().getId());
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
@@ -1482,7 +1444,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
             rs.close();
             ps.close();
 
-            ps = (PreparedStatement) con.prepareStatement("UPDATE hiredmerchants SET mesos = 0 WHERE merchantid = ?");
+            ps = con.prepareStatement("UPDATE hiredmerchants SET mesos = 0 WHERE merchantid = ?");
             ps.setInt(1, getPlayer().getId());
             ps.executeUpdate();
             ps.close();
@@ -1494,7 +1456,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public void dc() {
-        MapleCharacter victim = c.getChannelServer().getPlayerStorage().getCharacterByName(c.getPlayer().getName().toString());
+        MapleCharacter victim = c.getChannelServer().getPlayerStorage().getCharacterByName(c.getPlayer().getName());
         victim.getClient().getSession().close();
         victim.getClient().disconnect(true, false);
 
@@ -1532,8 +1494,8 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     public long getMerchantMesos() {//关于金币
         long mesos = 0;
         try {
-            Connection con = (Connection) DatabaseConnection.getConnection();
-            PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT * FROM hiredmerchants WHERE merchantid = ?");
+            Connection con = DatabaseConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM hiredmerchants WHERE merchantid = ?");
             ps.setInt(1, getPlayer().getId());
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
@@ -1842,7 +1804,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
             } else if (type.equalsIgnoreCase("ItemEXP")) {
                 eq.setItemEXP(eq.getItemEXP() + offset);
             } else if (type.equalsIgnoreCase("Expiration")) {
-                eq.setExpiration((long) (eq.getExpiration() + offset));
+                eq.setExpiration(eq.getExpiration() + offset);
             } else if (type.equalsIgnoreCase("Flag")) {
                 eq.setFlag((byte) (eq.getFlag() + offset));
             }
@@ -2249,7 +2211,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
     }
 
     public void 获取装备栏物品代码() {
-        c.getPlayer().dropMessage(5, "" + ((Equip) c.getPlayer().getInventory(MapleInventoryType.装备栏).getItem((short) 1)) + "");
+        c.getPlayer().dropMessage(5, "" + c.getPlayer().getInventory(MapleInventoryType.装备栏).getItem((short) 1) + "");
     }
 
     //部位。属性，成功率，值
@@ -5391,7 +5353,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         c.getPlayer().getClient().getLatency();
         return;
     }
-    private final String rankTitles[] = new String[5];
+    private final String[] rankTitles = new String[5];
 
     public void MapleGuild(final int guildid) {
 
@@ -6889,7 +6851,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
         }
         return count;
     }
-    private Point position = new Point();
+    private final Point position = new Point();
 
     public void 清怪() {
         MapleMap map = c.getPlayer().getMap();
@@ -8340,7 +8302,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                 int 数量 = rs.getInt("c");
                 int 点券 = rs.getInt("d");
                 int 金币 = rs.getInt("e");
-                name.append("   #L").append(编号).append("# #v").append(物品).append("# #b#t").append(物品).append("##k x ").append(数量).append("");
+                name.append("   #L").append(编号).append("# #v").append(物品).append("# #b#t").append(物品).append("##k x ").append(数量);
                 name.append(" #d[券/币]:#b").append(点券).append("#k/#b").append(金币).append("#k#l\r\n");
             }
         } catch (SQLException ex) {
@@ -8842,7 +8804,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                         for (int j = 13 - 玩家名字.getBytes().length; j > 0; j--) {
                             name.append(" ");
                         }
-                        name.append("  ").append(职业).append("");
+                        name.append("  ").append(职业);
                         for (int j = 15 - 职业.getBytes().length; j > 0; j--) {
                             name.append(" ");
                         }
@@ -8856,7 +8818,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                         for (int j = 13 - 玩家名字.getBytes().length; j > 0; j--) {
                             name.append(" ");
                         }
-                        name.append("  ").append(职业).append("");
+                        name.append("  ").append(职业);
                         for (int j = 15 - 职业.getBytes().length; j > 0; j--) {
                             name.append(" ");
                         }
@@ -8870,7 +8832,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                         for (int j = 13 - 玩家名字.getBytes().length; j > 0; j--) {
                             name.append(" ");
                         }
-                        name.append("  ").append(职业).append("");
+                        name.append("  ").append(职业);
                         for (int j = 15 - 职业.getBytes().length; j > 0; j--) {
                             name.append(" ");
                         }
@@ -8903,7 +8865,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                     for (int j = 13 - 玩家名字.getBytes().length; j > 0; j--) {
                         name.append(" ");
                     }
-                    name.append("  ").append(职业).append("");
+                    name.append("  ").append(职业);
                     for (int j = 15 - 职业.getBytes().length; j > 0; j--) {
                         name.append(" ");
                     }
@@ -8933,7 +8895,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
                     for (int j = 13 - 玩家名字.getBytes().length; j > 0; j--) {
                         name.append(" ");
                     }
-                    name.append("  ").append(职业).append("");
+                    name.append("  ").append(职业);
                     for (int j = 15 - 职业.getBytes().length; j > 0; j--) {
                         name.append(" ");
                     }
@@ -10390,16 +10352,16 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 
     public String 显示附魔效果(String a) {
         StringBuilder name = new StringBuilder();
-        String arr1[] = a.split(",");
+        String[] arr1 = a.split(",");
         for (int i = 0; i < arr1.length; i++) {
             String pair = arr1[i];
             if (pair.contains(":")) {
                 String kongInfo = "●";
-                String arr2[] = pair.split(":");
+                String[] arr2 = pair.split(":");
                 int fumoType = Integer.parseInt(arr2[0]);
                 int fumoVal = Integer.parseInt(arr2[1]);
                 if (fumoType > 0 && Start.FuMoInfoMap.containsKey(fumoType)) {
-                    String infoArr[] = Start.FuMoInfoMap.get(fumoType);
+                    String[] infoArr = Start.FuMoInfoMap.get(fumoType);
                     String fumoName = infoArr[0];
                     String fumoInfo = infoArr[1];
                     kongInfo += fumoName + " " + String.format(fumoInfo, fumoVal);

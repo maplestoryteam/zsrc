@@ -3,9 +3,10 @@
  */
 package client;
 
+import server.Randomizer;
+
 import java.io.Serializable;
 import java.security.MessageDigest;
-import server.Randomizer;
 
 /*
      * 怪物给玩家的buff
@@ -31,15 +32,15 @@ public enum MapleDisease implements Serializable {
     CURSE(0x8000000000000000L),;//诅咒
     // 0x100 is disable skill except buff
     private static final long serialVersionUID = 0L;
-    private long i;
-    private boolean first;
+    private final long i;
+    private final boolean first;
 
-    private MapleDisease(long i) {
+    MapleDisease(long i) {
         this.i = i;
         first = false;
     }
 
-    private MapleDisease(long i, boolean first) {
+    MapleDisease(long i, boolean first) {
         this.i = i;
         this.first = first;
     }
@@ -140,7 +141,7 @@ public enum MapleDisease implements Serializable {
                 md.update(result[i]);
             }
             byte[] hash = md.digest();
-            StringBuffer d = new StringBuffer("");
+            StringBuffer d = new StringBuffer();
             for (int i = 0; i < hash.length; i++) {
                 int v = hash[i] & 0xFF;
                 if (v < 16) {

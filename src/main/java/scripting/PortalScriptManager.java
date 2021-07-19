@@ -1,24 +1,15 @@
 package scripting;
 
-import static abc.Game.地图脚本报错;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import client.MapleClient;
+import server.MaplePortal;
+import tools.FileoutputUtil;
+
+import javax.script.*;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.script.Compilable;
-import javax.script.CompiledScript;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptEngineManager;
-
-import client.MapleClient;
-import java.io.*;
-import server.MaplePortal;
-import server.ServerProperties;
-import tools.FileoutputUtil;
+import static abc.Game.地图脚本报错;
 
 public class PortalScriptManager {
 

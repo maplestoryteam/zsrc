@@ -1,8 +1,8 @@
-package module.system.common;  
-  
-import java.io.BufferedReader;  
-import java.io.IOException;  
-import java.io.InputStream;  
+package module.system.common;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;  
   
 /** 
@@ -32,14 +32,10 @@ public class NetState {
             br.close();   
            
             if (null != sb && !sb.toString().equals("")) {   
-                String logString = "";   
-                if (sb.toString().indexOf("TTL") > 0) {   
-                    // ÍøÂç³©Í¨    
-                    connect = true;  
-                } else {   
-                    // ÍøÂç²»³©Í¨    
-                    connect = false;  
-                }   
+                String logString = "";
+                // ÍøÂç³©Í¨
+                // ÍøÂç²»³©Í¨
+                connect = sb.toString().indexOf("TTL") > 0;
             }   
         } catch (IOException e) {  
             e.printStackTrace();  

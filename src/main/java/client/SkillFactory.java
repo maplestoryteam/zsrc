@@ -1,21 +1,10 @@
 package client;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import provider.MapleData;
-import provider.MapleDataProvider;
-import provider.MapleDataFileEntry;
-import provider.MapleDataProviderFactory;
-import provider.MapleDataDirectoryEntry;
-import provider.MapleDataTool;
+import provider.*;
 import tools.StringUtil;
+
+import java.io.File;
+import java.util.*;
 
 public class SkillFactory {
 
@@ -23,7 +12,7 @@ public class SkillFactory {
     private static final Map<Integer, List<Integer>> skillsByJob = new HashMap<Integer, List<Integer>>();
     private static final Map<Integer, SummonSkillEntry> SummonSkillInformation = new HashMap<Integer, SummonSkillEntry>();
      private final static MapleData stringData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz")).getData("Skill.img");
-   private static MapleDataProvider datasource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Skill.wz"));
+   private static final MapleDataProvider datasource = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Skill.wz"));
 
     public static final ISkill getSkill(final int id) {
         if (skills.size() != 0) {
@@ -73,12 +62,12 @@ public class SkillFactory {
         return null;
     }
     public static ISkill getSkill1(int id) {
-        ISkill ret = (ISkill) skills.get(Integer.valueOf(id));
+        ISkill ret = skills.get(Integer.valueOf(id));
         if (ret != null) {
             return ret;
         }
         synchronized (skills) {
-            ret = (ISkill) skills.get(Integer.valueOf(id));
+            ret = skills.get(Integer.valueOf(id));
             if (ret == null) {
                 int job = id / 10000;
                 MapleData skillroot = datasource.getData(StringUtil.getLeftPaddedStr(String.valueOf(job), '0', 3) + ".img");

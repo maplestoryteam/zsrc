@@ -1,27 +1,22 @@
 package server;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import client.MapleClient;
 import client.MapleCharacter;
+import client.MapleClient;
 import handling.channel.ChannelServer;
 import handling.world.World;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ScheduledFuture;
 import server.Timer.EtcTimer;
 import server.maps.MapleMap;
 import tools.MaplePacketCreator;
 import tools.Pair;
 
+import java.lang.ref.WeakReference;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ScheduledFuture;
+
 public class MapleSquad {
 
-    public static enum MapleSquadType {
+    public enum MapleSquadType {
 
         bossbalrog(2),
         zak(2), 
@@ -45,7 +40,7 @@ public class MapleSquad {
         ARIANT3(5),
         cygnus(3);
 
-        private MapleSquadType(int i) {
+        MapleSquadType(int i) {
             this.i = i;
         }
         public int i;
@@ -288,15 +283,11 @@ public class MapleSquad {
     }
 
     public void removeMember(MapleCharacter chr) {
-        if (members.containsKey(chr.getName())) {
-            members.remove(chr.getName());
-        }
+        members.remove(chr.getName());
     }
 
     public void removeMember(String chr) {
-        if (members.containsKey(chr)) {
-            members.remove(chr);
-        }
+        members.remove(chr);
     }
 
     public void banMember(int pos) {

@@ -1,9 +1,8 @@
 package gui.未分类;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -17,46 +16,32 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-
 public class Client {
 
-    private JFrame frame;
-    private JList userList;
-    private JTextArea textArea;
-    private JTextField textField;
-    private JTextField txt_port;
-    private JTextField txt_hostIp;
-    private JTextField txt_name;
-    private JButton btn_start;
-    private JButton btn_stop;
-    private JButton btn_send;
-    private JPanel northPanel;
-    private JPanel southPanel;
-    private JScrollPane rightScroll;
-    private JScrollPane leftScroll;
-    private JSplitPane centerSplit;
+    private final JFrame frame;
+    private final JList userList;
+    private final JTextArea textArea;
+    private final JTextField textField;
+    private final JTextField txt_port;
+    private final JTextField txt_hostIp;
+    private final JTextField txt_name;
+    private final JButton btn_start;
+    private final JButton btn_stop;
+    private final JButton btn_send;
+    private final JPanel northPanel;
+    private final JPanel southPanel;
+    private final JScrollPane rightScroll;
+    private final JScrollPane leftScroll;
+    private final JSplitPane centerSplit;
 
-    private DefaultListModel listModel;
+    private final DefaultListModel listModel;
     private boolean isConnected = false;
 
     private Socket socket;
     private PrintWriter writer;
     private BufferedReader reader;
     private MessageThread messageThread;// 负责接收消息的线程
-    private Map<String, User> onLineUsers = new HashMap<String, User>();// 所有在线用户
+    private final Map<String, User> onLineUsers = new HashMap<String, User>();// 所有在线用户
 
     // 主方法,程序入口
     public static void main(String[] args) {
@@ -283,8 +268,8 @@ public class Client {
     // 不断接收消息的线程
     class MessageThread extends Thread {
 
-        private BufferedReader reader;
-        private JTextArea textArea;
+        private final BufferedReader reader;
+        private final JTextArea textArea;
 
         // 接收消息线程的构造方法
         public MessageThread(BufferedReader reader, JTextArea textArea) {
@@ -333,7 +318,7 @@ public class Client {
                         }
                     } else if (command.equals("DELETE")) {// 有用户下线更新在线列表
                         String username = stringTokenizer.nextToken();
-                        User user = (User) onLineUsers.get(username);
+                        User user = onLineUsers.get(username);
                         onLineUsers.remove(user);
                         listModel.removeElement(username);
                     } else if (command.equals("USERLIST")) {// 加载在线用户列表

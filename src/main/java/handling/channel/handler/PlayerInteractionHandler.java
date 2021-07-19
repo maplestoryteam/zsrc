@@ -6,34 +6,30 @@
  */
 package handling.channel.handler;
 
-import java.util.Arrays;
-
+import client.MapleCharacter;
+import client.MapleClient;
 import client.inventory.IItem;
 import client.inventory.ItemFlag;
-import constants.GameConstants;
-import client.MapleClient;
-import client.MapleCharacter;
 import client.inventory.MapleInventoryType;
+import constants.GameConstants;
 import database.DatabaseConnection;
 import handling.world.MapleParty;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MapleTrade;
 import server.maps.FieldLimitType;
-import server.shops.HiredMerchant;
-import server.shops.IMaplePlayerShop;
-import server.shops.MaplePlayerShop;
-import server.shops.MaplePlayerShopItem;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
-import server.shops.MapleMiniGame;
+import server.shops.*;
 import tools.MaplePacketCreator;
-import tools.packet.PlayerShopPacket;
 import tools.data.LittleEndianAccessor;
+import tools.packet.PlayerShopPacket;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class PlayerInteractionHandler {
 
@@ -731,7 +727,7 @@ public class PlayerInteractionHandler {
                 }
                 final IMaplePlayerShop ips = chr.getPlayerShop();
                 if (ips != null && ips instanceof MapleMiniGame) {
-                    if (!((MapleMiniGame) ips).isOpen()) {
+                    if (!ips.isOpen()) {
                         break;
                     }
                     ips.removeAllVisitors(3, 1); //no msg

@@ -1,19 +1,20 @@
 package client.inventory;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import tools.Pair;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 public class PetDataFactory {
 
-    private static MapleDataProvider dataRoot = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Item.wz"));
-    private static Map<Pair<Integer, Integer>, PetCommand> petCommands = new HashMap<Pair<Integer, Integer>, PetCommand>();
-    private static Map<Integer, Integer> petHunger = new HashMap<Integer, Integer>();
+    private static final MapleDataProvider dataRoot = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Item.wz"));
+    private static final Map<Pair<Integer, Integer>, PetCommand> petCommands = new HashMap<Pair<Integer, Integer>, PetCommand>();
+    private static final Map<Integer, Integer> petHunger = new HashMap<Integer, Integer>();
 
     public static final PetCommand getPetCommand(final int petId, final int skillId) {
         PetCommand ret = petCommands.get(new Pair<Integer, Integer>(Integer.valueOf(petId), Integer.valueOf(skillId)));

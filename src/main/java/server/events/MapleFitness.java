@@ -3,18 +3,18 @@
  */
 package server.events;
 
-import static abc.Game.向高地活动时间;
-import java.util.concurrent.ScheduledFuture;
 import client.MapleCharacter;
 import server.Timer.EventTimer;
-import server.maps.MapleMap;
-import server.maps.SavedLocationType;
 import tools.MaplePacketCreator;
+
+import java.util.concurrent.ScheduledFuture;
+
+import static abc.Game.向高地活动时间;
 
 public class MapleFitness extends MapleEvent {
 
     private static final long serialVersionUID = 845748950824L;
-    private long time = 向高地活动时间;
+    private final long time = 向高地活动时间;
     private long timeStarted = 0;
     private ScheduledFuture<?> fitnessSchedule, msgSchedule;
 

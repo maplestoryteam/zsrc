@@ -1,17 +1,11 @@
 package gui.未分类;
 
 import gui.控制台.控制台2号;
-import static abc.Game.窗口标题;
-import database.DatabaseConnection;
-import handling.world.MapleParty;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+
+import static abc.Game.窗口标题;
 
 /**
  *
@@ -49,7 +43,7 @@ public class 娱乐玩法 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

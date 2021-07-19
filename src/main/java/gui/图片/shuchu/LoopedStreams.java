@@ -3,10 +3,10 @@ package gui.ͼƬ.shuchu;
 import java.io.*;
 
 public class LoopedStreams {
-	private PipedOutputStream pipedOS = 
+	private final PipedOutputStream pipedOS =
 		new PipedOutputStream();
 	private boolean keepRunning = true;
-	private ByteArrayOutputStream byteArrayOS =
+	private final ByteArrayOutputStream byteArrayOS =
 		new ByteArrayOutputStream() {
 		public void close() {
 			keepRunning = false;
@@ -23,7 +23,7 @@ public class LoopedStreams {
 	};
 
 
-	private PipedInputStream pipedIS = new PipedInputStream() {
+	private final PipedInputStream pipedIS = new PipedInputStream() {
 		public void close() {
 			keepRunning = false;
 			try	{

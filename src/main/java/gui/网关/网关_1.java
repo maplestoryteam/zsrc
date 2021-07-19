@@ -4,18 +4,16 @@ import database.DatabaseConnection;
 import database1.DatabaseConnection1;
 import gui.控制台.控制台2号;
 import handling.world.MapleParty;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
 
 public class 网关_1 extends javax.swing.JFrame {
 
@@ -177,7 +175,7 @@ public class 网关_1 extends javax.swing.JFrame {
                 "检测文件", "检测值"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false
             };
 
@@ -404,7 +402,7 @@ public class 网关_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_删除客户端检测ActionPerformed
     public static int 网关开关1 = 0;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -434,7 +432,7 @@ public class 网关_1 extends javax.swing.JFrame {
     }
 
     private void 刷新检测值() {
-        for (int i = ((DefaultTableModel) (this.客户端检测.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.客户端检测.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.客户端检测.getModel())).removeRow(i);
         }
         try {

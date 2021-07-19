@@ -14,7 +14,7 @@ public interface IMonitorService {
      * @throws Exception  
      * @author amgkaka  
      * Creation date: 2008-4-25 - ионГ10:45:08  
-     */  
-    public MonitorInfoBean getMonitorInfoBean() throws Exception;   
+     */
+    MonitorInfoBean getMonitorInfoBean() throws Exception;
   
 }  

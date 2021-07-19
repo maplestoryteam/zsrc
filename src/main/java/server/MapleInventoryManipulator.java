@@ -1,27 +1,20 @@
 package server;
 
-import java.awt.Point;
+import client.MapleBuffStat;
+import client.MapleCharacter;
+import client.MapleClient;
+import client.PlayerStats;
+import client.inventory.*;
+import constants.GameConstants;
+import server.maps.AramiaFireWorks;
+import tools.MaplePacketCreator;
+import tools.packet.MTSCSPacket;
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import client.inventory.MapleInventoryIdentifier;
-import constants.GameConstants;
-import client.inventory.Equip;
-import client.inventory.IItem;
-import client.inventory.InventoryException;
-import client.inventory.Item;
-import client.inventory.ItemFlag;
-import client.PlayerStats;
-import client.MapleBuffStat;
-import client.inventory.MaplePet;
-import client.MapleCharacter;
-import client.MapleClient;
-import client.inventory.*;
-import java.util.ArrayList;
-import server.maps.AramiaFireWorks;
-import tools.packet.MTSCSPacket;
-import tools.MaplePacketCreator;
 
 public class MapleInventoryManipulator {
 
@@ -238,7 +231,7 @@ public class MapleInventoryManipulator {
                     Iterator<IItem> i = existing.iterator();
                     while (quantity > 0) {
                         if (i.hasNext()) {
-                            nItem = (Item) i.next();
+                            nItem = i.next();
                             short oldQ = nItem.getQuantity();
 
                             if (oldQ < slotMax) {
@@ -652,7 +645,7 @@ public class MapleInventoryManipulator {
     }
 
     private static int rand(int min, int max) {
-        return Math.abs((int) Randomizer.rand(min, max));
+        return Math.abs(Randomizer.rand(min, max));
     }
 
     public static boolean checkSpace(final MapleClient c, final int itemid, int quantity, final String owner) {
@@ -714,7 +707,7 @@ public class MapleInventoryManipulator {
             if (item.getQuantity() == 0 && !allowZero) {
                 c.sendPacket(MaplePacketCreator.clearInventoryItem(type, item.getPosition(), fromDrop));
             } else {
-                c.sendPacket(MaplePacketCreator.updateInventorySlot(type, (Item) item, fromDrop));
+                c.sendPacket(MaplePacketCreator.updateInventorySlot(type, item, fromDrop));
             }
         }
     }

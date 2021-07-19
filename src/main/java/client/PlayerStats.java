@@ -1,38 +1,25 @@
 package client;
 
+import client.inventory.*;
 import constants.GameConstants;
-import client.inventory.MapleInventoryType;
-import client.inventory.IItem;
-import client.inventory.Equip;
-import client.inventory.IEquip;
-import client.inventory.MapleWeaponType;
-//import static com.sun.org.glassfish.external.amx.AMXUtil.prop;
-import java.lang.ref.WeakReference;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.HashMap;
-
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.concurrent.locks.ReentrantLock;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import server.MapleStatEffect;
-import server.StructPotentialItem;
-import server.StructSetItem;
+import server.*;
 import server.StructSetItem.SetItem;
 import tools.MaplePacketCreator;
 import tools.data.MaplePacketLittleEndianWriter;
 
+import java.io.Serializable;
+import java.lang.ref.WeakReference;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class PlayerStats implements Serializable {
 
     private static final long serialVersionUID = -679541993413738569L;
-    private transient WeakReference<MapleCharacter> chr;
-    private Map<Integer, Integer> setHandling = new HashMap<Integer, Integer>();
-    private List<Equip> durabilityHandling = new ArrayList<Equip>(), equipLevelHandling = new ArrayList<Equip>();
+    private final transient WeakReference<MapleCharacter> chr;
+    private final Map<Integer, Integer> setHandling = new HashMap<Integer, Integer>();
+    private final List<Equip> durabilityHandling = new ArrayList<Equip>();
+    private final List<Equip> equipLevelHandling = new ArrayList<Equip>();
     private transient float shouldHealHP, shouldHealMP;
     public short str, dex, luk, int_, hp, maxhp, mp, maxmp, prop;
     private transient short passive_sharpeye_percent, localmaxhp, localmaxmp;
@@ -1292,7 +1279,7 @@ public class PlayerStats implements Serializable {
         shouldHealMP = 3 + mpRestore + recoverMP;
 
         if (GameConstants.isJobFamily(200, playerjob)) { // Improving MP recovery
-            shouldHealMP += ((float) ((float) chra.getSkillLevel(SkillFactory.getSkill(2000000)) / 10) * chra.getLevel());
+            shouldHealMP += (((float) chra.getSkillLevel(SkillFactory.getSkill(2000000)) / 10) * chra.getLevel());
 
         } else if (GameConstants.isJobFamily(111, playerjob)) {
             final ISkill effect = SkillFactory.getSkill(1110000); // Improving MP Recovery

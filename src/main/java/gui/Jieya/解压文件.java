@@ -1,10 +1,6 @@
 package gui.Jieya;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 
 public class 解压文件 {
 
@@ -37,7 +33,7 @@ public class 解压文件 {
             while ((entry = zis.getNextEntry()) != null) {
                 //System.out.println("====" + entry.getName());
                 int count;
-                byte date[] = new byte[BUFFER];
+                byte[] date = new byte[BUFFER];
                 //如果条目是文件目录，则继续执行
                 if (entry.isDirectory()) {
                     continue;

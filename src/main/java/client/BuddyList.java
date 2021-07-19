@@ -1,18 +1,14 @@
 package client;
 
+import database.DatabaseConnection;
+import tools.MaplePacketCreator;
+
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.io.Serializable;
-
-import database.DatabaseConnection;
-import tools.MaplePacketCreator;
+import java.util.*;
 
 public class BuddyList implements Serializable {
 
@@ -25,7 +21,7 @@ public class BuddyList implements Serializable {
      * 好友名單操作
      *
      */
-    public static enum BuddyOperation {
+    public enum BuddyOperation {
 
         ADDED, DELETED
     }
@@ -33,7 +29,7 @@ public class BuddyList implements Serializable {
     /**
      * 好友名單操作結果
      */
-    public static enum BuddyAddResult {
+    public enum BuddyAddResult {
 
         BUDDYLIST_FULL, ALREADY_ON_LIST, OK
     }

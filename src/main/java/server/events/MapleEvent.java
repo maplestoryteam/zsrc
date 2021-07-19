@@ -1,28 +1,18 @@
 package server.events;
 
 import client.MapleCharacter;
-import database.DatabaseConnection;
 import handling.channel.ChannelServer;
 import handling.world.MapleParty;
 import handling.world.World;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import server.MapleInventoryManipulator;
-import static gui.QQMsgServer.sendMsgToQQGroup;
 import scripting.NPCScriptManager;
+import server.MapleInventoryManipulator;
 import server.RandomRewards;
-import server.Randomizer;
 import server.Timer.EventTimer;
 import server.maps.MapleMap;
 import server.maps.SavedLocationType;
-import tools.FileoutputUtil;
-import static tools.FileoutputUtil.CurrentReadable_Time;
 import tools.MaplePacketCreator;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
 
 public abstract class MapleEvent {
 
@@ -204,7 +194,7 @@ public abstract class MapleEvent {
                 for (int i : e.mapid) {
                     if (chr.getMapId() == i) {
                         e.startEvent();
-                        chr.dropMessage(5, String.valueOf(t) + " 活动开始");
+                        chr.dropMessage(5, t + " 活动开始");
                     }
                 }
             }
@@ -222,8 +212,8 @@ public abstract class MapleEvent {
         }
         cserv.setEvent(cserv.getEvent(event).mapid[0]);
         cserv.getEvent(event).reset();
-        World.Broadcast.broadcastSmega(MaplePacketCreator.serverNotice(9, cserv.getChannel(), "[活动] : " + cserv.getChannel() + " 频道 3 分钟后准备举行 [" + String.valueOf(event) + "] 活动,想要参加的玩家请从活动向导处参加。"));
-        sendMsgToQQGroup("[自助活动] : " + cserv.getChannel() + " 频道 3 分钟后准备举行 " + String.valueOf(event) + " ,参加的玩家从活动向导处参加。");
+        World.Broadcast.broadcastSmega(MaplePacketCreator.serverNotice(9, cserv.getChannel(), "[活动] : " + cserv.getChannel() + " 频道 3 分钟后准备举行 [" + event + "] 活动,想要参加的玩家请从活动向导处参加。"));
+        sendMsgToQQGroup("[自助活动] : " + cserv.getChannel() + " 频道 3 分钟后准备举行 " + event + " ,参加的玩家从活动向导处参加。");
         MapleParty.雪球赛 = 0;
         return "";
     }

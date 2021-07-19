@@ -1,9 +1,6 @@
 
 package server.maps;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-
 import client.ISkill;
 import client.MapleCharacter;
 import client.MapleClient;
@@ -13,13 +10,18 @@ import server.life.MapleMonster;
 import server.life.MobSkill;
 import tools.MaplePacketCreator;
 
+import java.awt.*;
+
 public class MapleMist extends AbstractMapleMapObject {
 
-    private Rectangle mistPosition;
+    private final Rectangle mistPosition;
     private MapleStatEffect source;
     private MobSkill skill;
-    private boolean isMobMist;
-    private int skillDelay, skilllevel, isPoisonMist, ownerId;
+    private final boolean isMobMist;
+    private final int skillDelay;
+    private final int skilllevel;
+    private int isPoisonMist;
+    private final int ownerId;
 
     public MapleMist(Rectangle mistPosition, MapleMonster mob, MobSkill skill) {
         this.mistPosition = mistPosition;

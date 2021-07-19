@@ -3,26 +3,28 @@
  */
 package handling.channel.handler;
 
-import client.MapleClient;
 import client.MapleCharacter;
+import client.MapleClient;
 import client.messages.CommandProcessor;
 import constants.ServerConstants.CommandType;
-import static gui.QQ通信.群通知;
 import gui.活动推雪球比赛;
 import handling.channel.ChannelServer;
 import handling.world.MapleMessenger;
 import handling.world.MapleMessengerCharacter;
 import handling.world.MapleParty;
 import handling.world.World;
-import java.util.Calendar;
-import java.util.concurrent.ScheduledFuture;
 import server.Timer;
 import server.custom.bossrank4.BossRankManager4;
 import server.quest.MapleQuest;
 import tools.FileoutputUtil;
-import static tools.FileoutputUtil.CurrentReadable_Time;
 import tools.MaplePacketCreator;
 import tools.data.LittleEndianAccessor;
+
+import java.util.Calendar;
+import java.util.concurrent.ScheduledFuture;
+
+import static gui.QQ通信.群通知;
+import static tools.FileoutputUtil.CurrentReadable_Time;
 
 public class ChatHandler {
 
@@ -139,7 +141,7 @@ public class ChatHandler {
     public static final void Others(final LittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         final int type = slea.readByte();
         final byte numRecipients = slea.readByte();
-        int recipients[] = new int[numRecipients];
+        int[] recipients = new int[numRecipients];
 
         for (byte i = 0; i < numRecipients; i++) {
             recipients[i] = slea.readInt();
@@ -440,7 +442,7 @@ public class ChatHandler {
                                             if (party.getLevel() >= 最低等级 && party.getLevel() <= 最高等级) {
                                                 MapleCharacter invited = c.getChannelServer().getPlayerStorage().getCharacterByName(party.getName());
                                                 invited.getClient().sendPacket(MaplePacketCreator.partyInvite(c.getPlayer()));
-                                                c.getPlayer().dropMessage(5, "[寻找组队]:找到玩家 ( " + party.getName() + " ) 所在地图 ( " + party.getMap().getMapName().toString() + " )");
+                                                c.getPlayer().dropMessage(5, "[寻找组队]:找到玩家 ( " + party.getName() + " ) 所在地图 ( " + party.getMap().getMapName() + " )");
                                                 搜索完毕 = true;
                                                 人数++;
                                             }

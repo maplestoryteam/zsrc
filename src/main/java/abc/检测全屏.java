@@ -3,25 +3,25 @@
  */
 package abc;
 
-import constants.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ¼ì²âÈ«ÆÁ {
 
     private static ¼ì²âÈ«ÆÁ instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
-    private String qp1[];
-    private String qp2[];
-    private String qp3[];
-    private String qp4[];
-    private String qp5[];
+    private final Properties itempb_cfg;
+    private String[] qp1;
+    private String[] qp2;
+    private String[] qp3;
+    private String[] qp4;
+    private String[] qp5;
 
-    private static Logger log = LoggerFactory.getLogger(¼ì²âÈ«ÆÁ.class);
+    private static final Logger log = LoggerFactory.getLogger(¼ì²âÈ«ÆÁ.class);
 
     public ¼ì²âÈ«ÆÁ() {
         itempb_cfg = new Properties();

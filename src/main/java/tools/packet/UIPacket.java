@@ -1,9 +1,10 @@
 package tools.packet;
 
-import static abc.Game.ต๗สิ2;
 import handling.SendPacketOpcode;
 import tools.MaplePacketCreator;
 import tools.data.MaplePacketLittleEndianWriter;
+
+import static abc.Game.ต๗สิ2;
 
 public class UIPacket {
 

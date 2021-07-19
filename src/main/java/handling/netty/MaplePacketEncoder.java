@@ -5,27 +5,24 @@ import constants.ServerConstants;
 import handling.SendPacketOpcode;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.MessageToByteEncoder;
-import java.nio.ByteBuffer;
-import tools.MapleAESOFB;
-import tools.MapleCustomEncryption;
-
-import java.util.concurrent.locks.Lock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tools.FileoutputUtil;
 import tools.HexTool;
+import tools.MapleAESOFB;
+import tools.MapleCustomEncryption;
 import tools.data.ByteArrayByteStream;
 import tools.data.LittleEndianAccessor;
 
+import java.util.concurrent.locks.Lock;
+
 public class MaplePacketEncoder extends MessageToByteEncoder<Object> {
 
-    private static Logger log = LoggerFactory.getLogger(MaplePacketEncoder.class);
+    private static final Logger log = LoggerFactory.getLogger(MaplePacketEncoder.class);
 
     @Override
     protected void encode(ChannelHandlerContext chc, Object message, ByteBuf buffer) throws Exception {
-        final MapleClient client = (MapleClient) chc.channel().attr(MapleClient.CLIENT_KEY).get();
+        final MapleClient client = chc.channel().attr(MapleClient.CLIENT_KEY).get();
 
         if (client != null) {
             final MapleAESOFB send_crypto = client.getSendCrypto();

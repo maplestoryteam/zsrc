@@ -3,12 +3,13 @@
  */
 package handling.channel.handler;
 
-import java.util.ArrayList;
-import java.util.List;
 import client.MapleCharacter;
 import client.MapleClient;
 import tools.MaplePacketCreator;
 import tools.data.LittleEndianAccessor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BeanGame {
 
@@ -68,7 +69,7 @@ public class BeanGame {
             // }
             c.sendPacket(MaplePacketCreator.showBeans(力度, size, Pos, Type));
         } else {
-            System.out.println("未處理的類型【" + type + "】\n包" + slea.toString());
+            System.out.println("未處理的類型【" + type + "】\n包" + slea);
         }
     }
 
@@ -96,9 +97,9 @@ public class BeanGame {
 
     public class Beans {
 
-        private int number;
-        private int type;
-        private int pos;
+        private final int number;
+        private final int type;
+        private final int pos;
 
         public Beans(int pos, int type, int number) {
             this.pos = pos;

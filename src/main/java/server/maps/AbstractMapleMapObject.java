@@ -1,10 +1,10 @@
 package server.maps;
 
-import java.awt.Point;
+import java.awt.*;
 
 public abstract class AbstractMapleMapObject implements MapleMapObject {
 
-    private Point position = new Point();
+    private final Point position = new Point();
     private int objectId;
 
     public abstract MapleMapObjectType getType();

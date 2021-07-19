@@ -3,81 +3,28 @@
  */
 package client;
 
-import static abc.Game.主城;
 import client.anticheat.CheatTracker;
-import client.inventory.Equip;
-import client.inventory.IItem;
-import client.inventory.Item;
-import client.inventory.ItemFlag;
-import client.inventory.ItemLoader;
-import client.inventory.MapleInventory;
-import client.inventory.MapleInventoryIdentifier;
-import client.inventory.MapleInventoryType;
-import client.inventory.MapleMount;
-import client.inventory.MaplePet;
-import client.inventory.MapleRing;
+import client.inventory.*;
 import constants.GameConstants;
 import constants.ServerConstants;
 import database.DatabaseConnection;
 import database.DatabaseException;
-import static fumo.FumoSkill.FM;
-import static gui.QQ通信.群通知;
-import static gui.Start.读取技个人信息设置;
 import handling.channel.ChannelServer;
 import handling.login.LoginServer;
-import handling.world.CharacterTransfer;
-import handling.world.MapleMessenger;
-import handling.world.MapleMessengerCharacter;
-import handling.world.MapleParty;
-import handling.world.MaplePartyCharacter;
-import handling.world.PartyOperation;
-import handling.world.PlayerBuffStorage;
-import handling.world.PlayerBuffValueHolder;
-import handling.world.World;
+import handling.world.*;
 import handling.world.family.MapleFamily;
 import handling.world.family.MapleFamilyBuff;
 import handling.world.family.MapleFamilyBuff.MapleFamilyBuffEntry;
 import handling.world.family.MapleFamilyCharacter;
 import handling.world.guild.MapleGuild;
 import handling.world.guild.MapleGuildCharacter;
-import java.awt.Point;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.lang.ref.WeakReference;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import scripting.EventInstanceManager;
 import scripting.NPCConversationManager;
 import scripting.NPCScriptManager;
+import server.Timer;
 import server.*;
 import server.Timer.BuffTimer;
 import server.Timer.EtcTimer;
@@ -88,38 +35,51 @@ import server.life.MapleMonster;
 import server.life.MobSkill;
 import server.life.PlayerNPC;
 import server.maps.*;
-import server.maps.AbstractAnimatedMapleMapObject;
-import server.maps.FieldLimitType;
-import server.maps.MapleDoor;
-import server.maps.MapleMap;
-import server.maps.MapleMapFactory;
-import server.maps.MapleMapObject;
-import server.maps.MapleMapObjectType;
-import server.maps.MapleSummon;
-import server.maps.SavedLocationType;
 import server.movement.LifeMovementFragment;
 import server.quest.MapleQuest;
 import server.shops.IMaplePlayerShop;
-import tools.ConcurrentEnumMap;
-import tools.FileoutputUtil;
-import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
-import tools.MockIOSession;
-import tools.Pair;
+import tools.*;
 import tools.data.MaplePacketLittleEndianWriter;
-import tools.packet.MTSCSPacket;
-import tools.packet.MobPacket;
-import tools.packet.MonsterCarnivalPacket;
-import tools.packet.PetPacket;
-import tools.packet.PlayerShopPacket;
-import tools.packet.UIPacket;
+import tools.packet.*;
+
+import java.awt.*;
+import java.io.*;
+import java.lang.ref.WeakReference;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.*;
+import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static abc.Game.主城;
+import static fumo.FumoSkill.FM;
+import static gui.QQ通信.群通知;
+import static gui.Start.读取技个人信息设置;
+import static tools.FileoutputUtil.CurrentReadable_Time;
 
 public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Serializable {
 
     private static final long serialVersionUID = 845748950829L;
     private String name, chalktext, BlessOfFairy_Origin, charmessage;
     private long lastCombo, lastfametime, keydown_skill;
-    private byte dojoRecord, gmLevel, gender, initialSpawnPoint, skinColor, guildrank = 5, allianceRank = 5, world, fairyExp = 10, fairyExp2 = 10, numClones, subcategory; // Make this a quest record, TODO : Transfer it somehow with the current data
+    private byte dojoRecord;
+    private byte gmLevel;
+    private byte gender;
+    private byte initialSpawnPoint;
+    private byte skinColor;
+    private byte guildrank = 5;
+    private byte allianceRank = 5;
+    private byte world;
+    private byte fairyExp = 10;
+    private final byte fairyExp2 = 10;
+    private byte numClones;
+    private byte subcategory; // Make this a quest record, TODO : Transfer it somehow with the current data
     public short level, mulung_energy, combo, availableCP, totalCP, fame, hpApUsed, job, remainingAp;
     public int accountid, id, meso, exp, hair, face, mapid, bookCover, dojo, prop,
             guildid = 0, fallcounter = 0, maplepoints, acash, chair, itemEffect, points, vpoints,
@@ -152,7 +112,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public long 吸怪检测 = 0;
     public long 愤怒之火掉血 = 0;
     public long 神圣之火回血 = 0;
-    private static int _tiredMinutes = 0;
+    private static final int _tiredMinutes = 0;
     public int 银行账号 = 0;
     public int 银行密码 = 0;
     public long 最高伤害 = 200000000;
@@ -872,13 +832,13 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     private transient Set<MapleMonster> controlled;
     private transient Set<MapleMapObject> visibleMapObjects;
     private transient ReentrantReadWriteLock visibleMapObjectsLock;
-    private Map<MapleQuest, MapleQuestStatus> quests;
+    private final Map<MapleQuest, MapleQuestStatus> quests;
     private Map<Integer, String> questinfo;
-    private Map<ISkill, SkillEntry> skills = new LinkedHashMap<ISkill, SkillEntry>();
-    private transient Map<MapleBuffStat, MapleBuffStatValueHolder> effects = new ConcurrentEnumMap<MapleBuffStat, MapleBuffStatValueHolder>(MapleBuffStat.class);
+    private final Map<ISkill, SkillEntry> skills = new LinkedHashMap<ISkill, SkillEntry>();
+    private final transient Map<MapleBuffStat, MapleBuffStatValueHolder> effects = new ConcurrentEnumMap<MapleBuffStat, MapleBuffStatValueHolder>(MapleBuffStat.class);
     private transient Map<Integer, MapleSummon> summons;
-    private transient Map<Integer, MapleCoolDownValueHolder> coolDowns = new LinkedHashMap<Integer, MapleCoolDownValueHolder>();
-    private transient Map<MapleDisease, MapleDiseaseValueHolder> diseases = new ConcurrentEnumMap<MapleDisease, MapleDiseaseValueHolder>(MapleDisease.class);
+    private final transient Map<Integer, MapleCoolDownValueHolder> coolDowns = new LinkedHashMap<Integer, MapleCoolDownValueHolder>();
+    private final transient Map<MapleDisease, MapleDiseaseValueHolder> diseases = new ConcurrentEnumMap<MapleDisease, MapleDiseaseValueHolder>(MapleDisease.class);
     private CashShop cs;
     private transient Deque<MapleCarnivalChallenge> pendingCarnivalRequests;
     private transient MapleCarnivalParty carnivalParty;
@@ -895,7 +855,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     private MapleStorage storage;
     private transient MapleTrade trade;
     private MapleMount mount;
-    private List<Integer> finishedAchievements = new ArrayList<Integer>();
+    private final List<Integer> finishedAchievements = new ArrayList<Integer>();
     private MapleMessenger messenger;
     private byte[] petStore;
     private transient IMaplePlayerShop playerShop;
@@ -913,7 +873,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     private long nextConsume = 0, pqStartTime = 0;
     private transient Event_PyramidSubway pyramidSubway = null;
     private transient List<Integer> pendingExpiration = null, pendingSkills = null;
-    private transient Map<Integer, Integer> movedMobs = new HashMap<Integer, Integer>();
+    private final transient Map<Integer, Integer> movedMobs = new HashMap<Integer, Integer>();
     private String teleportname = "";
     private int APQScore;
     //public String 第一句话 = "我爱冒险岛";
@@ -921,10 +881,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     private long currenttime = 0L;
     private long deadtime = 1000L;
     private MapleCharacter chars;
-    private long nengl = 0;
-    private long nengls = 0;
-    private static String[] ariantroomleader = new String[3]; // AriantPQ
-    private static int[] ariantroomslot = new int[3]; // AriantPQ
+    private final long nengl = 0;
+    private final long nengls = 0;
+    private static final String[] ariantroomleader = new String[3]; // AriantPQ
+    private static final int[] ariantroomslot = new int[3]; // AriantPQ
     public int apprentice = 0, master = 0; // apprentice ID for master
     public boolean DebugMessage = false;
     public int ariantScore = 0;
@@ -1204,7 +1164,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         } else {
             疲劳 = _tiredPoints;
         }
-        return (int) 疲劳;
+        return 疲劳;
     }
 
     public void 增加角色疲劳值(int period) {
@@ -2759,7 +2719,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public MapleQuestStatus getQuestRemove(MapleQuest quest) {
-        return (MapleQuestStatus) this.quests.remove(quest);
+        return this.quests.remove(quest);
     }
 
     public final MapleQuestStatus getQuestNoAdd(final MapleQuest quest) {
@@ -4247,19 +4207,19 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     public void gainSP(int sp) {
         this.remainingSp[GameConstants.getSkillBook(job)] += sp; //default
         client.sendPacket(MaplePacketCreator.updateSp(this, false));
-        client.sendPacket(UIPacket.getSPMsg((byte) sp, (short) job));
+        client.sendPacket(UIPacket.getSPMsg((byte) sp, job));
     }
 
     public void gainSP2(int sp) {
         this.remainingSp[GameConstants.getSkillBook(job)] -= sp; //default
         client.sendPacket(MaplePacketCreator.updateSp(this, false));
-        client.sendPacket(UIPacket.getSPMsg((byte) sp, (short) job));
+        client.sendPacket(UIPacket.getSPMsg((byte) sp, job));
     }
 
     public void gainSP(int sp, final int skillbook) {
         this.remainingSp[skillbook] += sp; //default
         client.sendPacket(MaplePacketCreator.updateSp(this, false));
-        client.sendPacket(UIPacket.getSPMsg((byte) sp, (short) job));
+        client.sendPacket(UIPacket.getSPMsg((byte) sp, job));
     }
 
     public void resetSP(int sp) {
@@ -4292,7 +4252,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         if (skill == null) {
             return;
         }
-        changeSkillLevel(skill, newLevel, newMasterlevel, skill.isTimeLimited() ? (System.currentTimeMillis() + (long) (30L * 24L * 60L * 60L * 1000L)) : -1);
+        changeSkillLevel(skill, newLevel, newMasterlevel, skill.isTimeLimited() ? (System.currentTimeMillis() + (30L * 24L * 60L * 60L * 1000L)) : -1);
     }
 
     public void changeSkillLevel(final ISkill skill, byte newLevel, byte newMasterlevel, long expiration) {
@@ -5138,7 +5098,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         if (clone) {
             return;
         }
-        if (monster != null && controlled.contains(monster)) {
+        if (monster != null) {
             controlled.remove(monster);
         }
     }
@@ -5379,7 +5339,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         statup.add(new Pair<>(MapleStat.HP, maxhp));
         statup.add(new Pair<>(MapleStat.MP, maxmp));
         statup.add(new Pair<>(MapleStat.EXP, exp));
-        statup.add(new Pair<>(MapleStat.LEVEL, (int) level));
+        statup.add(new Pair<>(MapleStat.LEVEL, level));
 
         if (isGM() || (job != 0 && job != 1000 && job != 2000 && job != 2001 && job != 3000)) {
             remainingSp[GameConstants.getSkillBook(this.job)] += 3;//技能点设置
@@ -5777,9 +5737,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public void addPet(final MaplePet pet) {
-        if (pets.contains(pet)) {
-            pets.remove(pet);
-        }
+        pets.remove(pet);
         pets.add(pet);
         // So that the pet will be at the last
         // Pet index logic :(
@@ -6168,7 +6126,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         if (guildid <= 0) {
             return;
         }
-        mgc.setLevel((short) level);
+        mgc.setLevel(level);
         mgc.setJobId(job);
         World.Guild.memberLevelJobUpdate(mgc);
     }
@@ -6303,7 +6261,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
             try {
                 Skill skill = (Skill) SkillFactory.getSkill1(Integer.parseInt(skill_.getName()));
                 if (level >= 0) {
-                    changeSkillLevel(skill, skill.getMaxLevel(), (byte) skill.getMaxLevel());
+                    changeSkillLevel(skill, skill.getMaxLevel(), skill.getMaxLevel());
                 }
             } catch (NumberFormatException nfe) {
                 break;
@@ -6635,7 +6593,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
 
     }
 
-    public static enum FameStatus {
+    public enum FameStatus {
 
         OK, NOT_TODAY, NOT_THIS_MONTH
     }
@@ -6662,9 +6620,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public void removeCooldown(int skillId) {
-        if (coolDowns.containsKey(Integer.valueOf(skillId))) {
-            coolDowns.remove(Integer.valueOf(skillId));
-        }
+        coolDowns.remove(Integer.valueOf(skillId));
     }
 
     public boolean skillisCooling(int skillId) {
@@ -6712,7 +6668,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public final boolean hasDisease(final MapleDisease dis) {
-        return diseases.keySet().contains(dis);
+        return diseases.containsKey(dis);
     }
 
     public void giveDebuff(final MapleDisease disease, MobSkill skill) {
@@ -8458,7 +8414,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
         ch.removePlayer(this);
         client.updateLoginState(MapleClient.CHANGE_CHANNEL, client.getSessionIPAddress());
         String s = this.client.getSessionIPAddress();
-        LoginServer.addIPAuth(s.substring(s.indexOf(47) + 1, s.length()));
+        LoginServer.addIPAuth(s.substring(s.indexOf(47) + 1));
         try {
             client.sendPacket(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(toch.getIP().split(":")[1])));
 
@@ -8611,7 +8567,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
             changed = true;
         }
 
-        updateInfoQuest(questid, changed ? newQuest.toString().substring(0, newQuest.toString().length() - 1) : newQuest.toString());
+        updateInfoQuest(questid, changed ? newQuest.substring(0, newQuest.toString().length() - 1) : newQuest.toString());
     }
 
     public void recalcPartyQuestRank(final int questid) {
@@ -9498,11 +9454,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     public boolean hasApprentice() {
-        if (apprentice > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return apprentice > 0;
     }
 
     public int getMaster() {
@@ -9940,7 +9892,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
     }
 
     // 身上装备附魔汇总数据
-    private Map<Integer, Integer> _equippedFuMoMap = new HashMap<>();
+    private final Map<Integer, Integer> _equippedFuMoMap = new HashMap<>();
 
     public Map<Integer, Integer> getEquippedFuMoMap() {
         return _equippedFuMoMap;
@@ -9962,12 +9914,12 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
                 while (rs.next()) {
                     String mxmxdDaKongFuMo = rs.getString("mxmxd_dakong_fumo");
                     if (mxmxdDaKongFuMo != null && mxmxdDaKongFuMo.length() > 0) {
-                        String arr[] = mxmxdDaKongFuMo.split(",");
+                        String[] arr = mxmxdDaKongFuMo.split(",");
                         for (String pair : arr) {
                             if (pair.length() == 0) {
                                 continue;
                             }
-                            String arr2[] = pair.split(":");
+                            String[] arr2 = pair.split(":");
                             int fumoType = Integer.parseInt(arr2[0]);
                             int fumoVal = Integer.parseInt(arr2[1]);
                             if (_equippedFuMoMap.containsKey(fumoType)) {
@@ -10056,15 +10008,15 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject implements Se
                 if (打豆豆) {
                     if (豆豆机进洞概率 >= 百分率) {
                         if (是否中奖) {
-                            MapleCharacter.this.getClient().sendPacket(MaplePacketCreator.开始豆豆(1, (int) 4343, (byte) 0, (short) 0, 豆豆类型));
+                            MapleCharacter.this.getClient().sendPacket(MaplePacketCreator.开始豆豆(1, 4343, (byte) 0, (short) 0, 豆豆类型));
                         } else {
-                            MapleCharacter.this.getClient().sendPacket(MaplePacketCreator.开始豆豆(1, (int) 豆豆机力度, (byte) 0, (short) 0, 豆豆类型));
+                            MapleCharacter.this.getClient().sendPacket(MaplePacketCreator.开始豆豆(1, 豆豆机力度, (byte) 0, (short) 0, 豆豆类型));
                         }
                     } else {
-                        MapleCharacter.this.getClient().sendPacket(MaplePacketCreator.开始豆豆(1, (int) 豆豆机力度, (byte) 0, (short) 0, 豆豆类型));
+                        MapleCharacter.this.getClient().sendPacket(MaplePacketCreator.开始豆豆(1, 豆豆机力度, (byte) 0, (short) 0, 豆豆类型));
                     }
                 } else {
-                    MapleCharacter.this.getClient().sendPacket(MaplePacketCreator.开始豆豆(1, (int) 豆豆机力度, (byte) 0, (short) 0, 豆豆类型));
+                    MapleCharacter.this.getClient().sendPacket(MaplePacketCreator.开始豆豆(1, 豆豆机力度, (byte) 0, (short) 0, 豆豆类型));
                 }
             }
         }, 1000);

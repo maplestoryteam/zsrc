@@ -1,10 +1,8 @@
 package gui.ͼƬ.shuchu;
 
-import gui.ͼƬ.shuchu.LoopedStreams;
-import java.io.*;
-import java.util.*;
 import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.text.Document;
+import java.io.*;
 
 public class ConsoleTextArea extends JTextArea {
 	public ConsoleTextArea(InputStream[] inStreams) {
@@ -36,8 +34,7 @@ public class ConsoleTextArea extends JTextArea {
 					Document doc = getDocument();
 					while((s = br.readLine()) != null) {
 						boolean caretAtEnd = false;
-						caretAtEnd = getCaretPosition() == doc.getLength() ?
-							true : false;
+						caretAtEnd = getCaretPosition() == doc.getLength();
 						sb.setLength(0);
 						append(sb.append(s).append('\n').toString());
 						if(caretAtEnd)

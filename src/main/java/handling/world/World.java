@@ -3,19 +3,6 @@ package handling.world;
 import client.*;
 import client.BuddyList.BuddyAddResult;
 import client.BuddyList.BuddyOperation;
-import java.rmi.RemoteException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import client.inventory.MapleInventoryType;
 import client.inventory.MaplePet;
 import client.inventory.PetDataFactory;
@@ -25,14 +12,7 @@ import handling.channel.ChannelServer;
 import handling.channel.PlayerStorage;
 import handling.world.family.MapleFamily;
 import handling.world.family.MapleFamilyCharacter;
-import handling.world.guild.MapleBBSThread;
-import handling.world.guild.MapleGuild;
-import handling.world.guild.MapleGuildAlliance;
-import handling.world.guild.MapleGuildCharacter;
-import handling.world.guild.MapleGuildSummary;
-import java.util.Collection;
-import gui.QQMsgServer;
-import static gui.QQMsgServer.sendMsgToQQGroup;
+import handling.world.guild.*;
 import server.ServerProperties;
 import server.Timer.MapTimer;
 import server.Timer.WorldTimer;
@@ -41,6 +21,17 @@ import server.maps.MapleMapItem;
 import tools.CollectionUtil;
 import tools.MaplePacketCreator;
 import tools.packet.PetPacket;
+
+import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
 
 public class World {
 
@@ -171,7 +162,7 @@ public class World {
 
     public static class Party {
 
-        private static Map<Integer, MapleParty> parties = new HashMap<Integer, MapleParty>();
+        private static final Map<Integer, MapleParty> parties = new HashMap<Integer, MapleParty>();
         private static final AtomicInteger runningPartyId = new AtomicInteger();
 
         static {
@@ -378,7 +369,7 @@ public class World {
 
     public static class Messenger {
 
-        private static Map<Integer, MapleMessenger> messengers = new HashMap<Integer, MapleMessenger>();
+        private static final Map<Integer, MapleMessenger> messengers = new HashMap<Integer, MapleMessenger>();
         private static final AtomicInteger runningMessengerId = new AtomicInteger();
 
         static {
@@ -917,9 +908,9 @@ public class World {
 
     public static class Find {
 
-        private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-        private static HashMap<Integer, Integer> idToChannel = new HashMap<Integer, Integer>();
-        private static HashMap<String, Integer> nameToChannel = new HashMap<String, Integer>();
+        private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+        private static final HashMap<Integer, Integer> idToChannel = new HashMap<Integer, Integer>();
+        private static final HashMap<String, Integer> nameToChannel = new HashMap<String, Integer>();
 
         public static void register(int id, String name, int channel) {
             lock.writeLock().lock();

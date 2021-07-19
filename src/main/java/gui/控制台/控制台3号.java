@@ -1,9 +1,12 @@
 package gui.控制台;
 
-import static abc.Game.版本;
 import database.DatabaseConnection;
 import gui.ZEVMS;
 import handling.world.MapleParty;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -13,12 +16,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import static abc.Game.版本;
 
 /**
  *
@@ -975,7 +974,7 @@ public class 控制台3号 extends javax.swing.JFrame {
                 "序号", "问题", "答案"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -1233,7 +1232,7 @@ public class 控制台3号 extends javax.swing.JFrame {
                 "序号", "野外BOSS", "刷新时间/分"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -1304,7 +1303,7 @@ public class 控制台3号 extends javax.swing.JFrame {
                 "序号", "BOSS", "每日获取经验次数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -1383,7 +1382,7 @@ public class 控制台3号 extends javax.swing.JFrame {
         刷新野外BOSS刷新时间();
     }//GEN-LAST:event_刷新野外BOSS刷新时间ActionPerformed
     public void 刷新野外BOSS刷新时间() {
-        for (int i = ((DefaultTableModel) (this.野外BOSS刷新时间.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.野外BOSS刷新时间.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.野外BOSS刷新时间.getModel())).removeRow(i);
         }
         try {
@@ -1891,7 +1890,7 @@ public class 控制台3号 extends javax.swing.JFrame {
         刷新打折优惠开关();
     }//GEN-LAST:event_打折优惠开关ActionPerformed
     public void 刷新BOSS限次() {
-        for (int i = ((DefaultTableModel) (this.BOSS经验限制.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.BOSS经验限制.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.BOSS经验限制.getModel())).removeRow(i);
         }
         try {
@@ -2032,7 +2031,7 @@ public class 控制台3号 extends javax.swing.JFrame {
     }
 
     public void 刷新题库() {
-        for (int i = ((DefaultTableModel) (this.OX答题题库.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.OX答题题库.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.OX答题题库.getModel())).removeRow(i);
         }
         try {
@@ -2066,7 +2065,7 @@ public class 控制台3号 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

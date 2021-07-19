@@ -1,12 +1,13 @@
 package server.maps;
 
-import java.awt.Point;
-import client.inventory.IItem;
 import client.MapleCharacter;
 import client.MapleClient;
+import client.inventory.IItem;
+import tools.MaplePacketCreator;
+
+import java.awt.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import tools.MaplePacketCreator;
 
 public class MapleMapItem extends AbstractMapleMapObject {
 
@@ -16,7 +17,7 @@ public class MapleMapItem extends AbstractMapleMapObject {
     protected byte type;
     protected boolean pickedUp = false, playerDrop, randDrop = false;
     protected long nextExpiry = 0, nextFFA = 0;
-    private ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
 
     public MapleMapItem(IItem item, Point position, MapleMapObject dropper, MapleCharacter owner, byte type, boolean playerDrop) {
         setPosition(position);

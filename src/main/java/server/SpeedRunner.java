@@ -1,31 +1,24 @@
 package server;
 
 import database.DatabaseConnection;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
-import javax.net.ssl.HttpsURLConnection;
 import server.maps.SpeedRunType;
 import tools.Pair;
 import tools.StringUtil;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
 public class SpeedRunner {
 
-    private static SpeedRunner instance = new SpeedRunner();
+    private static final SpeedRunner instance = new SpeedRunner();
     private final Map<SpeedRunType, Pair<String, Map<Integer, String>>> speedRunData;
 
     private SpeedRunner() {
@@ -125,7 +118,7 @@ public class SpeedRunner {
             conn.setDoOutput(true);
 
             OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("v", v);
             writer.write(getPostDataString(postDataParams));

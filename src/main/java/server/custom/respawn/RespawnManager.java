@@ -2,13 +2,6 @@ package server.custom.respawn;
 
 import handling.channel.ChannelServer;
 import handling.world.World;
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
-import server.Randomizer;
-import server.ServerProperties;
 import server.Timer;
 import server.Timer.RespawnTimer;
 import server.life.MapleLifeFactory;
@@ -16,6 +9,11 @@ import server.life.MapleMonster;
 import server.life.OverrideMonsterStats;
 import server.maps.MapleMap;
 import tools.MaplePacketCreator;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  *
@@ -32,7 +30,7 @@ public class RespawnManager {
         return InstanceHolder.instance;
     }
 
-    private List<RespawnInfo> respawnInfolist = new ArrayList<>();
+    private final List<RespawnInfo> respawnInfolist = new ArrayList<>();
     private ScheduledFuture<?> spawnTime;
 
     public void run() {
@@ -98,7 +96,7 @@ public class RespawnManager {
         spawnTime = null;
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         RespawnTimer.getInstance().start();
         RespawnManager.getInstance().run();
     }

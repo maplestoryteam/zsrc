@@ -1,29 +1,30 @@
 package server.shops;
 
-import constants.GameConstants;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.lang.ref.WeakReference;
-import handling.world.World;
-import client.inventory.IItem;
-import client.inventory.ItemLoader;
 import client.MapleCharacter;
 import client.MapleClient;
+import client.inventory.IItem;
+import client.inventory.ItemLoader;
 import client.inventory.MapleInventoryType;
+import constants.GameConstants;
 import database.DatabaseConnection;
 import handling.channel.ChannelServer;
-import java.awt.Point;
-import java.sql.*;
-import java.util.ArrayList;
+import handling.world.World;
 import server.maps.AbstractMapleMapObject;
 import server.maps.MapleMap;
 import server.maps.MapleMapObjectType;
 import tools.Pair;
 import tools.packet.PlayerShopPacket;
+
+import java.awt.*;
+import java.lang.ref.WeakReference;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class AbstractPlayerStore extends AbstractMapleMapObject implements IMaplePlayerShop {
 
@@ -31,7 +32,7 @@ public abstract class AbstractPlayerStore extends AbstractMapleMapObject impleme
     protected String ownerName, des, pass;
     protected int ownerId, owneraccount, itemId, channel, map;
     protected AtomicInteger meso = new AtomicInteger(0);
-    protected WeakReference<MapleCharacter> chrs[];
+    protected WeakReference<MapleCharacter>[] chrs;
     protected List<String> visitors = new LinkedList<String>();
     protected List<BoughtItem> bought = new LinkedList<BoughtItem>();
     protected List<MaplePlayerShopItem> items = new LinkedList<MaplePlayerShopItem>();

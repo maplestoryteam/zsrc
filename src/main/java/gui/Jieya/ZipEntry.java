@@ -1,6 +1,5 @@
 package gui.Jieya;
 
-import gui.Jieya.ZipConstants;
 import java.util.Date;
 
 /**
@@ -317,7 +316,7 @@ class ZipEntry implements ZipConstants, Cloneable {
     public Object clone() {
 	try {
 	    ZipEntry e = (ZipEntry)super.clone();
-	    e.extra = (extra == null ? null : (byte[])extra.clone());
+	    e.extra = (extra == null ? null : extra.clone());
 	    return e;
 	} catch (CloneNotSupportedException e) {
 	    // This should never happen, since we are Cloneable

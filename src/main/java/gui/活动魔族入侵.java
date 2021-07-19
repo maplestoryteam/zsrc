@@ -1,18 +1,19 @@
 package gui;
 
-import static abc.Game.主城;
 import client.MapleCharacter;
-import static gui.QQ通信.群通知;
 import handling.channel.ChannelServer;
 import handling.world.World;
-import java.util.Calendar;
-import java.util.concurrent.ScheduledFuture;
 import server.Timer;
 import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
-import server.maps.MapleMap;
-import static tools.FileoutputUtil.CurrentReadable_Time;
 import tools.MaplePacketCreator;
+
+import java.util.Calendar;
+import java.util.concurrent.ScheduledFuture;
+
+import static abc.Game.主城;
+import static gui.QQ通信.群通知;
+import static tools.FileoutputUtil.CurrentReadable_Time;
 
 public class 活动魔族入侵 {
 
@@ -26,7 +27,7 @@ public class 活动魔族入侵 {
      */
     public static int 蝙蝠魔 = 8150000;
     public static int S = 0;
- public static void main(String args[]) {
+ public static void main(String[] args) {
         魔族入侵线程();
     }
     public static void 魔族入侵线程() {

@@ -2,22 +2,17 @@ package client.inventory;
 
 import client.MapleCharacter;
 import constants.GameConstants;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.io.Serializable;
 import server.MapleItemInformationProvider;
 import tools.MaplePacketCreator;
 
+import java.io.Serializable;
+import java.util.*;
+
 public class MapleInventory implements Iterable<IItem>, Serializable {
 
-    private Map<Short, IItem> inventory;
+    private final Map<Short, IItem> inventory;
     private byte slotLimit = 0;
-    private MapleInventoryType type;
+    private final MapleInventoryType type;
 
     /**
      * Creates a new instance of MapleInventory
@@ -122,8 +117,8 @@ public class MapleInventory implements Iterable<IItem>, Serializable {
 
     public boolean move2(byte sSlot, byte dSlot, short slotMax) {
         MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
-        IItem source = (Item) this.inventory.get(Byte.valueOf(sSlot));
-        IItem target = (Item) this.inventory.get(Byte.valueOf(dSlot));
+        IItem source = this.inventory.get(Byte.valueOf(sSlot));
+        IItem target = this.inventory.get(Byte.valueOf(dSlot));
         if (source == null) {
             throw new InventoryException("Trying to move empty slot");
         }
@@ -241,7 +236,7 @@ public class MapleInventory implements Iterable<IItem>, Serializable {
             return -1;
         }
         for (short i = 1; i <= slotLimit; i++) {
-            if (!inventory.keySet().contains(i)) {
+            if (!inventory.containsKey(i)) {
                 return i;
             }
         }
@@ -254,7 +249,7 @@ public class MapleInventory implements Iterable<IItem>, Serializable {
         }
         byte free = 0;
         for (short i = 1; i <= slotLimit; i++) {
-            if (!inventory.keySet().contains(i)) {
+            if (!inventory.containsKey(i)) {
                 free++;
             }
         }

@@ -1,6 +1,8 @@
 package gui.ͼƬ.shuchu;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 
 public class Listing3 {
 	static PipedInputStream pipedIS =

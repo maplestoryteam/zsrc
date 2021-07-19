@@ -61,7 +61,7 @@ public class 进度条1 extends javax.swing.JFrame {
        服务端启动进度条.setValue(-100);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new 进度条1().setVisible(true);

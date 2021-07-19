@@ -1,12 +1,7 @@
 package tools;
 
 import java.io.Serializable;
-import java.util.AbstractMap;
-import java.util.AbstractSet;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Provides a strongly-typed map of keys to values.
@@ -114,7 +109,7 @@ public class ArrayMap<K, V> extends AbstractMap<K, V> implements Serializable {
         }
     }
     private transient Set<? extends java.util.Map.Entry<K, V>> entries = null;
-    private ArrayList<Entry<K, V>> list;
+    private final ArrayList<Entry<K, V>> list;
 
     /**
      * Class constructor

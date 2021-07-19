@@ -20,8 +20,10 @@
  */
 package tools.data;
 
-import java.io.IOException;
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import tools.HexTool;
+
+import java.io.IOException;
 
 /**
  * Provides for an abstraction layer for an array of bytes.

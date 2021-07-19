@@ -1,16 +1,15 @@
 package gui;
 
-import static abc.sancu.FileDemo_05.删除文件;
 import gui.Jieya.解压文件;
-import static gui.ZEVMS.下载文件;
-import static a.本地数据库.数据库下载目录;
-import static a.本地数据库.数据库导入目录;
-import static a.本地数据库.数据库解压目录;
-import static a.本地数据库.服务端数据库目录;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static a.本地数据库.*;
+import static abc.sancu.FileDemo_05.删除文件;
+import static gui.ZEVMS.下载文件;
 
 public class 检测数据库表 {
 

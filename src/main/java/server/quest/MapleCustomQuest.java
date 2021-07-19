@@ -1,14 +1,14 @@
 
 package server.quest;
 
+import database.DatabaseConnection;
+
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.LinkedList;
-import database.DatabaseConnection;
 
 public class MapleCustomQuest extends MapleQuest implements Serializable {
 

@@ -1,19 +1,18 @@
 package gui;
 
 import database.DatabaseConnection;
+import server.Timer;
+import server.Timer.WorldTimer;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.ScheduledFuture;
-import server.Timer;
-import server.Timer.EtcTimer;
-import server.Timer.MapTimer;
-import server.Timer.WorldTimer;
 
 public class 股票系统 {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         读取股票数据();
         WorldTimer.getInstance().start();
         启动股票线程();

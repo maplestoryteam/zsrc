@@ -1,38 +1,29 @@
 package server;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.io.Serializable;
-import constants.GameConstants;
-import client.inventory.ItemLoader;
-import client.inventory.IItem;
 import client.MapleClient;
+import client.inventory.IItem;
+import client.inventory.ItemLoader;
 import client.inventory.MapleInventoryType;
+import constants.GameConstants;
 import database.DatabaseConnection;
 import database.DatabaseException;
-import java.sql.*;
-import java.util.EnumMap;
 import tools.MaplePacketCreator;
 import tools.Pair;
+
+import java.io.Serializable;
+import java.sql.*;
+import java.util.*;
 
 public class MapleStorage implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;
-    private int id;
-    private int accountId;
-    private List<IItem> items;
+    private final int id;
+    private final int accountId;
+    private final List<IItem> items;
     private int meso;
     private byte slots;
     private boolean changed = false;
-    private Map<MapleInventoryType, List<IItem>> typeItems = new EnumMap<MapleInventoryType, List<IItem>>(MapleInventoryType.class);
+    private final Map<MapleInventoryType, List<IItem>> typeItems = new EnumMap<MapleInventoryType, List<IItem>>(MapleInventoryType.class);
 
     private MapleStorage(int id, byte slots, int meso, int accountId) {
         this.id = id;

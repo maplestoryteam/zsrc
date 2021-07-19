@@ -6,11 +6,11 @@
 package gui.控制台.活动;
 
 import gui.控制台.控制台2号;
-import static abc.Game.窗口标题;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+
+import static abc.Game.窗口标题;
 
 /**
  *
@@ -125,7 +125,7 @@ public class 夺旗对抗赛 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
  
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

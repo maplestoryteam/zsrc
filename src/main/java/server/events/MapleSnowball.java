@@ -5,16 +5,16 @@ package server.events;
 
 import client.MapleCharacter;
 import client.MapleDisease;
-import java.util.concurrent.ScheduledFuture;
 import server.Timer.EventTimer;
 import server.life.MobSkillFactory;
 import server.maps.MapleMap;
-import server.maps.SavedLocationType;
 import tools.MaplePacketCreator;
+
+import java.util.concurrent.ScheduledFuture;
 
 public class MapleSnowball extends MapleEvent {//Ñ©ÇòÈü
 
-    private MapleSnowballs[] balls = new MapleSnowballs[2];
+    private final MapleSnowballs[] balls = new MapleSnowballs[2];
 
     public MapleSnowball(final int channel, final int[] mapid) {
         super(channel, mapid);

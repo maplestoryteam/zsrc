@@ -3,41 +3,34 @@
 */
 package scripting;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.locks.Lock;
-import javax.script.ScriptException;
-
 import client.MapleCharacter;
 import client.MapleQuestStatus;
 import database.DatabaseConnection;
 import handling.channel.ChannelServer;
 import handling.world.MapleParty;
 import handling.world.MaplePartyCharacter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import server.MapleCarnivalParty;
 import server.MapleItemInformationProvider;
 import server.MapleSquad;
 import server.MapleSquad.MapleSquadType;
-import server.ServerProperties;
 import server.Timer.EventTimer;
-import server.quest.MapleQuest;
 import server.life.MapleMonster;
 import server.maps.MapleMap;
 import server.maps.MapleMapFactory;
+import server.quest.MapleQuest;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.packet.UIPacket;
+
+import javax.script.ScriptException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class EventInstanceManager {
 
@@ -45,9 +38,9 @@ public class EventInstanceManager {
     private List<Integer> dced = new LinkedList<Integer>();
     private List<MapleMonster> mobs = new LinkedList<MapleMonster>();
     private Map<Integer, Integer> killCount = new HashMap<Integer, Integer>();
-    private EventManager em;
-    private int channel;
-    private String name;
+    private final EventManager em;
+    private final int channel;
+    private final String name;
     private Properties props = new Properties();
     private long timeStarted = 0;
     private long eventTime = 0;

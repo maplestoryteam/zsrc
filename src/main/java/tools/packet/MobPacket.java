@@ -1,19 +1,19 @@
 package tools.packet;
 
-import java.util.Map;
-import java.util.List;
-import java.awt.Point;
-
 import client.status.MonsterStatus;
 import client.status.MonsterStatusEffect;
 import constants.ServerConstants;
 import handling.SendPacketOpcode;
-import java.util.Collection;
-import java.util.Collections;
 import server.life.MapleMonster;
 import server.life.MobSkill;
 import server.movement.LifeMovementFragment;
 import tools.data.MaplePacketLittleEndianWriter;
+
+import java.awt.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class MobPacket {
 

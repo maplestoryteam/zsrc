@@ -1,12 +1,12 @@
 package com.cyb.dao;
 
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.lang.management.ManagementFactory;
-
 import com.cyb.MonitorInfoBean;
 import com.cyb.util.Bytes;
 import com.sun.management.OperatingSystemMXBean;
+
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.lang.management.ManagementFactory;
 
 public class MonitorServiceImpl implements IMonitorService{
 

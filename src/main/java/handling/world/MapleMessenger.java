@@ -7,8 +7,8 @@ import java.util.Collection;
 public class MapleMessenger implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;
-    private MapleMessengerCharacter[] members = new MapleMessengerCharacter[3];
-    private String[] silentLink = new String[3];
+    private final MapleMessengerCharacter[] members = new MapleMessengerCharacter[3];
+    private final String[] silentLink = new String[3];
     private int id;
 
     public MapleMessenger(int id, MapleMessengerCharacter chrfor) {
@@ -114,10 +114,7 @@ public class MapleMessenger implements Serializable {
             return false;
         }
         final MapleMessenger other = (MapleMessenger) obj;
-        if (id != other.id) {
-            return false;
-        }
-        return true;
+        return id == other.id;
     }
 
     public Collection<MapleMessengerCharacter> getMembers() {

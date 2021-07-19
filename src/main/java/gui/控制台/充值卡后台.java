@@ -1,9 +1,12 @@
 package gui.控制台;
 
-import static abc.Game.版本;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
 import database.DatabaseConnection;
 import gui.ZEVMS;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import tools.FileoutputUtil;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,12 +15,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import tools.FileoutputUtil;
+
+import static abc.Game.版本;
 import static tools.FileoutputUtil.CurrentReadable_Date;
 
 /**
@@ -88,7 +87,7 @@ public class 充值卡后台 extends javax.swing.JFrame {
                 "卡号", "类型", "数额", "礼包"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -508,7 +507,7 @@ public class 充值卡后台 extends javax.swing.JFrame {
     }
 
     public void 刷新充值卡信息() {
-        for (int i = ((DefaultTableModel) (this.充值卡信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.充值卡信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.充值卡信息.getModel())).removeRow(i);
         }
         PreparedStatement ps1 = null;
@@ -552,7 +551,7 @@ public class 充值卡后台 extends javax.swing.JFrame {
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -1,91 +1,15 @@
 package client.messages.commands.a;
 
-import client.ISkill;
 import client.MapleCharacter;
 import client.MapleCharacterUtil;
-import constants.ServerConstants.PlayerGMRank;
 import client.MapleClient;
-import client.MapleDisease;
-import client.MapleStat;
-import client.SkillFactory;
-import client.anticheat.CheatingOffense;
-import client.inventory.Equip;
-import client.inventory.IItem;
-import client.inventory.ItemFlag;
-import client.inventory.MapleInventory;
-import client.inventory.MapleInventoryIdentifier;
-import client.inventory.MapleInventoryType;
-import client.inventory.MapleRing;
-import client.messages.CommandProcessorUtil;
 import client.messages.commands.CommandExecute;
-import constants.GameConstants;
-import database.DatabaseConnection;
-import handling.MapleServerHandler;
-import handling.RecvPacketOpcode;
-import handling.SendPacketOpcode;
 import handling.channel.ChannelServer;
 import handling.world.World;
-import handling.world.CheaterData;
-import java.awt.Point;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map.Entry;
-import provider.MapleData;
-import provider.MapleDataProvider;
-import provider.MapleDataProviderFactory;
-import provider.MapleDataTool;
-import scripting.EventInstanceManager;
-import scripting.EventManager;
-import scripting.PortalScriptManager;
-import scripting.ReactorScriptManager;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import server.MaplePortal;
-import server.MapleShopFactory;
-import server.MapleSquad;
-import server.ShutdownServer;
-import server.Timer;
-import server.events.MapleEvent;
-import server.events.MapleEventType;
-import server.life.MapleLifeFactory;
-import server.life.MapleMonster;
-import server.life.MapleMonsterInformationProvider;
-import server.life.MapleNPC;
-import server.life.MobSkillFactory;
-import server.life.OverrideMonsterStats;
-import server.life.PlayerNPC;
 import server.maps.MapleMap;
-import server.maps.MapleMapObject;
-import server.maps.MapleMapObjectType;
-import server.maps.MapleReactor;
-import server.maps.MapleReactorFactory;
-import server.maps.MapleReactorStats;
-import server.quest.MapleQuest;
-import tools.ArrayMap;
-import tools.CPUSampler;
-import tools.MaplePacketCreator;
-import tools.MockIOSession;
-import tools.Pair;
 import tools.StringUtil;
-import tools.packet.MobPacket;
-import tools.packet.PlayerShopPacket;
-import com.mysql.jdbc.Connection;
-import java.util.Iterator;
-import java.util.Map;
-import server.ServerProperties;
-import tools.FileoutputUtil;
-import static tools.FileoutputUtil.CurrentReadable_Time;
+
+import java.util.Collection;
 
 /**
  *
@@ -119,7 +43,7 @@ public class GMCommand {
     // }
     public static class WarpHere extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter victim = c.getChannelServer().getPlayerStorage().getCharacterByName(splitted[1]);
             if (victim != null) {
                 victim.changeMap(c.getPlayer().getMap(), c.getPlayer().getMap().findClosestSpawnpoint(c.getPlayer().getPosition()));
@@ -245,7 +169,7 @@ public class GMCommand {
                 if (victim != null) {
                     c.getPlayer().dropMessage(5, "此玩家(" + victim.getId() + ")状态:");
                     c.getPlayer().dropMessage(5, "等級: " + victim.getLevel() + "职业: " + victim.getJob() + "名声: " + victim.getFame());
-                    c.getPlayer().dropMessage(5, "地图: " + victim.getMapId() + " - " + victim.getMap().getMapName().toString());
+                    c.getPlayer().dropMessage(5, "地图: " + victim.getMapId() + " - " + victim.getMap().getMapName());
                     c.getPlayer().dropMessage(5, "力量: " + victim.getStat().getStr() + "  ||  敏捷: " + victim.getStat().getDex() + "  ||  智力: " + victim.getStat().getInt() + "  ||  运气: " + victim.getStat().getLuk());
                     c.getPlayer().dropMessage(5, "拥有 " + victim.getMeso() + " 金币.");
                 } else {

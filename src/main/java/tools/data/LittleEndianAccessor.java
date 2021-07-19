@@ -20,9 +20,9 @@
  */
 package tools.data;
 
-import constants.ServerConstants;
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-import java.awt.Point;
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -150,7 +150,7 @@ public class LittleEndianAccessor {
      */
     public final String readAsciiString(final int n) {
         try {
-            final byte ret[] = new byte[n];
+            final byte[] ret = new byte[n];
             for (int x = 0; x < n; x++) {
                 ret[x] = readByte();
             }
@@ -293,9 +293,9 @@ public class LittleEndianAccessor {
             for (int y = 0; y < n; y++) {
                 unReadByte();
             }
-            final byte ret[] = new byte[n];
+            final byte[] ret = new byte[n];
             for (int x = 0; x < n; x++) {
-                ret[x] = (byte) readByte();
+                ret[x] = readByte();
             }
             return new String(ret, "GB18030");
         } catch (UnsupportedEncodingException ex) {

@@ -1,21 +1,19 @@
 package constants;
 
-import static abc.Game.作者QQ;
 import client.MapleCharacter;
 import client.inventory.MapleInventoryType;
 import client.inventory.MapleWeaponType;
 import client.status.MonsterStatus;
 import handling.channel.handler.AttackInfo;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import server.MapleStatEffect;
-import server.Randomizer;
 import handling.login.Balloon;
 import handling.world.MapleParty;
+import server.MapleStatEffect;
+import server.Randomizer;
 import server.maps.MapleMapObjectType;
+
+import java.util.*;
+
+import static abc.Game.作者QQ;
 
 public class GameConstants {
 
@@ -84,10 +82,7 @@ public class GameConstants {
             case 1122076: //进阶黑暗龙王项链
                 return false;
         }
-        if (!canScroll(itemId)) {
-            return false;
-        }
-        return true;
+        return canScroll(itemId);
     }
 
     public static boolean 蝙蝠怪武器(final int itemId) {
@@ -116,7 +111,7 @@ public class GameConstants {
     }
 
     public static int getBookLevel(final int level) {
-        return (int) ((5 * level) * (level + 1));
+        return (5 * level) * (level + 1);
     }
 
     public static int getTimelessRequiredEXP(final int level) {
@@ -1923,21 +1918,13 @@ public class GameConstants {
     public static final boolean isMountItemAvailable(final int mountid, final int jobid) {
         if (jobid != 900 && mountid / 10000 == 190) {
             if (isKOC(jobid)) {
-                if (mountid < 1902005 || mountid > 1902007) {
-                    return false;
-                }
+                return mountid >= 1902005 && mountid <= 1902007;
             } else if (isAdventurer(jobid)) {
-                if (mountid < 1902000 || mountid > 1902002) {
-                    return false;
-                }
+                return mountid >= 1902000 && mountid <= 1902002;
             } else if (isAran(jobid)) {
-                if (mountid < 1902015 || mountid > 1902018) {
-                    return false;
-                }
+                return mountid >= 1902015 && mountid <= 1902018;
             } else if (isEvan(jobid)) {
-                if (mountid < 1902040 || mountid > 1902042) {
-                    return false;
-                }
+                return mountid >= 1902040 && mountid <= 1902042;
             }
         }
         return true;

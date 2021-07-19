@@ -1,11 +1,11 @@
 package gui.控制台;
 
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
 import gui.Start;
-import static gui.Start.instance;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+
+import static gui.Start.instance;
 
 public class 聊天记录显示 extends javax.swing.JFrame {
 
@@ -43,7 +43,7 @@ public class 聊天记录显示 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         聊天记录显示.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         try {

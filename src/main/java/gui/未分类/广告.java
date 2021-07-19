@@ -1,11 +1,12 @@
 package gui.未分类;
 
 import gui.ZEVMS;
-import java.awt.*;
-import java.net.*;
-import javax.swing.*;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import static gui.Start.CashShopServer;
+
+import javax.swing.*;
+import java.awt.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 //从网络取得
 
 public class 广告 extends JFrame {

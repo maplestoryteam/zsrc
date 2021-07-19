@@ -7,6 +7,7 @@ import client.LoginCrypto;
 import constants.ServerConstants;
 import database.DatabaseConnection;
 import database1.DatabaseConnection1;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,7 +87,7 @@ public class AutoRegister {
             if (rs.first()) {
                 accountExists = true;
             }
-            rs.close();;
+            rs.close();
             ps.close();
         } catch (SQLException ex) {
             System.out.println("ZZ"+ex);

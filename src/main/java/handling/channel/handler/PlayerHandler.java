@@ -6,60 +6,40 @@
  */
 package handling.channel.handler;
 
-import static abc.Game.丢金币开关;
-import static abc.Game.调试;
-import java.awt.Point;
-import java.util.List;
-import client.inventory.IItem;
-import client.ISkill;
-import client.SkillFactory;
-import client.SkillMacro;
-import constants.GameConstants;
-import client.inventory.MapleInventoryType;
-import client.MapleBuffStat;
-import client.MapleClient;
-import client.MapleCharacter;
-import client.MapleCoolDownValueHolder;
-import client.MapleStat;
-import client.PlayerStats;
+import client.*;
 import client.anticheat.CheatingOffense;
+import client.inventory.IItem;
 import client.inventory.ItemFlag;
+import client.inventory.MapleInventoryType;
+import constants.GameConstants;
 import constants.MapConstants;
-import static fumo.FumoSkill.FM;
-import static gui.QQMsgServer.sendMsgToQQGroup;
 import handling.channel.ChannelServer;
 import handling.world.MapleParty;
 import handling.world.World;
+import scripting.NPCConversationManager;
+import scripting.NPCScriptManager;
+import server.*;
+import server.custom.bossrank.BossRankManager;
+import server.events.MapleSnowball.MapleSnowballs;
+import server.life.*;
+import server.maps.FieldLimitType;
+import server.maps.MapleMap;
+import server.movement.LifeMovementFragment;
+import server.quest.MapleQuest;
+import tools.MaplePacketCreator;
+import tools.data.LittleEndianAccessor;
+import tools.packet.MTSCSPacket;
+import tools.packet.MobPacket;
+
+import java.awt.*;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Calendar;
-import scripting.NPCConversationManager;
-import scripting.NPCScriptManager;
-import server.AutobanManager;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import server.MapleStatEffect;
-import server.MaplePortal;
-import java.util.concurrent.ScheduledFuture;
-import server.Randomizer;
-import server.Timer;
-import server.Timer.EtcTimer;
-import server.custom.bossrank.BossRankManager;
-import server.events.MapleSnowball.MapleSnowballs;
-import server.life.MapleMonster;
-import server.life.MobAttackInfo;
-import server.life.MobAttackInfoFactory;
-import server.life.MobSkill;
-import server.life.MobSkillFactory;
-import server.maps.MapleMap;
-import server.maps.FieldLimitType;
-import server.movement.LifeMovementFragment;
-import server.quest.MapleQuest;
-import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
-import tools.packet.MobPacket;
-import tools.packet.MTSCSPacket;
-import tools.data.LittleEndianAccessor;
+import java.util.List;
+
+import static abc.Game.调试;
+import static fumo.FumoSkill.FM;
+import static gui.QQMsgServer.sendMsgToQQGroup;
 
 public class PlayerHandler {
 
@@ -537,7 +517,7 @@ public class PlayerHandler {
             damage -= chr.F().get(FM("坚不可摧"));
         }
         if (chr.getEquippedFuMoMap().get(21) != null) {
-            long 附魔减伤 = (long) (damage / 100 * chr.getEquippedFuMoMap().get(21));
+            long 附魔减伤 = damage / 100 * chr.getEquippedFuMoMap().get(21);
             damage -= 附魔减伤;
         }
         final PlayerStats stats = chr.getStat();
@@ -609,7 +589,7 @@ public class PlayerHandler {
                 final int bouncedam_ = (Randomizer.nextInt(100) < chr.getStat().DAMreflect_rate ? chr.getStat().DAMreflect : 0) + (type == -1 && chr.getBuffedValue(MapleBuffStat.POWERGUARD) != null ? chr.getBuffedValue(MapleBuffStat.POWERGUARD) : 0) + (type == -1 && chr.getBuffedValue(MapleBuffStat.PERFECT_ARMOR) != null ? chr.getBuffedValue(MapleBuffStat.PERFECT_ARMOR) : 0);
                 // final boolean bouncedam_A = chr.getBuffedValue(MapleBuffStat.BODY_PRESSURE) != null;
                 if (bouncedam_ > 0 && attacker != null) {
-                    long bouncedamage = (long) (damage * bouncedam_ / 100);
+                    long bouncedamage = damage * bouncedam_ / 100;
                     bouncedamage = Math.min(bouncedamage, attacker.getMobMaxHp() / 10);
                     attacker.damage(chr, bouncedamage, true);
                     damage -= bouncedamage;
@@ -1203,7 +1183,7 @@ public class PlayerHandler {
             case 4121007: // Triple Throw
             case 14001004: // Lucky seven
             case 14111005: // Triple Throw
-                basedamage = (float) ((float) ((statst.getTotalLuk() * 5.0f) * (statst.getTotalWatk() + projectileWatk)) / 100);
+                basedamage = ((statst.getTotalLuk() * 5.0f) * (statst.getTotalWatk() + projectileWatk)) / 100;
                 break;
             case 4111004: // Shadow Meso
 //		basedamage = ((effect.getMoneyCon() * 10) / 100) * effect.getProb(); // Not sure
@@ -1399,7 +1379,7 @@ public class PlayerHandler {
                     check_hp += 150;
                 }
                 if (healHP > check_hp * 2 && healHP > 20) {
-                    chr.getCheatTracker().registerOffense(CheatingOffense.回复过多HP, String.valueOf(healHP) + " 服务器:" + check_hp);
+                    chr.getCheatTracker().registerOffense(CheatingOffense.回复过多HP, healHP + " 服务器:" + check_hp);
                     //  healHP = check_hp;
                 }
                 chr.addHP(healHP);
@@ -1411,7 +1391,7 @@ public class PlayerHandler {
         if (chr.canMP()) {
             if (healMP != 0) {
                 if (healMP > check_mp * 2 && healMP > 20) {
-                    chr.getCheatTracker().registerOffense(CheatingOffense.回复过多MP, String.valueOf(healMP) + "服务器:" + check_mp);
+                    chr.getCheatTracker().registerOffense(CheatingOffense.回复过多MP, healMP + "服务器:" + check_mp);
                     //  healMP = check_mp;
                 }
                 chr.addMP(healMP);
@@ -1710,7 +1690,7 @@ public class PlayerHandler {
         int attackto = slea.readInt();
         MapleMonster mob = c.getPlayer().getMap().getMonsterByOid(attackto);
         if (mob != null && mob.getHp() > 0) {
-            mob.damage(c.getPlayer(), (long) damage, true, true);
+            mob.damage(c.getPlayer(), damage, true, true);
         }
     }
 

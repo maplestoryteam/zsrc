@@ -1,25 +1,26 @@
 package server.maps;
 
-import java.awt.Point;
+import client.MapleCharacter;
+import client.MapleClient;
+import server.MaplePortal;
+import tools.MaplePacketCreator;
+
+import java.awt.*;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import client.MapleCharacter;
-import client.MapleClient;
-import handling.world.MaplePartyCharacter;
-import java.lang.ref.WeakReference;
-import server.MaplePortal;
-import tools.MaplePacketCreator;
 
 public class MapleDoor extends AbstractMapleMapObject {
 
-    private WeakReference<MapleCharacter> owner;
-    private MapleMap town;
+    private final WeakReference<MapleCharacter> owner;
+    private final MapleMap town;
     private MaplePortal townPortal;
-    private MapleMap target;
-    private int skillId, ownerId;
-    private Point targetPosition;
+    private final MapleMap target;
+    private final int skillId;
+    private final int ownerId;
+    private final Point targetPosition;
 
     public MapleDoor(final MapleCharacter owner, final Point targetPosition, final int skillId) {
         super();

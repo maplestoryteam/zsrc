@@ -197,20 +197,20 @@ public enum RecvPacketOpcode implements WritableIntValueHolder {
     public final short getValue() {
         return code;
     }
-    private boolean CheckState;
+    private final boolean CheckState;
 
-    private RecvPacketOpcode() {
+    RecvPacketOpcode() {
         this.CheckState = true;
     }
 
-    private RecvPacketOpcode(final boolean CheckState) {
+    RecvPacketOpcode(final boolean CheckState) {
         this.CheckState = CheckState;
     }
 
     public final boolean NeedsChecking() {
         return CheckState;
     }
-    public static Properties getDefaultProperties() throws FileNotFoundException, IOException {
+    public static Properties getDefaultProperties() throws IOException {
         Properties props = new Properties();
         FileInputStream fileInputStream = new FileInputStream("Load\\recv.ini");
         props.load(fileInputStream);

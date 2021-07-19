@@ -1,23 +1,20 @@
 
 package server.quest;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import provider.MapleData;
 import provider.MapleDataEntity;
 import provider.WzXML.MapleDataType;
 
+import java.io.Serializable;
+import java.util.*;
+
 public class MapleCustomQuestData implements MapleData, Serializable {
 
     private static final long serialVersionUID = -8600005891655365066L;
-    private List<MapleCustomQuestData> children = new LinkedList<MapleCustomQuestData>();
-    private String name;
-    private Object data;
-    private MapleDataEntity parent;
+    private final List<MapleCustomQuestData> children = new LinkedList<MapleCustomQuestData>();
+    private final String name;
+    private final Object data;
+    private final MapleDataEntity parent;
 
     public MapleCustomQuestData(String name, Object data, MapleDataEntity parent) {
         this.name = name;

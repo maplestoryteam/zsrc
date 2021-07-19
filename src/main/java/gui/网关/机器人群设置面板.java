@@ -1,16 +1,14 @@
 package gui.网关;
 
-import static a.本地数据库.任务更新下载目录;
-import static a.本地数据库.任务更新导入目录;
-import static a.本地数据库.任务更新解压目录;
-import static abc.sancu.FileDemo_05.删除文件;
 import gui.Jieya.解压文件;
-import static gui.ZEVMS.下载文件;
 import gui.控制台.控制台2号;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+
+import static a.本地数据库.*;
+import static abc.sancu.FileDemo_05.删除文件;
+import static gui.ZEVMS.下载文件;
 
 public class 机器人群设置面板 extends javax.swing.JFrame {
 
@@ -55,7 +53,7 @@ public class 机器人群设置面板 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
     public static int 网关开关1 = 0;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

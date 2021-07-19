@@ -1,24 +1,21 @@
 package client.anticheat;
 
-import java.awt.Point;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ScheduledFuture;
-import constants.GameConstants;
 import client.MapleCharacter;
+import constants.GameConstants;
 import handling.world.World;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import server.AutobanManager;
 import server.Timer.CheatTimer;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.StringUtil;
+
+import java.awt.*;
+import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class CheatTracker {
 
@@ -49,7 +46,7 @@ public class CheatTracker {
     private int gm_message = 50;
     private int lastTickCount = 0, tickSame = 0;
     private long lastASmegaTime = 0;
-    private long[] lastTime = new long[6];
+    private final long[] lastTime = new long[6];
 
     public CheatTracker(final MapleCharacter chr) {
         this.chr = new WeakReference<MapleCharacter>(chr);
@@ -502,8 +499,8 @@ public class CheatTracker {
             } else if (type == 2) {
                 //怪物碰撞过快 回避率过高 快速攻击 快速攻击2 怪物移动 伤害相同
                 String outputFileName = "断线";
-                World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[GM信息] " + chrhardref.getName() + " 自动断线 类别: " + offense.toString() + " 原因: " + (param == null ? "" : (" - " + param))));
-                FileoutputUtil.logToFile_chr(chrhardref, "logs/Hack/" + outputFileName + ".txt", "\r\n " + FileoutputUtil.NowTime() + " 类别" + offense.toString() + " 原因 " + (param == null ? "" : (" - " + param)));
+                World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, "[GM信息] " + chrhardref.getName() + " 自动断线 类别: " + offense + " 原因: " + (param == null ? "" : (" - " + param))));
+                FileoutputUtil.logToFile_chr(chrhardref, "logs/Hack/" + outputFileName + ".txt", "\r\n " + FileoutputUtil.NowTime() + " 类别" + offense + " 原因 " + (param == null ? "" : (" - " + param)));
                 chrhardref.getClient().getSession().close();
                 //chrhardref.getClient().getSession().close();
             } else if (type == 3) {

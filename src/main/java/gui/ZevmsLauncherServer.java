@@ -1,21 +1,15 @@
 package gui;
 
-import handling.cashshop.CashShopServer;
-import handling.channel.ChannelServer;
-import handling.login.LoginServer;
+import tools.FileoutputUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import tools.FileoutputUtil;
 
 /**
  *
@@ -23,7 +17,7 @@ import tools.FileoutputUtil;
  */
 public class ZevmsLauncherServer {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         new ZevmsLauncherServer(60000).start();
     }
 
@@ -174,7 +168,7 @@ public class ZevmsLauncherServer {
                                     String log = String.format(f, FileoutputUtil.NowTime(), clientIP, data);
                                     //System.out.println(log);
                                     //FileoutputUtil.logToFile(String.format("log\\µÇÂ¼Æ÷¼ì²â\\%s %s.log", logFileName, clientIP.replace("/", "")), log);
-                                    String arr[] = data.split(",");
+                                    String[] arr = data.split(",");
 
                                     int isNotNumerCount = 0;
                                     for (String num : arr) {
@@ -277,7 +271,7 @@ public class ZevmsLauncherServer {
     }
 
     private int toInt(int b) {
-        return b >= 0 ? (int) b : (int) (b + 256);
+        return b >= 0 ? b : (b + 256);
     }
 
     public boolean isNumeric(String str) {

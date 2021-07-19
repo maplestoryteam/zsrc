@@ -1,54 +1,30 @@
 package gui.控制台;
 
-import static abc.Game.开服名字;
-import static abc.Game.版本;
-import static abc.sancu.FileDemo_05.删除文件;
 import client.MapleCharacter;
 import database.DatabaseConnection;
-import database1.DatabaseConnection1;
-import gui.Jieya.解压文件;
-import static gui.Jieya.解压文件.解压文件;
-import static gui.ZEVMS.下载文件;
-import static a.本地数据库.数据库下载目录;
-import static a.本地数据库.数据库导入目录;
-import static a.本地数据库.数据库解压目录;
-import static a.本地数据库.服务端数据库目录;
-import static a.本地数据库.服务端目录;
-import static gui.检测数据库表.检测数据库表;
 import handling.channel.ChannelServer;
 import handling.world.MapleParty;
 import handling.world.World;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import provider.MapleData;
-import provider.MapleDataProvider;
-import provider.MapleDataProviderFactory;
-import provider.MapleDataTool;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
 import scripting.NPCScriptManager;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
 import server.ServerProperties;
 import server.events.MapleEvent;
 import server.events.MapleEventType;
 import tools.MaplePacketCreator;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static abc.Game.开服名字;
+import static abc.Game.版本;
 
 /**
  *
@@ -506,7 +482,7 @@ public class 活动控制台 extends javax.swing.JFrame {
                 "答案"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -531,7 +507,7 @@ public class 活动控制台 extends javax.swing.JFrame {
                 "消耗点券"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -555,7 +531,7 @@ public class 活动控制台 extends javax.swing.JFrame {
                 "猜对次数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -579,7 +555,7 @@ public class 活动控制台 extends javax.swing.JFrame {
                 "猜错次数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -603,7 +579,7 @@ public class 活动控制台 extends javax.swing.JFrame {
                 "奖金池"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -627,7 +603,7 @@ public class 活动控制台 extends javax.swing.JFrame {
                 "每次猜错增加消奖金"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1300,7 +1276,7 @@ public class 活动控制台 extends javax.swing.JFrame {
 
     public void 刷新猜数字配置() {
 
-        for (int i = ((DefaultTableModel) (this.每次猜错增加消耗点券.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.每次猜错增加消耗点券.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.每次猜错增加消耗点券.getModel())).removeRow(i);
         }
         try {
@@ -1318,7 +1294,7 @@ public class 活动控制台 extends javax.swing.JFrame {
             Logger.getLogger(活动控制台.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.消耗点券.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.消耗点券.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.消耗点券.getModel())).removeRow(i);
         }
         try {
@@ -1336,7 +1312,7 @@ public class 活动控制台 extends javax.swing.JFrame {
             Logger.getLogger(活动控制台.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.猜错次数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.猜错次数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.猜错次数.getModel())).removeRow(i);
         }
         try {
@@ -1354,7 +1330,7 @@ public class 活动控制台 extends javax.swing.JFrame {
             Logger.getLogger(活动控制台.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.猜对次数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.猜对次数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.猜对次数.getModel())).removeRow(i);
         }
         try {
@@ -1373,7 +1349,7 @@ public class 活动控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.猜数字答案.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.猜数字答案.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.猜数字答案.getModel())).removeRow(i);
         }
         try {
@@ -1392,7 +1368,7 @@ public class 活动控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.奖金池.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.奖金池.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.奖金池.getModel())).removeRow(i);
         }
         try {
@@ -1415,7 +1391,7 @@ public class 活动控制台 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

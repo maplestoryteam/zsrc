@@ -2,27 +2,23 @@
 过图
  */package server.maps;
 
-import static abc.访问地区.新手冒险家;
-import java.awt.Point;
-
 import client.MapleClient;
-import client.MapleQuestStatus;
 import client.SkillFactory;
 import database.DatabaseConnection;
 import handling.world.MapleParty;
+import scripting.EventManager;
+import scripting.NPCScriptManager;
+import server.MapleItemInformationProvider;
+import server.Randomizer;
+import server.life.MapleLifeFactory;
+import tools.MaplePacketCreator;
+import tools.packet.UIPacket;
+
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import scripting.EventManager;
-import scripting.NPCScriptManager;
-import server.Randomizer;
-import server.MapleItemInformationProvider;
-import server.life.MapleLifeFactory;
-import server.quest.MapleQuest;
-import server.quest.MapleQuest.MedalQuest;
-import tools.MaplePacketCreator;
-import tools.packet.UIPacket;
 
 public class MapScriptMethods {
 
@@ -34,7 +30,7 @@ public class MapScriptMethods {
         "我做你的倡导坚韧！但不要把你的勇气与鲁莽!",
         "如果你想一步一步地走到失败的道路上，用一切方法去做!"};
 
-    private static enum onFirstUserEnter {
+    private enum onFirstUserEnter {
         pepeking_effect,
         dojang_Eff,
         PinkBeen_before,
@@ -67,9 +63,9 @@ public class MapScriptMethods {
                 return NULL;
             }
         }
-    };
+    }
 
-    private static enum onUserEnter {
+    private enum onUserEnter {
         babyPigMap,
         crash_Dragon,
         evanleaveD,
@@ -157,7 +153,7 @@ public class MapScriptMethods {
                 return NULL;
             }
         }
-    };
+    }
 
     //5120000*下雪
     //5120001*小红花
@@ -179,7 +175,7 @@ public class MapScriptMethods {
             //武陵
             case dojang_Eff: {
                 int temp = (c.getPlayer().getMapId() - 925000000) / 100;
-                int stage = (int) (temp - ((temp / 100) * 100));
+                int stage = temp - ((temp / 100) * 100);
                 sendDojoClock(c, getTiming(stage) * 60);
                 sendDojoStart(c, stage - getDojoStageDec(stage));
                 break;

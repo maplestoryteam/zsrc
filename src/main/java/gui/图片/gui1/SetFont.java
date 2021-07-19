@@ -1,9 +1,8 @@
 package gui.ͼƬ.gui1;
 
 
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.UIManager;
+import javax.swing.*;
+import java.awt.*;
 
 public final class SetFont {
 

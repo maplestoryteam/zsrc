@@ -1,25 +1,23 @@
 package server.maps;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 import tools.Pair;
+
+import java.awt.*;
+import java.util.List;
+import java.util.*;
 
 public class MapleNodes {
 
-    private Map<Integer, MapleNodeInfo> nodes; //used for HOB pq.
+    private final Map<Integer, MapleNodeInfo> nodes; //used for HOB pq.
     private final List<Rectangle> areas;
-    private List<MaplePlatform> platforms;
-    private List<MonsterPoint> monsterPoints;
-    private List<Integer> skillIds;
-    private List<Pair<Integer, Integer>> mobsToSpawn;
-    private List<Pair<Point, Integer>> guardiansToSpawn;
-    private int nodeStart = -1, nodeEnd = -1, mapid;
+    private final List<MaplePlatform> platforms;
+    private final List<MonsterPoint> monsterPoints;
+    private final List<Integer> skillIds;
+    private final List<Pair<Integer, Integer>> mobsToSpawn;
+    private final List<Pair<Point, Integer>> guardiansToSpawn;
+    private int nodeStart = -1;
+    private int nodeEnd = -1;
+    private final int mapid;
     private boolean firstHighest = true;
 
     public MapleNodes(final int mapid) {

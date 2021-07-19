@@ -3,21 +3,21 @@
  */
 package abc;
 
-import constants.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class 拍卖行限制 {
 
     private static 拍卖行限制 instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
+    private final Properties itempb_cfg;
     private String PM;
 
-    private static Logger log = LoggerFactory.getLogger(拍卖行限制.class);
+    private static final Logger log = LoggerFactory.getLogger(拍卖行限制.class);
 
     public 拍卖行限制() {
         itempb_cfg = new Properties();

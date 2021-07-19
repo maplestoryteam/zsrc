@@ -1,22 +1,23 @@
 package client.inventory;
 
-import java.awt.Point;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.io.Serializable;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import database.DatabaseConnection;
 import server.MapleItemInformationProvider;
 import server.movement.LifeMovementFragment;
 import server.movement.StaticLifeMovement;
 
+import java.awt.*;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class MaplePet implements Serializable {
 
-    public static enum PetFlag {
+    public enum PetFlag {
 
         ITEM_PICKUP(0x01, 5190000, 5191000),//捡起道具，取消捡起道具
         EXPAND_PICKUP(0x02, 5190002, 5191002), //扩大移动范围技能//取消扩大移动范围技能
@@ -31,7 +32,7 @@ public class MaplePet implements Serializable {
 
         private final int i, item, remove;
 
-        private PetFlag(int i, int item, int remove) {
+        PetFlag(int i, int item, int remove) {
             this.i = i;
             this.item = item;
             this.remove = remove;
@@ -66,7 +67,11 @@ public class MaplePet implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;
     private String name;
-    private int Fh = 0, stance = 0, uniqueid, petitemid, secondsLeft = 0;
+    private int Fh = 0;
+    private int stance = 0;
+    private final int uniqueid;
+    private final int petitemid;
+    private int secondsLeft = 0;
     private Point pos;
     private byte fullness = 100, level = 1, summoned = 0;
     private short inventorypos = 0, closeness = 0, flags = 0;
@@ -154,7 +159,7 @@ public class MaplePet implements Serializable {
             pse.setShort(4, (short) closeness);
             pse.setByte(5, (byte) fullness);
             pse.setInt(6, secondsLeft);
-            pse.setShort(7, (short) ret1); //flags
+            pse.setShort(7, ret1); //flags
             pse.executeUpdate();
             pse.close();
         } catch (final SQLException ex) {

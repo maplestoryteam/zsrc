@@ -1,33 +1,31 @@
 package client.messages.commands;
 
-import static abc.Game.主城;
-import static abc.Game.作者QQ;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import tools.FileoutputUtil;
-import constants.ServerConstants.PlayerGMRank;
+import client.DebugWindow;
+import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleStat;
+import constants.ServerConstants.PlayerGMRank;
 import database.DatabaseConnection;
+import handling.world.MapleParty;
+import handling.world.MaplePartyCharacter;
 import handling.world.World;
-import java.sql.SQLException;
-import java.util.Arrays;
+import scripting.NPCScriptManager;
+import server.ServerProperties;
 import server.life.MapleMonster;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
+import server.shops.IMaplePlayerShop;
+import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.StringUtil;
-import scripting.NPCScriptManager;
-import server.ServerProperties;
-import client.DebugWindow;
-import client.MapleCharacter;
-import static gui.QQMsgServer.sendMsgToQQGroup;
-import handling.channel.ChannelServer;
-import handling.world.MapleParty;
-import handling.world.MaplePartyCharacter;
-import server.shops.IMaplePlayerShop;
-import static tools.FileoutputUtil.CurrentReadable_Date;
-import static tools.FileoutputUtil.CurrentReadable_Time;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+
+import static abc.Game.主城;
+import static abc.Game.作者QQ;
 
 public class 玩家指令 {
 
@@ -531,10 +529,10 @@ public class 玩家指令 {
     public static class 我的位置 extends CommandExecute {
 
         @Override
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().dropMessage(5, "地图: " + c.getPlayer().getMap().getMapName() + " ");
             c.getPlayer().dropMessage(5, "代码: " + c.getPlayer().getMap().getId() + " ");
-            c.getPlayer().dropMessage(5, "坐标: " + String.valueOf(c.getPlayer().getPosition().x) + " , " + String.valueOf(c.getPlayer().getPosition().y) + "");
+            c.getPlayer().dropMessage(5, "坐标: " + c.getPlayer().getPosition().x + " , " + c.getPlayer().getPosition().y + "");
 
             return 1;
         }

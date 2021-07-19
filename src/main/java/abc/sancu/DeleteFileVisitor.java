@@ -10,16 +10,16 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class DeleteFileVisitor extends SimpleFileVisitor<Path> {
 
-    private String sourcePath;
+    private final String sourcePath;
     private String fileSuffixes;
-    private boolean delSubFile;
-    private boolean keepEmptyFolder;
+    private final boolean delSubFile;
+    private final boolean keepEmptyFolder;
     private String fileSuffix, tmpString;
     private File fileTmp;
     private boolean tmpBuer;
     private int delFileTotalCount;
     private int tryCount;
-    private Path rootPath;
+    private final Path rootPath;
 
     public DeleteFileVisitor(String oldPath, String fileSuffixes, boolean delSubFile, boolean keepEmptyFolder) {
         sourcePath = oldPath;
@@ -135,24 +135,18 @@ public class DeleteFileVisitor extends SimpleFileVisitor<Path> {
             //删除指定文件
             if (fileName.lastIndexOf(".") >= 0) {
 //					获取当前文件后缀
-                fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length()).toLowerCase();
+                fileSuffix = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
             } else {
                 fileSuffix = "";
             }
             if ("".equals(fileSuffixes)) {
                 //删除无后缀文件
-                if ("".equals(fileSuffix)) {
-                    return true;
-                }
+                return "".equals(fileSuffix);
             } else //删除指定后缀文件
             {
-                if (fileSuffixes.contains("#" + fileSuffix + "#")) {
-                    //在后缀前后加#号是为了避免一些误判，比如：使用者要删除recmp3后缀格式，那么输入参数字符串为#recmp3#,这时遍历到mp3文件，在前后不加#的情况下，用contains就会误判
-                    return true;
-                }
+                //在后缀前后加#号是为了避免一些误判，比如：使用者要删除recmp3后缀格式，那么输入参数字符串为#recmp3#,这时遍历到mp3文件，在前后不加#的情况下，用contains就会误判
+                return fileSuffixes.contains("#" + fileSuffix + "#");
             }
         }
-
-        return false;
     }
 }

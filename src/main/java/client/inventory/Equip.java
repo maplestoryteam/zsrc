@@ -1,17 +1,18 @@
 package client.inventory;
 
-import static abc.Game2.永恒装备;
-import static abc.Game2.重生装备;
 import client.MapleClient;
 import constants.GameConstants;
 import handling.world.World;
-import java.io.Serializable;
-import java.util.List;
 import server.MapleItemInformationProvider;
-import server.Randomizer;
 import server.ServerProperties;
 import tools.MaplePacketCreator;
 import tools.Pair;
+
+import java.io.Serializable;
+import java.util.List;
+
+import static abc.Game2.永恒装备;
+import static abc.Game2.重生装备;
 //装备升级给经验？？
 
 public class Equip extends Item implements IEquip, Serializable {

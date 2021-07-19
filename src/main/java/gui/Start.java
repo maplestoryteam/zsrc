@@ -1,57 +1,27 @@
 package gui;
 
-import static a.本地数据库.任务更新下载目录;
-
-import static a.本地数据库.任务更新导入目录;
-import static a.本地数据库.任务更新解压目录;
-import static a.用法大全.关系验证;
-import static abc.Game.数据库数据导入;
-import static abc.Game.版本;
-import static abc.sancu.FileDemo_05.删除文件;
-
 import client.Class2;
 import client.DebugWindow;
 import client.MapleCharacter;
 import client.SkillFactory;
-import handling.MapleServerHandler;
-import handling.channel.ChannelServer;
-import handling.channel.MapleGuildRanking;
-import handling.login.LoginServer;
-import handling.cashshop.CashShopServer;
-import handling.login.LoginInformationProvider;
-import handling.world.World;
-
-import java.sql.SQLException;
-
 import database.DatabaseConnection;
 import gui.Jieya.解压文件;
-
-import static gui.ZEVMS.下载文件;
-
-import handling.world.MapleParty;
-import handling.world.family.MapleFamilyBuff;
-
-import java.io.*;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
 import gui.控制台.控制台1号;
-import gui.未分类.广告;
-import gui.控制台.脚本更新器;
 import gui.控制台.聊天记录显示;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import gui.控制台.脚本更新器;
+import gui.未分类.广告;
+import handling.cashshop.CashShopServer;
+import handling.channel.ChannelServer;
+import handling.channel.MapleGuildRanking;
+import handling.login.LoginInformationProvider;
+import handling.login.LoginServer;
+import handling.world.MapleParty;
+import handling.world.World;
+import handling.world.family.MapleFamilyBuff;
+import server.Timer;
+import server.*;
 import server.Timer.*;
+import server.custom.bossrank3.BossRankManager3;
 import server.custom.forum.Forum_Section;
 import server.events.MapleOxQuizFactory;
 import server.life.MapleLifeFactory;
@@ -59,31 +29,27 @@ import server.maps.MapleMapFactory;
 import server.quest.MapleQuest;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
-import server.AutobanManager;
-import server.CashItemFactory;
-import server.ItemMakerFactory;
-import server.MTSStorage;
-import server.MapleCarnivalFactory;
-import server.MapleItemInformationProvider;
-import server.PredictCardFactory;
-import server.RandomRewards;
-import server.ServerProperties;
-import server.ShutdownServer;
-import server.SpeedRunner;
-import server.Timer;
-import server.custom.bossrank3.BossRankManager3;
 import tools.packet.UIPacket;
 
-import static gui.QQ通信.通信;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
+import static a.本地数据库.*;
+import static a.用法大全.关系验证;
 import static a.用法大全.本地取广播;
-import static abc.Game.主城;
-import static gui.QQ通信.OX答题;
-import static gui.QQ通信.群通知;
+import static abc.Game.数据库数据导入;
+import static abc.Game.版本;
+import static abc.sancu.FileDemo_05.删除文件;
+import static gui.QQ通信.*;
+import static gui.ZEVMS.下载文件;
 import static gui.活动野外通缉.随机通缉;
-import static gui.进阶BOSS.进阶BOSS线程.开启进阶BOSS线程;
-
-import java.util.Scanner;
-
 import static server.MapleCarnivalChallenge.getJobNameById;
 import static tools.FileoutputUtil.CurrentReadable_Time;
 
@@ -91,7 +57,7 @@ public class Start {
 
     public static boolean Check = true;
     public static final Start instance = new Start();
-    private static int maxUsers = 0;
+    private static final int maxUsers = 0;
     public static ZEVMS2 CashGui;
     public static 控制台1号 服务端功能开关;
     public static 广告 广告;
@@ -323,7 +289,7 @@ public class Start {
      * * <1分钟执行一次>
      */
     private static int 记录在线时间 = 0;
-    private static int 重置数据库 = 0;
+    private static final int 重置数据库 = 0;
     private static Boolean 每日送货 = false;
     private static Boolean 喜从天降 = false;
     private static Boolean 鱼来鱼往 = false;
@@ -337,277 +303,261 @@ public class Start {
     private static int Z = 0;
 
     public static void 记录在线时间(final int time) {
-        Timer.WorldTimer.getInstance().register(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        if (记录在线时间 > 0) {
-                                                            MapleParty.服务端运行时长 += 1;
-                                                            Calendar calendar = Calendar.getInstance();
-                                                            int 时 = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-                                                            int 分 = Calendar.getInstance().get(Calendar.MINUTE);
-                                                            int 星期 = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-                                                            /**
-                                                             * <凌晨清理每日信息>
-                                                             */
-                                                            if (时 == 0 && isClearBossLog == false) {
-                                                                System.err.println("[服务端]" + CurrentReadable_Time() + " : ------------------------------");
-                                                                System.err.println("[服务端]" + CurrentReadable_Time() + " : 服务端开始清理每日信息 √");
-                                                                通信("服务端开始清理每日信息");
-                                                                try {
-                                                                    //重置今日在线时间
-                                                                    try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE characters SET todayOnlineTime = 0")) {
-                                                                        ps.executeUpdate();
-                                                                        System.err.println("[服务端]" + CurrentReadable_Time() + " : 清理今日在线时间完成 √");
-                                                                    }
-                                                                    //重置每日bosslog信息
-                                                                    try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE bosslog SET characterid = 0")) {
-                                                                        ps.executeUpdate();
-                                                                        System.err.println("[服务端]" + CurrentReadable_Time() + " : 清理今日log信息完成 √");
-                                                                    }
-                                                                    //重置每日bosslog信息
-                                                                    try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE accounts SET df_tired_point = 0")) {
-                                                                        ps.executeUpdate();
-                                                                        System.err.println("[服务端]" + CurrentReadable_Time() + " : 清理今日疲劳完成 √");
-                                                                    }
-                                                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : 服务端清理每日信息完成 √");
-                                                                    通信("服务端清理每日信息完成");
-                                                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : ------------------------------");
-                                                                } catch (SQLException ex) {
-                                                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : 服务端处理每日数据出错 × " + ex.getMessage());
-                                                                    通信("服务端处理每日数据出错，你可能要手动清理一下。");
-                                                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : ------------------------------");
-                                                                }
-                                                                isClearBossLog = true;
-                                                                每日送货 = false;
-                                                                启动OX答题线程 = false;
-                                                                魔族入侵 = false;
-                                                                魔族攻城 = false;
-                                                                喜从天降 = false;
-                                                                鱼来鱼往 = false;
-                                                                MapleParty.OX答题活动 = 0;
-                        /*if (重置数据库 == 1) {
-                            重置数据库();
-                        } else {
-                            重置数据库++;
-                        }*/
-                                                            } else if (时 == 23) {
-                                                                isClearBossLog = false;
-                                                            }
-                                                            /**
-                                                             * <鱼来鱼往>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("鱼来鱼往开关") == 0) {
-                                                                if (时 == 21 && 分 >= 30 && 鱼来鱼往 == false) {
-                                                                    for (ChannelServer cserv1 : ChannelServer.getAllInstances()) {
-                                                                        for (MapleCharacter mch : cserv1.getPlayerStorage().getAllCharacters()) {
-                                                                            mch.startMapEffect("[鱼来鱼往]: 水下世界 2 频道 1 分钟后开始喜从鱼来鱼往活动。", 5120027);
-                                                                        }
-                                                                    }
-                                                                    QQ通信.群通知("[鱼来鱼往]: 水下世界 2 频道 1 分钟后开始喜从鱼来鱼往活动。");
-                                                                    new Thread() {
-                                                                        @Override
-                                                                        public void run() {
-                                                                            try {
-                                                                                Thread.sleep(1000 * 60);
-                                                                                活动鱼来鱼往.鱼来鱼往();
-                                                                            } catch (InterruptedException e) {
-                                                                            }
-                                                                        }
-                                                                    }.start();
-                                                                    鱼来鱼往 = true;
-                                                                }
-                                                            }
-                                                            /**
-                                                             * <喜从天降>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("喜从天降开关") == 0) {
-                                                                if (星期 == 1 || 星期 == 7) {
-                                                                    if (时 == 22 && 分 == 30 && 喜从天降 == false) {
-                                                                        for (ChannelServer cserv1 : ChannelServer.getAllInstances()) {
-                                                                            for (MapleCharacter mch : cserv1.getPlayerStorage().getAllCharacters()) {
-                                                                                mch.startMapEffect("[喜从天降]: 市场 2 频道 1 分钟后开始喜从天降活动。", 5120027);
-                                                                            }
-                                                                        }
-                                                                        QQ通信.群通知("[喜从天降]: 市场 2 频道 1 分钟后开始喜从天降活动。");
-                                                                        new Thread() {
-                                                                            @Override
-                                                                            public void run() {
-                                                                                try {
-                                                                                    Thread.sleep(1000 * 60);
-                                                                                    活动喜从天降.喜从天降();
-                                                                                } catch (InterruptedException e) {
-                                                                                }
-                                                                            }
-                                                                        }.start();
+        Timer.WorldTimer.getInstance().register(() -> {
+                    if (记录在线时间 > 0) {
+                        MapleParty.服务端运行时长 += 1;
+                        Calendar calendar = Calendar.getInstance();
+                        int 时 = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                        int 分 = Calendar.getInstance().get(Calendar.MINUTE);
+                        int 星期 = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+                        /**
+                         * <凌晨清理每日信息>
+                         */
+                        if (时 == 0 && isClearBossLog == false) {
+                            System.err.println("[服务端]" + CurrentReadable_Time() + " : ------------------------------");
+                            System.err.println("[服务端]" + CurrentReadable_Time() + " : 服务端开始清理每日信息 √");
+                            通信("服务端开始清理每日信息");
+                            try {
+                                //重置今日在线时间
+                                try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE characters SET todayOnlineTime = 0")) {
+                                    ps.executeUpdate();
+                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : 清理今日在线时间完成 √");
+                                }
+                                //重置每日bosslog信息
+                                try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE bosslog SET characterid = 0")) {
+                                    ps.executeUpdate();
+                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : 清理今日log信息完成 √");
+                                }
+                                //重置每日bosslog信息
+                                try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("UPDATE accounts SET df_tired_point = 0")) {
+                                    ps.executeUpdate();
+                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : 清理今日疲劳完成 √");
+                                }
+                                System.err.println("[服务端]" + CurrentReadable_Time() + " : 服务端清理每日信息完成 √");
+                                通信("服务端清理每日信息完成");
+                                System.err.println("[服务端]" + CurrentReadable_Time() + " : ------------------------------");
+                            } catch (SQLException ex) {
+                                System.err.println("[服务端]" + CurrentReadable_Time() + " : 服务端处理每日数据出错 × " + ex.getMessage());
+                                通信("服务端处理每日数据出错，你可能要手动清理一下。");
+                                System.err.println("[服务端]" + CurrentReadable_Time() + " : ------------------------------");
+                            }
+                            isClearBossLog = true;
+                            每日送货 = false;
+                            启动OX答题线程 = false;
+                            魔族入侵 = false;
+                            魔族攻城 = false;
+                            喜从天降 = false;
+                            鱼来鱼往 = false;
+                            MapleParty.OX答题活动 = 0;
+/*if (重置数据库 == 1) {
+重置数据库();
+} else {
+重置数据库++;
+}*/
+                        } else if (时 == 23) {
+                            isClearBossLog = false;
+                        }
+                        /**
+                         * <鱼来鱼往>
+                         */
+                        if (Start.ConfigValuesMap.get("鱼来鱼往开关") == 0) {
+                            if (时 == 21 && 分 >= 30 && 鱼来鱼往 == false) {
+                                for (ChannelServer cserv1 : ChannelServer.getAllInstances()) {
+                                    for (MapleCharacter mch : cserv1.getPlayerStorage().getAllCharacters()) {
+                                        mch.startMapEffect("[鱼来鱼往]: 水下世界 2 频道 1 分钟后开始喜从鱼来鱼往活动。", 5120027);
+                                    }
+                                }
+                                QQ通信.群通知("[鱼来鱼往]: 水下世界 2 频道 1 分钟后开始喜从鱼来鱼往活动。");
+                                new Thread(() -> {
+                                    try {
+                                        Thread.sleep(1000 * 60);
+                                        活动鱼来鱼往.鱼来鱼往();
+                                    } catch (InterruptedException e) {
+                                    }
+                                }).start();
+                                鱼来鱼往 = true;
+                            }
+                        }
+                        /**
+                         * <喜从天降>
+                         */
+                        if (Start.ConfigValuesMap.get("喜从天降开关") == 0) {
+                            if (星期 == 1 || 星期 == 7) {
+                                if (时 == 22 && 分 == 30 && 喜从天降 == false) {
+                                    for (ChannelServer cserv1 : ChannelServer.getAllInstances()) {
+                                        for (MapleCharacter mch : cserv1.getPlayerStorage().getAllCharacters()) {
+                                            mch.startMapEffect("[喜从天降]: 市场 2 频道 1 分钟后开始喜从天降活动。", 5120027);
+                                        }
+                                    }
+                                    QQ通信.群通知("[喜从天降]: 市场 2 频道 1 分钟后开始喜从天降活动。");
+                                    new Thread(() -> {
+                                        try {
+                                            Thread.sleep(1000 * 60);
+                                            活动喜从天降.喜从天降();
+                                        } catch (InterruptedException e) {
+                                        }
+                                    }).start();
 
-                                                                        喜从天降 = true;
-                                                                    }
-                                                                }
-                                                            }
-                                                            /**
-                                                             * <每日送货>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("每日送货开关") == 0) {
-                                                                if (时 == 12 && 每日送货 == false) {
-                                                                    for (ChannelServer cserv1 : ChannelServer.getAllInstances()) {
-                                                                        for (MapleCharacter mch : cserv1.getPlayerStorage().getAllCharacters()) {
-                                                                            mch.startMapEffect("[每日送货]: 送货活动开启，明珠港送货员处可以开始送货哦，可以获得丰厚的奖励。", 5120027);
-                                                                        }
-                                                                    }
-                                                                    QQ通信.群通知("[每日送货]: 送货活动开启，明珠港送货员处可以开始送货哦，可以获得丰厚的奖励。");
-                                                                    每日送货 = true;
-                                                                }
-                                                            }
-                                                            /**
-                                                             * <OX答题>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("OX答题开关") == 0) {
-                                                                if (时 == 20 && 启动OX答题线程 == false) {
-                                                                    for (ChannelServer cserv1 : ChannelServer.getAllInstances()) {
-                                                                        for (MapleCharacter mch : cserv1.getPlayerStorage().getAllCharacters()) {
-                                                                            mch.startMapEffect("[每日答题]: 10 分钟后将举行 OX 答题比赛，想要参加的小伙伴，请找活动向导参加吧。", 5120027);
-                                                                        }
-                                                                    }
-                                                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : 每日活动 OX答题 线程已经启动");
-                                                                    OX答题("[每日活动]: 10 分钟后将举行 OX 答题比赛，想要参加的小伙伴，请找活动向导参加吧。");
-                                                                    活动OX答题.OX答题线程();
-                                                                    MapleParty.OX答题活动++;
-                                                                    启动OX答题线程 = true;
-                                                                }
-                                                            }
-                                                            /**
-                                                             * <魔族入侵>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("魔族突袭开关") == 0) {
-                                                                if (calendar.get(Calendar.HOUR_OF_DAY) == 22 && 魔族入侵 == false) {
-                                                                    活动魔族入侵.魔族入侵线程();
-                                                                    魔族入侵 = true;
-                                                                }
-                                                            }
-                                                            /**
-                                                             * <魔族攻城>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("魔族攻城开关") == 0) {
-                                                                if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == 1) {
-                                                                    if (时 == 21 && 分 <= 10 && 魔族攻城 == false) {
-                                                                        活动魔族攻城.魔族攻城线程();
-                                                                        魔族攻城 = true;
-                                                                    }
-                                                                }
-                                                            }
-                                                            /**
-                                                             * <幸运职业，天选之人-狩猎>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("幸运职业开关") == 0) {
-                                                                if (时 == 11 && 幸运职业 == false) {
-                                                                    幸运职业();
-                                                                    幸运职业 = true;
-                                                                } else if (时 == 23 && 幸运职业 == true) {
-                                                                    幸运职业();
-                                                                    幸运职业 = false;
-                                                                } else if (MapleParty.幸运职业 == 0) {
-                                                                    幸运职业();
-                                                                }
-                                                            }
-                                                            /**
-                                                             * <周末随机倍率活动>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("周末倍率开关") == 0) {
-                                                                switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
-                                                                    case 7:
-                                                                        if (时 == 0 && 倍率活动 == false) {
-                                                                            活动倍率活动.倍率活动线程();
-                                                                            倍率活动 = true;
-                                                                        } else if (时 == 23) {
-                                                                            倍率活动 = false;
-                                                                        }
-                                                                        break;
-                                                                    case 1:
-                                                                        if (时 == 0 && 倍率活动 == false) {
-                                                                            活动倍率活动.倍率活动线程();
-                                                                            倍率活动 = true;
-                                                                        } else if (时 == 23) {
-                                                                            倍率活动 = false;
-                                                                        }
-                                                                        break;
-                                                                    case 6:
-                                                                        if (倍率活动 == true) {
-                                                                            倍率活动 = false;
-                                                                        }
-                                                                        break;
-                                                                    default:
-                                                                        break;
-                                                                }
-                                                            }
-                                                            /**
-                                                             * <启动神秘商人>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("神秘商人开关") == 0) {
-                                                                //第一次启动神秘商人
-                                                                if (MapleParty.神秘商人线程 == 0) {
-                                                                    活动神秘商人.启动神秘商人();
-                                                                    MapleParty.神秘商人线程++;
-                                                                }
-                                                                //召唤神秘商人
-                                                                if (MapleParty.神秘商人线程 > 0) {
-                                                                    if (时 == MapleParty.神秘商人时间 && MapleParty.神秘商人 == 0) {
-                                                                        活动神秘商人.召唤神秘商人();
-                                                                    }
-                                                                }
+                                    喜从天降 = true;
+                                }
+                            }
+                        }
+                        /**
+                         * <每日送货>
+                         */
+                        if (Start.ConfigValuesMap.get("每日送货开关") == 0) {
+                            if (时 == 12 && 每日送货 == false) {
+                                for (ChannelServer cserv1 : ChannelServer.getAllInstances()) {
+                                    for (MapleCharacter mch : cserv1.getPlayerStorage().getAllCharacters()) {
+                                        mch.startMapEffect("[每日送货]: 送货活动开启，明珠港送货员处可以开始送货哦，可以获得丰厚的奖励。", 5120027);
+                                    }
+                                }
+                                QQ通信.群通知("[每日送货]: 送货活动开启，明珠港送货员处可以开始送货哦，可以获得丰厚的奖励。");
+                                每日送货 = true;
+                            }
+                        }
+                        /**
+                         * <OX答题>
+                         */
+                        if (Start.ConfigValuesMap.get("OX答题开关") == 0) {
+                            if (时 == 20 && 启动OX答题线程 == false) {
+                                for (ChannelServer cserv1 : ChannelServer.getAllInstances()) {
+                                    for (MapleCharacter mch : cserv1.getPlayerStorage().getAllCharacters()) {
+                                        mch.startMapEffect("[每日答题]: 10 分钟后将举行 OX 答题比赛，想要参加的小伙伴，请找活动向导参加吧。", 5120027);
+                                    }
+                                }
+                                System.err.println("[服务端]" + CurrentReadable_Time() + " : 每日活动 OX答题 线程已经启动");
+                                OX答题("[每日活动]: 10 分钟后将举行 OX 答题比赛，想要参加的小伙伴，请找活动向导参加吧。");
+                                活动OX答题.OX答题线程();
+                                MapleParty.OX答题活动++;
+                                启动OX答题线程 = true;
+                            }
+                        }
+                        /**
+                         * <魔族入侵>
+                         */
+                        if (Start.ConfigValuesMap.get("魔族突袭开关") == 0) {
+                            if (calendar.get(Calendar.HOUR_OF_DAY) == 22 && 魔族入侵 == false) {
+                                活动魔族入侵.魔族入侵线程();
+                                魔族入侵 = true;
+                            }
+                        }
+                        /**
+                         * <魔族攻城>
+                         */
+                        if (Start.ConfigValuesMap.get("魔族攻城开关") == 0) {
+                            if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == 1) {
+                                if (时 == 21 && 分 <= 10 && 魔族攻城 == false) {
+                                    活动魔族攻城.魔族攻城线程();
+                                    魔族攻城 = true;
+                                }
+                            }
+                        }
+                        /**
+                         * <幸运职业，天选之人-狩猎>
+                         */
+                        if (Start.ConfigValuesMap.get("幸运职业开关") == 0) {
+                            if (时 == 11 && 幸运职业 == false) {
+                                幸运职业();
+                                幸运职业 = true;
+                            } else if (时 == 23 && 幸运职业 == true) {
+                                幸运职业();
+                                幸运职业 = false;
+                            } else if (MapleParty.幸运职业 == 0) {
+                                幸运职业();
+                            }
+                        }
+                        /**
+                         * <周末随机倍率活动>
+                         */
+                        if (Start.ConfigValuesMap.get("周末倍率开关") == 0) {
+                            switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
+                                case 1:
+                                case 7:
+                                    if (时 == 0 && 倍率活动 == false) {
+                                        活动倍率活动.倍率活动线程();
+                                        倍率活动 = true;
+                                    } else if (时 == 23) {
+                                        倍率活动 = false;
+                                    }
+                                    break;
+                                case 6:
+                                    if (倍率活动 == true) {
+                                        倍率活动 = false;
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        /**
+                         * <启动神秘商人>
+                         */
+                        if (Start.ConfigValuesMap.get("神秘商人开关") == 0) {
+                            //第一次启动神秘商人
+                            if (MapleParty.神秘商人线程 == 0) {
+                                活动神秘商人.启动神秘商人();
+                                MapleParty.神秘商人线程++;
+                            }
+                            //召唤神秘商人
+                            if (MapleParty.神秘商人线程 > 0) {
+                                if (时 == MapleParty.神秘商人时间 && MapleParty.神秘商人 == 0) {
+                                    活动神秘商人.召唤神秘商人();
+                                }
+                            }
 
-                                                            }
-                                                            /**
-                                                             * <初始化通缉令>
-                                                             */
-                                                            if (gui.Start.ConfigValuesMap.get("野外通缉开关") == 0) {
-                                                                if (初始通缉令 == 30) {
-                                                                    随机通缉();
-                                                                    初始通缉令++;
-                                                                } else {
-                                                                    初始通缉令++;
-                                                                }
-                                                            }
+                        }
+                        /**
+                         * <初始化通缉令>
+                         */
+                        if (Start.ConfigValuesMap.get("野外通缉开关") == 0) {
+                            if (初始通缉令 == 30) {
+                                随机通缉();
+                                初始通缉令++;
+                            } else {
+                                初始通缉令++;
+                            }
+                        }
 
-                                                            /**
-                                                             * <记录在线时间>
-                                                             */
-                                                            Z = 0;
-                                                            for (ChannelServer cserv : ChannelServer.getAllInstances()) {
-                                                                for (MapleCharacter chr : cserv.getPlayerStorage().getAllCharacters()) {
-                                                                    if (chr == null) {
-                                                                        continue;
-                                                                    }
-                                                                    chr.增加角色疲劳值(1);
-                                                                    Connection con = DatabaseConnection.getConnection();
-                                                                    try {
-                                                                        /**
-                                                                         * <加在线>
-                                                                         */
-                                                                        try (PreparedStatement psu = con.prepareStatement("UPDATE characters SET todayOnlineTime = todayOnlineTime + ?, totalOnlineTime = totalOnlineTime + ? WHERE id = ?")) {
-                                                                            psu.setInt(1, time);
-                                                                            psu.setInt(2, time);
-                                                                            psu.setInt(3, chr.getId());
-                                                                            psu.executeUpdate();
-                                                                            psu.close();
-                                                                        }
-                                                                        chr.getClient().sendPacket(MaplePacketCreator.enableActions());
-                                                                        if (Z == 0) {
-                                                                            Z++;
-                                                                            System.err.println("[服务端]" + CurrentReadable_Time() + " : 记录在线 √");
-                                                                        }
-                                                                    } catch (SQLException ex) {
-                                                                        System.err.println("[服务端]" + CurrentReadable_Time() + " : 记录在线 × (" + chr.getId() + ")");//+ ex.getMessage()
-                                                                        //通信("玩家 [" + 角色ID取名字(chr.getId()) + "] 记录在线错误，现在开始补救。");
-                                                                        记录在线时间补救(chr.getId());
-                                                                    }
+                        /**
+                         * <记录在线时间>
+                         */
+                        Z = 0;
+                        for (ChannelServer cserv : ChannelServer.getAllInstances()) {
+                            for (MapleCharacter chr : cserv.getPlayerStorage().getAllCharacters()) {
+                                if (chr == null) {
+                                    continue;
+                                }
+                                chr.增加角色疲劳值(1);
+                                Connection con = DatabaseConnection.getConnection();
+                                try {
+                                    /**
+                                     * <加在线>
+                                     */
+                                    try (PreparedStatement psu = con.prepareStatement("UPDATE characters SET todayOnlineTime = todayOnlineTime + ?, totalOnlineTime = totalOnlineTime + ? WHERE id = ?")) {
+                                        psu.setInt(1, time);
+                                        psu.setInt(2, time);
+                                        psu.setInt(3, chr.getId());
+                                        psu.executeUpdate();
+                                        psu.close();
+                                    }
+                                    chr.getClient().sendPacket(MaplePacketCreator.enableActions());
+                                    if (Z == 0) {
+                                        Z++;
+                                        System.err.println("[服务端]" + CurrentReadable_Time() + " : 记录在线 √");
+                                    }
+                                } catch (SQLException ex) {
+                                    System.err.println("[服务端]" + CurrentReadable_Time() + " : 记录在线 × (" + chr.getId() + ")");//+ ex.getMessage()
+                                    //通信("玩家 [" + 角色ID取名字(chr.getId()) + "] 记录在线错误，现在开始补救。");
+                                    记录在线时间补救(chr.getId());
+                                }
 
-                                                                }
-                                                            }
-                                                        } else {
-                                                            记录在线时间++;
-                                                        }
-                                                    }
-                                                }, 60 * 1000 * time
+                            }
+                        }
+                    } else {
+                        记录在线时间++;
+                    }
+                }, 60 * 1000 * time
         );
     }
 
@@ -1330,8 +1280,8 @@ public class Start {
     public static void 服务器信息() {
         try {
             InetAddress addr = InetAddress.getLocalHost();
-            String ip = addr.getHostAddress().toString(); //獲取本機ip
-            String hostName = addr.getHostName().toString(); //獲取本機計算機名稱
+            String ip = addr.getHostAddress(); //獲取本機ip
+            String hostName = addr.getHostName(); //獲取本機計算機名稱
             //System.out.println("本機IP："+ip+"\n本機名稱:"+hostName);
             System.out.println("○ 检测服务端运行环境");
             System.out.println("○ 服务器名: " + hostName);
@@ -1411,10 +1361,10 @@ public class Start {
         try {
             String backlistStr = Class2.Pgb();
             if (backlistStr.contains("/")) {
-                String blacklistArr[] = backlistStr.split(",");
+                String[] blacklistArr = backlistStr.split(",");
                 for (int i = 0; i < blacklistArr.length; i++) {
                     String pairString = blacklistArr[i];
-                    String pair[] = pairString.split("/");
+                    String[] pair = pairString.split("/");
                     String qq = pair[0];
                     String ip = "/" + pair[1];
                     CloudBlacklist.put(qq, ip);
@@ -1434,7 +1384,7 @@ public class Start {
             Process p = Runtime.getRuntime().exec("cmd /c tasklist");
             baos = new ByteArrayOutputStream();
             os = p.getInputStream();
-            byte b[] = new byte[256];
+            byte[] b = new byte[256];
             while (os.read(b) > 0) {
                 baos.write(b);
             }

@@ -1,16 +1,16 @@
 package handling.channel;
 
 import client.MapleClient;
-import java.util.List;
-import java.util.LinkedList;
+import database.DatabaseConnection;
+import server.Timer;
+import tools.MaplePacketCreator;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import database.DatabaseConnection;
-import server.Timer;
-import tools.MaplePacketCreator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MapleGuildRanking {
 

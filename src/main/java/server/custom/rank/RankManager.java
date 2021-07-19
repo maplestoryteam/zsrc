@@ -3,20 +3,16 @@ package server.custom.rank;
 import client.BuddyEntry;
 import client.MapleCharacter;
 import client.MapleQuestStatus;
-import constants.GameConstants;
 import database.DatabaseConnection;
+import server.quest.MapleQuest;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.quest.MapleQuest;
 
 public class RankManager {
 
@@ -33,8 +29,8 @@ public class RankManager {
 
     }
     private Map<Integer, List<MiniGamePoints>> miniGamePointsMap = new HashMap<>();
-    private Map<Integer, List<MiniGamePoints>> topMap = new HashMap<>();
-    private long updateTime = 1000 * 60 * 60 * 1;//一小时更新一次
+    private final Map<Integer, List<MiniGamePoints>> topMap = new HashMap<>();
+    private final long updateTime = 1000 * 60 * 60 * 1;//一小时更新一次
     private long lastUpdateTime;
 
     public void loadRank(int quest) {
@@ -77,7 +73,7 @@ public class RankManager {
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
     }
 
     

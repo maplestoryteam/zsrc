@@ -1,36 +1,29 @@
 package server;
 
+import client.MapleClient;
+import client.SkillFactory;
+import client.inventory.*;
+import constants.GameConstants;
+import database.DatabaseConnection;
+import server.life.MapleLifeFactory;
+import server.life.MapleNPC;
+import tools.MaplePacketCreator;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import client.inventory.IItem;
-import client.inventory.Item;
-import client.SkillFactory;
-import constants.GameConstants;
-import client.inventory.MapleInventoryIdentifier;
-import client.MapleClient;
-import client.inventory.MapleInventoryType;
-import client.inventory.MaplePet;
-import database.DatabaseConnection;
-import java.util.Calendar;
-import server.life.MapleLifeFactory;
-import server.life.MapleNPC;
+import java.util.*;
+
 import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
 //商店
 
 public class MapleShop {//子弹飞镖充值类型。
 
     private static final Set<Integer> rechargeableItems = new LinkedHashSet<Integer>();
-    private int id;
-    private int npcId;
-    private List<MapleShopItem> items;
+    private final int id;
+    private final int npcId;
+    private final List<MapleShopItem> items;
 
     static {
         //可充值的飞镖
@@ -222,7 +215,7 @@ public class MapleShop {//子弹飞镖充值类型。
             final int price = (int) Math.round(ii.getPrice(item.getItemId()) * (slotMax - item.getQuantity()));
             if (c.getPlayer().getMeso() >= price) {
                 item.setQuantity(slotMax);
-                c.sendPacket(MaplePacketCreator.updateInventorySlot(MapleInventoryType.USE, (Item) item, false));
+                c.sendPacket(MaplePacketCreator.updateInventorySlot(MapleInventoryType.USE, item, false));
                 c.getPlayer().gainMeso(-price, false, true, false);
                 c.sendPacket(MaplePacketCreator.confirmShopTransaction((byte) 0x8));
             }

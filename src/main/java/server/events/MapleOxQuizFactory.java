@@ -1,24 +1,23 @@
 
 package server.events;
 
-import java.util.HashMap;
-import java.util.Map;
+import database.DatabaseConnection;
+import server.Randomizer;
+import tools.Pair;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import database.DatabaseConnection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
-import server.Randomizer;
-import server.ServerProperties;
-import tools.Pair;
 
 public class MapleOxQuizFactory {//OX
 
     private boolean initialized = false;
-    private Map<Pair<Integer, Integer>, MapleOxQuizEntry> questionCache;
-    private static MapleOxQuizFactory instance = new MapleOxQuizFactory();
+    private final Map<Pair<Integer, Integer>, MapleOxQuizEntry> questionCache;
+    private static final MapleOxQuizFactory instance = new MapleOxQuizFactory();
 
     public MapleOxQuizFactory() {
         questionCache = new HashMap<Pair<Integer, Integer>, MapleOxQuizEntry>();
@@ -118,8 +117,11 @@ public class MapleOxQuizFactory {//OX
 
     public static class MapleOxQuizEntry {
 
-        private String question, answerText;
-        private int answer, questionset, questionid;
+        private final String question;
+        private final String answerText;
+        private final int answer;
+        private final int questionset;
+        private final int questionid;
 
         public MapleOxQuizEntry(String question, String answerText, int answer, int questionset, int questionid) {
             this.question = question;

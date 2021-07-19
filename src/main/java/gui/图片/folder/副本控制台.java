@@ -5,10 +5,17 @@
  */
 package gui.图片.folder;
 
-import static abc.Game.版本;
 import database.DatabaseConnection;
 import gui.ZEVMS;
-import handling.world.MapleParty;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import provider.MapleData;
+import provider.MapleDataProvider;
+import provider.MapleDataProviderFactory;
+import provider.MapleDataTool;
+import scripting.ReactorScriptManager;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -19,17 +26,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import provider.MapleData;
-import provider.MapleDataProvider;
-import provider.MapleDataProviderFactory;
-import provider.MapleDataTool;
-import scripting.ReactorScriptManager;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import static abc.Game.版本;
 
 /**
  *
@@ -549,7 +547,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "序号", "代码", "随机下限", "随机上限", "获得概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -649,7 +647,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "序号", "代码", "随机下限", "随机上限", "获得概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -710,7 +708,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最小人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -730,7 +728,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最大人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -750,7 +748,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最高等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -770,7 +768,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最低等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -836,7 +834,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第一关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -866,7 +864,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第2-4关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -895,7 +893,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -924,7 +922,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关金币"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1038,7 +1036,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最小人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1058,7 +1056,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最大人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1078,7 +1076,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最高等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1098,7 +1096,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最低等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1164,7 +1162,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第一关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1193,7 +1191,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第二关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1213,7 +1211,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第三关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1233,7 +1231,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第四关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1253,7 +1251,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第五关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1274,7 +1272,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第六关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1294,7 +1292,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第七关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1314,7 +1312,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第八关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1334,7 +1332,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第九关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1428,7 +1426,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1457,7 +1455,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关金币"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1486,7 +1484,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "物品", "概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -1577,7 +1575,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "序号", "代码", "随机下限", "随机上限", "获得概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -1692,7 +1690,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最小人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1712,7 +1710,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最大人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1732,7 +1730,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最高等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1752,7 +1750,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最低等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1808,7 +1806,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1828,7 +1826,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关金币"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1876,7 +1874,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "序号", "代码", "随机下限", "随机上限", "获得概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -1986,7 +1984,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最小人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2016,7 +2014,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最大人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2036,7 +2034,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最高等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2056,7 +2054,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最低等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2076,7 +2074,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2141,7 +2139,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关金币"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2176,7 +2174,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "序号", "代码", "随机下限", "随机上限", "获得概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -2291,7 +2289,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最小人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2311,7 +2309,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最大人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2331,7 +2329,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最高等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2351,7 +2349,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最低等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2417,7 +2415,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "第一关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2438,7 +2436,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "仓库经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2458,7 +2456,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "休息室经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2478,7 +2476,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "大厅经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2498,7 +2496,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "封印室经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2518,7 +2516,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "散步路经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2538,7 +2536,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通道经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2621,7 +2619,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2641,7 +2639,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关金币"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2684,7 +2682,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "   物品", "概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, true
             };
 
@@ -2764,7 +2762,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "序号", "代码", "随机下限", "随机上限", "获得概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -2874,7 +2872,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最小人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2904,7 +2902,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最大人数"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2924,7 +2922,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最高等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2944,7 +2942,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "最低等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -2964,7 +2962,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -3029,7 +3027,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "通关金币"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -3064,7 +3062,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "序号", "代码", "随机下限", "随机上限", "获得概率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -3177,7 +3175,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "帕普拉图斯"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -3218,7 +3216,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "暴力熊"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -3247,7 +3245,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "少林妖僧"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -3276,7 +3274,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "蜈蚣"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -3310,7 +3308,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 "序号", "野外BOSS", "刷新时间/分"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -4036,7 +4034,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             }
             try {
                 //清楚table数据
-                for (int i = ((DefaultTableModel) (this.玩具塔奖励箱子.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.玩具塔奖励箱子.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.玩具塔奖励箱子.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM reactordrops WHERE itemid = ?");
@@ -4891,7 +4889,7 @@ public class 副本控制台 extends javax.swing.JFrame {
 
         if (result1) {
             try {
-                for (int i = ((DefaultTableModel) (this.废都副本奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.废都副本奖励.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.废都副本奖励.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM 废都副本奖励 WHERE id = ?");
@@ -4931,7 +4929,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 ps.setInt(3, Integer.parseInt(this.废都奖励随机上限.getText()));
                 ps.setInt(4, Integer.parseInt(this.废都奖励获得概率.getText()));
                 ps.executeUpdate();
-                for (int i = ((DefaultTableModel) (this.废都副本奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.废都副本奖励.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.废都副本奖励.getModel())).removeRow(i);
                 }
                 刷新废都奖励();
@@ -5179,7 +5177,7 @@ public class 副本控制台 extends javax.swing.JFrame {
 
     private void 刷新月妙设置ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_刷新月妙设置ActionPerformed
 
-        for (int i = ((DefaultTableModel) (this.刷新最小人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.刷新最小人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.刷新最小人数.getModel())).removeRow(i);
         }
         try {
@@ -5197,7 +5195,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.刷新最大人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.刷新最大人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.刷新最大人数.getModel())).removeRow(i);
         }
         try {
@@ -5215,7 +5213,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.刷新最低等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.刷新最低等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.刷新最低等级.getModel())).removeRow(i);
         }
         try {
@@ -5233,7 +5231,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.刷新最高等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.刷新最高等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.刷新最高等级.getModel())).removeRow(i);
         }
         try {
@@ -5251,7 +5249,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.月妙通关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.月妙通关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.月妙通关经验.getModel())).removeRow(i);
         }
         try {
@@ -5268,7 +5266,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.月妙通关金币.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.月妙通关金币.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.月妙通关金币.getModel())).removeRow(i);
         }
         try {
@@ -5895,7 +5893,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                 ps.setInt(3, Integer.parseInt(this.测试奖励随机上限.getText()));
                 ps.setInt(4, Integer.parseInt(this.测试奖励获得概率.getText()));
                 ps.executeUpdate();
-                for (int i = ((DefaultTableModel) (this.测试奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.测试奖励.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.测试奖励.getModel())).removeRow(i);
                 }
                 刷新测试奖励();
@@ -5914,7 +5912,7 @@ public class 副本控制台 extends javax.swing.JFrame {
 
         if (result1) {
             try {
-                for (int i = ((DefaultTableModel) (this.测试奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.测试奖励.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.测试奖励.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM 测试奖励 WHERE id = ?");
@@ -6446,7 +6444,7 @@ public class 副本控制台 extends javax.swing.JFrame {
         刷新野外BOSS刷新时间();
     }//GEN-LAST:event_刷新野外BOSS刷新时间ActionPerformed
     public void 刷新野外BOSS刷新时间() {
-        for (int i = ((DefaultTableModel) (this.野外BOSS刷新时间.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.野外BOSS刷新时间.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.野外BOSS刷新时间.getModel())).removeRow(i);
         }
         try {
@@ -6504,7 +6502,7 @@ public class 副本控制台 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_刷新野外BOSS刷新时间修改ActionPerformed
     public void 刷新蜈蚣() {
-        for (int i = ((DefaultTableModel) (this.蜈蚣每日次数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.蜈蚣每日次数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.蜈蚣每日次数.getModel())).removeRow(i);
         }
         try {
@@ -6529,7 +6527,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     
         
         
-        for (int i = ((DefaultTableModel) (this.少林妖僧每日次数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.少林妖僧每日次数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.少林妖僧每日次数.getModel())).removeRow(i);
         }
         try {
@@ -6554,7 +6552,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新帕普拉图斯() {
-        for (int i = ((DefaultTableModel) (this.帕普拉图斯每日次数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.帕普拉图斯每日次数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.帕普拉图斯每日次数.getModel())).removeRow(i);
         }
         try {
@@ -6579,7 +6577,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新暴力熊() {
-        for (int i = ((DefaultTableModel) (this.暴力熊每日次数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.暴力熊每日次数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.暴力熊每日次数.getModel())).removeRow(i);
         }
         try {
@@ -6604,7 +6602,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新测试奖励() {
-        for (int i = ((DefaultTableModel) (this.测试奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.测试奖励.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.测试奖励.getModel())).removeRow(i);
         }
         try {
@@ -6662,7 +6660,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新海盗副本奖励() {
-        for (int i = ((DefaultTableModel) (this.海盗副本奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.海盗副本奖励.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.海盗副本奖励.getModel())).removeRow(i);
         }
         try {
@@ -6720,7 +6718,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新月妙奖励() {
-        for (int i = ((DefaultTableModel) (this.月妙副本奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.月妙副本奖励.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.月妙副本奖励.getModel())).removeRow(i);
         }
         try {
@@ -6778,7 +6776,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新毒雾配置() {
-        for (int i = ((DefaultTableModel) (this.毒雾森林最小人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.毒雾森林最小人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.毒雾森林最小人数.getModel())).removeRow(i);
         }
         try {
@@ -6794,7 +6792,7 @@ public class 副本控制台 extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.毒雾森林最大人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.毒雾森林最大人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.毒雾森林最大人数.getModel())).removeRow(i);
         }
         try {
@@ -6811,7 +6809,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.毒雾森林最低等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.毒雾森林最低等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.毒雾森林最低等级.getModel())).removeRow(i);
         }
         try {
@@ -6828,7 +6826,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.毒雾森林最高等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.毒雾森林最高等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.毒雾森林最高等级.getModel())).removeRow(i);
         }
         try {
@@ -6845,7 +6843,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.毒雾森林通关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.毒雾森林通关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.毒雾森林通关经验.getModel())).removeRow(i);
         }
         try {
@@ -6862,7 +6860,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.毒雾森林通关金币.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.毒雾森林通关金币.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.毒雾森林通关金币.getModel())).removeRow(i);
         }
         try {
@@ -6883,7 +6881,7 @@ public class 副本控制台 extends javax.swing.JFrame {
 
     public void 刷新() {
 
-        for (int i = ((DefaultTableModel) (this.刷新最小人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.刷新最小人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.刷新最小人数.getModel())).removeRow(i);
         }
         try {
@@ -6902,7 +6900,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.刷新最大人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.刷新最大人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.刷新最大人数.getModel())).removeRow(i);
         }
         try {
@@ -6921,7 +6919,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.刷新最低等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.刷新最低等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.刷新最低等级.getModel())).removeRow(i);
         }
         try {
@@ -6940,7 +6938,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.刷新最高等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.刷新最高等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.刷新最高等级.getModel())).removeRow(i);
         }
         try {
@@ -6959,7 +6957,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.月妙通关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.月妙通关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.月妙通关经验.getModel())).removeRow(i);
         }
         try {
@@ -6977,7 +6975,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.月妙通关金币.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.月妙通关金币.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.月妙通关金币.getModel())).removeRow(i);
         }
         try {
@@ -6998,7 +6996,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新废都奖励() {
-        for (int i = ((DefaultTableModel) (this.废都副本奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都副本奖励.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都副本奖励.getModel())).removeRow(i);
         }
         try {
@@ -7056,7 +7054,7 @@ public class 副本控制台 extends javax.swing.JFrame {
 
     public void 刷新海盗设置() {
 
-        for (int i = ((DefaultTableModel) (this.海盗最小人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.海盗最小人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.海盗最小人数.getModel())).removeRow(i);
         }
         try {
@@ -7074,7 +7072,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.海盗最大人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.海盗最大人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.海盗最大人数.getModel())).removeRow(i);
         }
         try {
@@ -7092,7 +7090,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.海盗最低等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.海盗最低等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.海盗最低等级.getModel())).removeRow(i);
         }
         try {
@@ -7110,7 +7108,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.海盗最高等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.海盗最高等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.海盗最高等级.getModel())).removeRow(i);
         }
         try {
@@ -7129,7 +7127,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.海盗通关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.海盗通关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.海盗通关经验.getModel())).removeRow(i);
         }
         try {
@@ -7147,7 +7145,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.海盗通关金币.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.海盗通关金币.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.海盗通关金币.getModel())).removeRow(i);
         }
         try {
@@ -7169,7 +7167,7 @@ public class 副本控制台 extends javax.swing.JFrame {
 
     public void 刷新废都() {
 
-        for (int i = ((DefaultTableModel) (this.废都最小人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都最小人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都最小人数.getModel())).removeRow(i);
         }
         try {
@@ -7188,7 +7186,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.废都最大人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都最大人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都最大人数.getModel())).removeRow(i);
         }
         try {
@@ -7207,7 +7205,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.废都最低等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都最低等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都最低等级.getModel())).removeRow(i);
         }
         try {
@@ -7226,7 +7224,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.废都最高等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都最高等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都最高等级.getModel())).removeRow(i);
         }
         try {
@@ -7245,7 +7243,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.废都第一关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都第一关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都第一关经验.getModel())).removeRow(i);
         }
         try {
@@ -7263,7 +7261,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.废都第2至4关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都第2至4关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都第2至4关经验.getModel())).removeRow(i);
         }
         try {
@@ -7281,7 +7279,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.废都通关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都通关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都通关经验.getModel())).removeRow(i);
         }
         try {
@@ -7299,7 +7297,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.废都通关金币.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.废都通关金币.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.废都通关金币.getModel())).removeRow(i);
         }
         try {
@@ -7320,7 +7318,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新玩具塔奖励() {
-        for (int i = ((DefaultTableModel) (this.玩具塔副本奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔副本奖励.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔副本奖励.getModel())).removeRow(i);
         }
         try {
@@ -7378,7 +7376,7 @@ public class 副本控制台 extends javax.swing.JFrame {
 
     public void 刷新玩具塔设置() {
 
-        for (int i = ((DefaultTableModel) (this.玩具塔最小人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔最小人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔最小人数.getModel())).removeRow(i);
         }
         try {
@@ -7397,7 +7395,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔最大人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔最大人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔最大人数.getModel())).removeRow(i);
         }
         try {
@@ -7416,7 +7414,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔最低等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔最低等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔最低等级.getModel())).removeRow(i);
         }
         try {
@@ -7433,7 +7431,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔最高等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔最高等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔最高等级.getModel())).removeRow(i);
         }
         try {
@@ -7450,7 +7448,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔第一关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔第一关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔第一关经验.getModel())).removeRow(i);
         }
         try {
@@ -7469,7 +7467,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔第二关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔第二关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔第二关经验.getModel())).removeRow(i);
         }
         try {
@@ -7488,7 +7486,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔第三关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔第三关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔第三关经验.getModel())).removeRow(i);
         }
         try {
@@ -7507,7 +7505,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔第四关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔第四关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔第四关经验.getModel())).removeRow(i);
         }
         try {
@@ -7526,7 +7524,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔第五关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔第五关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔第五关经验.getModel())).removeRow(i);
         }
         try {
@@ -7545,7 +7543,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔第七关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔第七关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔第七关经验.getModel())).removeRow(i);
         }
         try {
@@ -7564,7 +7562,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔第八关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔第八关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔第八关经验.getModel())).removeRow(i);
         }
         try {
@@ -7583,7 +7581,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔第九关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔第九关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔第九关经验.getModel())).removeRow(i);
         }
         try {
@@ -7602,7 +7600,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔通关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔通关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔通关经验.getModel())).removeRow(i);
         }
         try {
@@ -7620,7 +7618,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.玩具塔通关金币.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔通关金币.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔通关金币.getModel())).removeRow(i);
         }
         try {
@@ -7639,7 +7637,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新玩具塔箱子() {
-        for (int i = ((DefaultTableModel) (this.玩具塔奖励箱子.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩具塔奖励箱子.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩具塔奖励箱子.getModel())).removeRow(i);
         }
         try {
@@ -7681,7 +7679,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新毒雾奖励() {
-        for (int i = ((DefaultTableModel) (this.毒雾副本奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.毒雾副本奖励.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.毒雾副本奖励.getModel())).removeRow(i);
         }
         try {
@@ -7738,7 +7736,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新女神塔奖励() {
-        for (int i = ((DefaultTableModel) (this.女神塔副本奖励.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔副本奖励.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔副本奖励.getModel())).removeRow(i);
         }
         try {
@@ -7796,7 +7794,7 @@ public class 副本控制台 extends javax.swing.JFrame {
 
     public void 刷新女神塔设置() {
 
-        for (int i = ((DefaultTableModel) (this.女神塔最小人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔最小人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔最小人数.getModel())).removeRow(i);
         }
         try {
@@ -7814,7 +7812,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔最大人数.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔最大人数.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔最大人数.getModel())).removeRow(i);
         }
         try {
@@ -7832,7 +7830,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔最低等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔最低等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔最低等级.getModel())).removeRow(i);
         }
         try {
@@ -7850,7 +7848,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔最高等级.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔最高等级.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔最高等级.getModel())).removeRow(i);
         }
         try {
@@ -7868,7 +7866,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔第一关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔第一关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔第一关经验.getModel())).removeRow(i);
         }
         try {
@@ -7886,7 +7884,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔仓库经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔仓库经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔仓库经验.getModel())).removeRow(i);
         }
         try {
@@ -7904,7 +7902,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔休息室经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔休息室经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔休息室经验.getModel())).removeRow(i);
         }
         try {
@@ -7922,7 +7920,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔封印室经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔封印室经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔封印室经验.getModel())).removeRow(i);
         }
         try {
@@ -7940,7 +7938,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔大厅经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔大厅经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔大厅经验.getModel())).removeRow(i);
         }
         try {
@@ -7958,7 +7956,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔散步路经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔散步路经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔散步路经验.getModel())).removeRow(i);
         }
         try {
@@ -7976,7 +7974,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔通道经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔通道经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔通道经验.getModel())).removeRow(i);
         }
         try {
@@ -7994,7 +7992,7 @@ public class 副本控制台 extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.女神塔通关经验.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔通关经验.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔通关经验.getModel())).removeRow(i);
         }
         try {
@@ -8011,7 +8009,7 @@ public class 副本控制台 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (int i = ((DefaultTableModel) (this.女神塔通关金币.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔通关金币.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔通关金币.getModel())).removeRow(i);
         }
         try {
@@ -8032,7 +8030,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新女神塔箱子() {
-        for (int i = ((DefaultTableModel) (this.女神塔奖励箱子.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.女神塔奖励箱子.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.女神塔奖励箱子.getModel())).removeRow(i);
         }
         try {
@@ -8076,7 +8074,7 @@ public class 副本控制台 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

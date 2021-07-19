@@ -6,9 +6,9 @@ package tools.wztosql;
 
 import com.mysql.jdbc.PreparedStatement;
 import database.DatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-import server.CashItemInfo;
 
 /**
  *

@@ -4,7 +4,7 @@ public enum AuctionState1 {
     下架(0), 上架(1), 已售(2);
     private final int state;
 
-    private AuctionState1(int state) {
+    AuctionState1(int state) {
         this.state = state;
     }
 

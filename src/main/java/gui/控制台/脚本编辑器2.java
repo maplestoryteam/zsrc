@@ -1,17 +1,17 @@
 package gui.控制台;
 
-import static abc.Game.版本;
 import abc.sancu.FileDemo_05;
 import client.脚本编辑器;
 import handling.world.MapleParty;
-import java.util.Properties;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
 import server.MapleItemInformationProvider;
 import tools.FileoutputUtil;
+
+import javax.swing.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Properties;
+
+import static abc.Game.版本;
 
 public class 脚本编辑器2 extends javax.swing.JFrame {
 
@@ -24,7 +24,7 @@ public class 脚本编辑器2 extends javax.swing.JFrame {
         //输出版本号和公告信息
         try {
             String versionInfo = 脚本编辑器.Pv(版本);
-            String unicode = new String(versionInfo.getBytes(), "UTF-8");
+            String unicode = new String(versionInfo.getBytes(), StandardCharsets.UTF_8);
             unicode = unicode.replace("\\n", "\n");
             脚本显示窗.setText("" + unicode + "");
 
@@ -450,7 +450,7 @@ public class 脚本编辑器2 extends javax.swing.JFrame {
         显示("┣收取点券 " + 收取金钱数量.getText() + "");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         脚本编辑器2.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         try {

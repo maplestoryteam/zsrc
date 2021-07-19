@@ -1,28 +1,21 @@
 
 package handling.channel.handler;
 
+import client.*;
 import constants.GameConstants;
-import java.util.ArrayList;
-import java.util.List;
-
-import client.ISkill;
-import client.MapleClient;
-import client.MapleCharacter;
-import client.MapleStat;
-import client.PlayerStats;
-import client.SkillFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import server.AutobanManager;
 import server.Randomizer;
-import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.Pair;
 import tools.data.LittleEndianAccessor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StatsHandling {
 
-    private static Logger log = LoggerFactory.getLogger(StatsHandling.class);
+    private static final Logger log = LoggerFactory.getLogger(StatsHandling.class);
     
     public static final void DistributeAP(final LittleEndianAccessor slea, final MapleClient c, final MapleCharacter chr) {
         final List<Pair<MapleStat, Integer>> statupdate = new ArrayList<Pair<MapleStat, Integer>>(2);

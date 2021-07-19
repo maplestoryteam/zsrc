@@ -1,7 +1,13 @@
 package gui.控制台;
 
-import static abc.Game.窗口标题;
 import database.DatabaseConnection;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import scripting.NPCConversationManager;
+import scripting.ReactorScriptManager;
+import server.MapleItemInformationProvider;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -11,15 +17,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import scripting.NPCConversationManager;
-import scripting.ReactorScriptManager;
-import server.MapleItemInformationProvider;
+
+import static abc.Game.窗口标题;
 
 public class 控制台2号 extends javax.swing.JFrame {
 
@@ -383,7 +382,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 "序列号", "怪物代码", "物品代码", "爆率", "物品名字"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
@@ -491,7 +490,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 "序列号", "物品代码", "爆率", "物品名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -734,7 +733,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 "角色ID", "角色名字", "道具ID", "道具名字"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -906,7 +905,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 "序号", "代码", "概率", "物品名称"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -1018,7 +1017,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 "序列号", "物品代码", "概率", "名称"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -1228,7 +1227,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 "序号", "商店ID", "物品代码", "销售金币", "物品名称"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
@@ -1362,7 +1361,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 "序列号", "反应堆", "物品代码", "概率", "物品名字"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
@@ -1634,7 +1633,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 "序号", "药水", "冷却"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -1708,7 +1707,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 ZEVMS2提示框.setText("[信息]:请填写正确的值。");
                 return;
             }
-            for (int i = ((DefaultTableModel) (this.怪物爆物.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.怪物爆物.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.怪物爆物.getModel())).removeRow(i);
             }
             try {
@@ -1761,7 +1760,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 ZEVMS2提示框.setText("[信息]:请填写正确的值。");
                 return;
             }
-            for (int i = ((DefaultTableModel) (this.怪物爆物.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.怪物爆物.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.怪物爆物.getModel())).removeRow(i);
             }
             try {
@@ -1845,7 +1844,7 @@ public class 控制台2号 extends javax.swing.JFrame {
 
             try {
                 //清楚table数据
-                for (int i = ((DefaultTableModel) (this.怪物爆物.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.怪物爆物.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.怪物爆物.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM drop_data WHERE id = ?");
@@ -2069,7 +2068,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     private void 查找道具ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_查找道具ActionPerformed
         boolean result1 = this.游戏道具代码.getText().matches("[0-9]+");
         if (result1) {
-            for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
             }
             try {
@@ -2103,7 +2102,7 @@ public class 控制台2号 extends javax.swing.JFrame {
 
         if (result1) {
             try {
-                for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM inventoryitems WHERE itemid = ?");
@@ -2125,7 +2124,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     private void 查找道具1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_查找道具1ActionPerformed
         boolean result1 = this.游戏道具代码.getText().matches("[0-9]+");
         if (result1) {
-            for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
             }
             try {
@@ -2158,7 +2157,7 @@ public class 控制台2号 extends javax.swing.JFrame {
         boolean result1 = this.游戏道具代码.getText().matches("[0-9]+");
         if (result1) {
             try {
-                for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM auctionitems WHERE itemid = ?");
@@ -2180,7 +2179,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     private void 查找道具2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_查找道具2ActionPerformed
         boolean result1 = this.游戏道具代码.getText().matches("[0-9]+");
         if (result1) {
-            for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
             }
             try {
@@ -2213,7 +2212,7 @@ public class 控制台2号 extends javax.swing.JFrame {
 
         if (result1) {
             try {
-                for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM auctionitems1 WHERE itemid = ?");
@@ -2235,7 +2234,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     private void 查找道具3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_查找道具3ActionPerformed
         boolean result1 = this.游戏道具代码.getText().matches("[0-9]+");
         if (result1) {
-            for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
             }
             try {
@@ -2267,7 +2266,7 @@ public class 控制台2号 extends javax.swing.JFrame {
         boolean result1 = this.游戏道具代码.getText().matches("[0-9]+");
         if (result1) {
             try {
-                for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM bank_item1 WHERE itemid = ?");
@@ -2289,7 +2288,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     private void 查找道具4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_查找道具4ActionPerformed
         boolean result1 = this.游戏道具代码.getText().matches("[0-9]+");
         if (result1) {
-            for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
             }
             try {
@@ -2323,7 +2322,7 @@ public class 控制台2号 extends javax.swing.JFrame {
 
         if (result1) {
             try {
-                for (int i = ((DefaultTableModel) (this.游戏道具.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.游戏道具.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.游戏道具.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM bank_item WHERE itemid = ?");
@@ -2406,7 +2405,7 @@ public class 控制台2号 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_新增钓鱼物品ActionPerformed
     private void 刷新钓鱼() {
-        for (int i = ((DefaultTableModel) (this.钓鱼物品.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.钓鱼物品.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.钓鱼物品.getModel())).removeRow(i);
         }
         try {
@@ -2449,7 +2448,7 @@ public class 控制台2号 extends javax.swing.JFrame {
         if (result1) {
             try {
                 //清楚table数据
-                for (int i = ((DefaultTableModel) (this.钓鱼物品.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.钓鱼物品.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.钓鱼物品.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM 钓鱼物品 WHERE id = ?");
@@ -2497,7 +2496,7 @@ public class 控制台2号 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_新增挖矿物品ActionPerformed
     private void 刷新挖矿() {
-        for (int i = ((DefaultTableModel) (this.挖矿反应堆.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.挖矿反应堆.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.挖矿反应堆.getModel())).removeRow(i);
         }
         try {
@@ -2536,7 +2535,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                 ZEVMS2提示框.setText("[信息]:请填写正确的值。");
                 return;
             }
-            for (int i = ((DefaultTableModel) (this.游戏商店2.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.游戏商店2.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.游戏商店2.getModel())).removeRow(i);
             }
             try {
@@ -2579,7 +2578,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     }
 
     private void 刷新采药() {
-        for (int i = ((DefaultTableModel) (this.挖矿反应堆.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.挖矿反应堆.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.挖矿反应堆.getModel())).removeRow(i);
         }
         try {
@@ -2648,7 +2647,7 @@ public class 控制台2号 extends javax.swing.JFrame {
         boolean result1 = this.挖矿序列号.getText().matches("[0-9]+");
         if (result1) {
             try {
-                for (int i = ((DefaultTableModel) (this.挖矿反应堆.getModel())).getRowCount() - 1; i >= 0; i--) {
+                for (int i = this.挖矿反应堆.getModel().getRowCount() - 1; i >= 0; i--) {
                     ((DefaultTableModel) (this.挖矿反应堆.getModel())).removeRow(i);
                 }
                 ps1 = DatabaseConnection.getConnection().prepareStatement("SELECT * FROM reactordrops WHERE reactordropid = ?");
@@ -2658,7 +2657,7 @@ public class 控制台2号 extends javax.swing.JFrame {
                     String sqlstr = " delete from reactordrops where reactordropid =" + Integer.parseInt(this.挖矿序列号.getText()) + "";
                     ps1.executeUpdate(sqlstr);
                     ZEVMS2提示框.setText("[信息]:删除成功。");
-                    for (int i = ((DefaultTableModel) (this.挖矿反应堆.getModel())).getRowCount() - 1; i >= 0; i--) {
+                    for (int i = this.挖矿反应堆.getModel().getRowCount() - 1; i >= 0; i--) {
                         ((DefaultTableModel) (this.挖矿反应堆.getModel())).removeRow(i);
                     }
                 }
@@ -2839,7 +2838,7 @@ public class 控制台2号 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_商品名称ActionPerformed
     public void 刷新反应堆() {
-        for (int i = ((DefaultTableModel) (this.反应堆.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.反应堆.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.反应堆.getModel())).removeRow(i);
         }
         try {
@@ -2951,7 +2950,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
         boolean result2 = this.查找反应堆掉落.getText().matches("[0-9]+");
         if (result2) {
-            for (int i = ((DefaultTableModel) (this.反应堆.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.反应堆.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.反应堆.getModel())).removeRow(i);
             }
             try {
@@ -2974,7 +2973,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
         boolean result2 = this.查找反应堆掉落.getText().matches("[0-9]+");
         if (result2) {
-            for (int i = ((DefaultTableModel) (this.反应堆.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.反应堆.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.反应堆.getModel())).removeRow(i);
             }
             try {
@@ -3227,7 +3226,7 @@ public class 控制台2号 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_修改物品掉落持续时间2ActionPerformed
     private void 刷新药水冷却() {
-        for (int i = ((DefaultTableModel) (this.药水冷却.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.药水冷却.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.药水冷却.getModel())).removeRow(i);
         }
         try {
@@ -3262,7 +3261,7 @@ public class 控制台2号 extends javax.swing.JFrame {
 
     public void 刷新世界爆物() {
 
-        for (int i = ((DefaultTableModel) (this.世界爆物.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.世界爆物.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.世界爆物.getModel())).removeRow(i);
         }
         try {
@@ -3304,7 +3303,7 @@ public class 控制台2号 extends javax.swing.JFrame {
             if (Integer.parseInt(this.查询怪物掉落代码.getText()) < 0) {
                 JOptionPane.showMessageDialog(null, "请填写正确的值");
             }
-            for (int i = ((DefaultTableModel) (this.怪物爆物.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.怪物爆物.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.怪物爆物.getModel())).removeRow(i);
             }
             try {
@@ -3341,7 +3340,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     }
 
     public void 刷新怪物爆物() {
-        for (int i = ((DefaultTableModel) (this.怪物爆物.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.怪物爆物.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.怪物爆物.getModel())).removeRow(i);
         }
         try {
@@ -3382,7 +3381,7 @@ public class 控制台2号 extends javax.swing.JFrame {
     }
 
     public void 刷新怪物卡片() {
-        for (int i = ((DefaultTableModel) (this.怪物爆物.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.怪物爆物.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.怪物爆物.getModel())).removeRow(i);
         }
         try {
@@ -3422,7 +3421,7 @@ public class 控制台2号 extends javax.swing.JFrame {
         });
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

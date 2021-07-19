@@ -8,6 +8,8 @@ package gui.Jieya;
  */
 
 
+import java.util.zip.Inflater;
+
 /**
  * This class provides support for general purpose compression using the
  * popular ZLIB compression library. The ZLIB compression library was
@@ -43,7 +45,7 @@ package gui.Jieya;
  * String outputString = new String(result, 0, resultLength, "UTF-8");
  * </pre></blockquote>
  * 
- * @see		Inflater
+ * @see        Inflater
  * @version 	1.43, 11/11/05
  * @author 	David Connelly
  */

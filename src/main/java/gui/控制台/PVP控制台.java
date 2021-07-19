@@ -1,10 +1,10 @@
 package gui.控制台;
 
-import static abc.Game.窗口标题;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+
+import static abc.Game.窗口标题;
 
 public class PVP控制台 extends javax.swing.JFrame {
 
@@ -44,7 +44,7 @@ public class PVP控制台 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

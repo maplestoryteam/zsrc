@@ -1,10 +1,8 @@
 package gui.ͼƬ.xiazai;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
   
 public class StartDownload extends Thread  
 {  

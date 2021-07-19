@@ -1,7 +1,8 @@
 package server.life;
 
-import java.awt.Point;
 import server.maps.MapleMap;
+
+import java.awt.*;
 
 public abstract class Spawns {
 

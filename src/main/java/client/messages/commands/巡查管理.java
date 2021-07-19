@@ -1,25 +1,16 @@
 package client.messages.commands;
 
 import client.MapleCharacter;
-import client.MapleCharacterUtil;
 import client.MapleClient;
-import client.SkillFactory;
 import constants.ServerConstants;
-import static gui.QQMsgServer.sendMsgToQQGroup;
 import handling.channel.ChannelServer;
 import handling.world.World;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
 import scripting.NPCScriptManager;
-import server.MaplePortal;
-import server.Timer;
-import server.events.MapleEvent;
-import server.events.MapleEventType;
 import server.maps.MapleMap;
-import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.StringUtil;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
 
 /*
 1.跟踪
@@ -106,7 +97,7 @@ public class 巡查管理 {//管理权限1
 
     public static class 无敌 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             MapleCharacter player = c.getPlayer();
             if (player.isInvincible()) {
                 player.setInvincible(false);
@@ -174,7 +165,7 @@ public class 巡查管理 {//管理权限1
 
     public static class 断线 extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
             c.getPlayer().getMap().disconnectAll();
             String msg = "[断线指令] 管理员 " + c.getPlayer().getName() + "  切断了地图玩家";
             World.Broadcast.broadcastGMMessage(MaplePacketCreator.serverNotice(6, msg));

@@ -2,6 +2,8 @@ package server.custom.forum;
 
 
 import database.DatabaseConnection;
+import tools.FileoutputUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import tools.FileoutputUtil;
 
 public class Forum_Thread {
 	

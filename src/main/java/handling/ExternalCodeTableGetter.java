@@ -1,13 +1,8 @@
 package handling;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Properties;
-
 import tools.HexTool;
+
+import java.util.*;
 
 public class ExternalCodeTableGetter {
 
@@ -42,7 +37,7 @@ public class ExternalCodeTableGetter {
             } else {
                 offset = args[0];
             }
-            if (offset.length() > 2 && offset.substring(0, 2).equals("0x")) {
+            if (offset.length() > 2 && offset.startsWith("0x")) {
                 return (short) (Short.parseShort(offset.substring(2), 16) + base);
             } else {
                 return (short) (Short.parseShort(offset) + base);

@@ -1,7 +1,5 @@
 package server.maps;
 
-import java.awt.Point;
-
 import client.MapleClient;
 import client.anticheat.CheatingOffense;
 import handling.channel.ChannelServer;
@@ -9,11 +7,15 @@ import scripting.PortalScriptManager;
 import server.MaplePortal;
 import tools.MaplePacketCreator;
 
+import java.awt.*;
+
 public class MapleGenericPortal implements MaplePortal {
 
     private String name, target, scriptName;
     private Point position;
-    private int targetmap, type, id;
+    private int targetmap;
+    private final int type;
+    private int id;
     private boolean portalState = true;
 
     public MapleGenericPortal(final int type) {

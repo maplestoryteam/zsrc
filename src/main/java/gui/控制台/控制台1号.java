@@ -1,34 +1,32 @@
 package gui.控制台;
 
-import static abc.Game.窗口标题;
 import client.MapleCharacterUtil;
 import database.DatabaseConnection;
 import gui.ZEVMS;
+import gui.ZEVMS2;
+import handling.world.World;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import provider.MapleData;
+import provider.MapleDataProvider;
+import provider.MapleDataProviderFactory;
+import provider.MapleDataTool;
+import scripting.NPCConversationManager;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import gui.ZEVMS2;
-import scripting.NPCConversationManager;
+
+import static abc.Game.窗口标题;
 import static gui.Start.ConfigValuesMap;
-import static gui.Start.读取地图吸怪检测;
 import static gui.Start.读取技能范围检测;
-import handling.world.World;
-import java.io.File;
-import provider.MapleData;
-import provider.MapleDataProvider;
-import provider.MapleDataProviderFactory;
-import provider.MapleDataTool;
 import static tools.FileoutputUtil.CurrentReadable_Time;
 
 /**
@@ -464,7 +462,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     public void 刷新金锤子() {
-        for (int i = ((DefaultTableModel) (this.金锤子表.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.金锤子表.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.金锤子表.getModel())).removeRow(i);
         }
         try {
@@ -504,7 +502,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     public void 刷新经验加成表() {
-        for (int i = ((DefaultTableModel) (this.经验加成表.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.经验加成表.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.经验加成表.getModel())).removeRow(i);
         }
         try {
@@ -1079,7 +1077,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     public void 刷新封MAC() {
-        for (int i = ((DefaultTableModel) (this.封MAC.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.封MAC.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.封MAC.getModel())).removeRow(i);
         }
         try {
@@ -1103,7 +1101,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     public void 刷新封IP() {
-        for (int i = ((DefaultTableModel) (this.封IP.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.封IP.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.封IP.getModel())).removeRow(i);
         }
         try {
@@ -2317,7 +2315,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "序号", "类型", "数值"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -2457,7 +2455,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "序号", "类型", "成功率/%"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -2527,7 +2525,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "序列号", "IP地址"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false
             };
 
@@ -2548,7 +2546,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "序列号", "MAC地址"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false
             };
 
@@ -2620,7 +2618,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "地图代码", "NPC代码"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false
             };
 
@@ -2678,7 +2676,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "序号", "5分钟一次随机广播内容"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false
             };
 
@@ -2861,7 +2859,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "角色ID", "角色名字", "角色等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -2991,7 +2989,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "*", "等级", "经验"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -3063,7 +3061,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "1", "信息", "值"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -3137,7 +3135,7 @@ public class 控制台1号 extends javax.swing.JFrame {
                 "编号", "技能ID", "检测值", "技能名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -4342,7 +4340,7 @@ public class 控制台1号 extends javax.swing.JFrame {
         刷新永恒升级开关();
     }//GEN-LAST:event_永恒升级开关ActionPerformed
     public void 刷新装备升级经验表() {
-        for (int i = ((DefaultTableModel) (this.升级经验信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.升级经验信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.升级经验信息.getModel())).removeRow(i);
         }
         try {
@@ -4375,7 +4373,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     public void 刷新装备升级设置表() {
-        for (int i = ((DefaultTableModel) (this.装备升级设置.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.装备升级设置.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.装备升级设置.getModel())).removeRow(i);
         }
         try {
@@ -4471,7 +4469,7 @@ public class 控制台1号 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_永恒升级开关2ActionPerformed
     public void 刷新技能值列表() {
-        for (int i = ((DefaultTableModel) (this.全屏设置表.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.全屏设置表.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.全屏设置表.getModel())).removeRow(i);
         }
         try {
@@ -4767,7 +4765,7 @@ public class 控制台1号 extends javax.swing.JFrame {
         if (!result1) {
             return;
         }
-        for (int i = ((DefaultTableModel) (this.全屏设置表.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.全屏设置表.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.全屏设置表.getModel())).removeRow(i);
         }
         try {
@@ -5021,7 +5019,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     private void 刷新角色信息() {
-        for (int i = ((DefaultTableModel) (this.角色信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色信息.getModel())).removeRow(i);
         }
         try {
@@ -5054,7 +5052,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     private void 刷新在线角色信息() {
-        for (int i = ((DefaultTableModel) (this.角色信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色信息.getModel())).removeRow(i);
         }
         try {
@@ -5089,7 +5087,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     private void 刷新离线角色信息() {
-        for (int i = ((DefaultTableModel) (this.角色信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色信息.getModel())).removeRow(i);
         }
         try {
@@ -5123,7 +5121,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     private void 刷新公告广播() {
-        for (int i = ((DefaultTableModel) (this.广播信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.广播信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.广播信息.getModel())).removeRow(i);
         }
         try {
@@ -5538,7 +5536,7 @@ public class 控制台1号 extends javax.swing.JFrame {
     }
 
     public void 刷新自添加NPC() {
-        for (int i = ((DefaultTableModel) (this.自添加NPC.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.自添加NPC.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.自添加NPC.getModel())).removeRow(i);
         }
         try {
@@ -5643,7 +5641,7 @@ public class 控制台1号 extends javax.swing.JFrame {
         gui.Start.GetConfigValues();
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         ZEVMS.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         try {

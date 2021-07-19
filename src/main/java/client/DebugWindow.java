@@ -1,14 +1,6 @@
 package client;
 
-import client.messages.CommandProcessorUtil;
 import constants.GameConstants;
-import gui.ZEVMS2;
-import java.awt.Point;
-import java.util.Arrays;
-import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
 import server.life.MapleMonster;
 import server.maps.MapleMap;
@@ -18,6 +10,11 @@ import server.quest.MapleQuest;
 import tools.HexTool;
 import tools.MaplePacketCreator;
 import tools.data.MaplePacketLittleEndianWriter;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -943,7 +940,7 @@ public class DebugWindow extends javax.swing.JFrame {
         mplew.writeZeroBytes(20);
         c.sendPacket(mplew.getPacket());
         //c.getPlayer().dropMessage(6,"已传送封包[" +packetheader + "] ");
-        c.getPlayer().dropMessage(6, "已传送封包[" + packetheader + "][" + mplew.getPacket().length + "] : " + mplew.toString());
+        c.getPlayer().dropMessage(6, "已传送封包[" + packetheader + "][" + mplew.getPacket().length + "] : " + mplew);
         this.封包.setText("" + (Integer.parseInt(this.封包.getText()) + 1) + "");
         System.err.println("" + c.getPlayer().getName() + " 已发送：" + (Integer.parseInt(this.封包.getText()) - 1) + "");
         this.jButton1.setText("已发送：" + (Integer.parseInt(this.封包.getText()) - 1) + "");
@@ -1302,7 +1299,7 @@ public class DebugWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_刷新11ActionPerformed
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         DebugWindow.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         try {

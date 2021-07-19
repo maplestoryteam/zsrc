@@ -1,12 +1,13 @@
 package scripting;
 
+import handling.channel.ChannelServer;
+import tools.FileoutputUtil;
+
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import handling.channel.ChannelServer;
-import tools.FileoutputUtil;
 
 public class EventScriptManager extends AbstractScriptManager {
 

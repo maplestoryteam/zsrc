@@ -1,17 +1,16 @@
 
 package provider.WzXML;
 
+import provider.MapleCanvas;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-import provider.MapleCanvas;
-
 public class FileStoredPngMapleCanvas implements MapleCanvas {
 
-    private File file;
+    private final File file;
     private int width;
     private int height;
     private BufferedImage image;

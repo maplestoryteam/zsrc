@@ -1,9 +1,10 @@
 package scripting;
 
-import java.io.*;
-import java.net.URL;
 import tools.HexTool;
 import tools.Pair;
+
+import java.io.*;
+import java.net.URL;
 
 public class LieDetectorScript {
 
@@ -24,7 +25,7 @@ public class LieDetectorScript {
                 output.write(buffer, 0, n);//将buffer以图片的数据模式写入流
             }
             String imgByte = HexTool.toString(output.toByteArray());//从流中获取数据数组
-            return new Pair(imgByte.substring(39, imgByte.length()), output.toString().split("CAPTCHA")[0]);//验证码
+            return new Pair(imgByte.substring(39), output.toString().split("CAPTCHA")[0]);//验证码
         } catch (IOException ex) {
             File directory = new File("scripts/lieDetector");
             if (!directory.exists()) {

@@ -1,6 +1,7 @@
 package a.http;
 
 import abc.Game;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
 
 public class 数据库更新文件 {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         数据库检测并更新();
     }
 

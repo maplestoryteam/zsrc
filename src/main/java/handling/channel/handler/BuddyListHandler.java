@@ -3,19 +3,7 @@
  */
 package handling.channel.handler;
 
-import static client.BuddyList.BuddyOperation.ADDED;
-import static client.BuddyList.BuddyOperation.DELETED;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import client.BuddyList;
-import client.BuddyEntry;
-import client.CharacterNameAndId;
-import client.MapleCharacter;
-import client.MapleClient;
+import client.*;
 import client.BuddyList.BuddyAddResult;
 import client.BuddyList.BuddyOperation;
 import database.DatabaseConnection;
@@ -24,11 +12,19 @@ import handling.world.World;
 import tools.MaplePacketCreator;
 import tools.data.LittleEndianAccessor;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import static client.BuddyList.BuddyOperation.ADDED;
+import static client.BuddyList.BuddyOperation.DELETED;
+
 public class BuddyListHandler {
 
     private static final class CharacterIdNameBuddyCapacity extends CharacterNameAndId {
 
-        private int buddyCapacity;
+        private final int buddyCapacity;
 
         public CharacterIdNameBuddyCapacity(int id, String name, int level, int job, String group, int buddyCapacity) {
             super(id, name, level, job, group);
@@ -212,7 +208,7 @@ public class BuddyListHandler {
             c.sendPacket(MaplePacketCreator.updateBuddylist(c.getPlayer().getBuddylist().getBuddies()));
             nextPendingRequest(c);
         } else {
-            System.out.println("Unknown buddylist: " + slea.toString());
+            System.out.println("Unknown buddylist: " + slea);
         }
     }
 

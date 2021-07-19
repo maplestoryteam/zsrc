@@ -2,23 +2,23 @@ package client.inventory;
 
 import client.MapleCharacter;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import database.DatabaseConnection;
+import server.MapleInventoryManipulator;
+
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.io.Serializable;
-
-import database.DatabaseConnection;
 import java.util.Comparator;
-import server.MapleInventoryManipulator;
 
 public class MapleRing implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738579L;
-    private int ringId;
-    private int ringId2;
-    private int partnerId;
-    private int itemId;
+    private final int ringId;
+    private final int ringId2;
+    private final int partnerId;
+    private final int itemId;
     private String partnerName;
     private boolean equipped = false;
 

@@ -2,7 +2,9 @@ package gui.Í¼Æ¬.xiazai;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -31,7 +33,7 @@ public class DownloadFrame implements ActionListener {
                 name = textField_2.getText();//ÎÄ¼þÃû						
                 System.out.println(textField.getText().substring(0, 3));
 
-                if (textField.getText().substring(0, 3).equals("htt")) {
+                if (textField.getText().startsWith("htt")) {
                     System.out.println(textField.getText().substring(0, 3));
                     StartDownload sd = new StartDownload(jps, jls, sourceFile, name, path, label_3);
                     sd.start();

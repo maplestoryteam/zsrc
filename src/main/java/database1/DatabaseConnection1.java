@@ -3,7 +3,11 @@
  */
 package database1;
 
-import static abc.Game.说明;
+import gui.未分类.数据库提示;
+import javazoom.jl.player.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -17,10 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.locks.ReentrantLock;
-import javazoom.jl.player.Player;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import gui.未分类.数据库提示;
+
+import static abc.Game.说明;
 
 public class DatabaseConnection1 {
 
@@ -240,7 +242,7 @@ public class DatabaseConnection1 {
             Properties 設定檔 = System.getProperties();
             Process process = null;
             os = p.getInputStream();
-            byte b[] = new byte[256];
+            byte[] b = new byte[256];
             while (os.read(b) > 0) {
                 baos.write(b);
             }

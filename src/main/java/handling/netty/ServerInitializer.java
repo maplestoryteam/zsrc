@@ -16,7 +16,7 @@ import io.netty.channel.socket.SocketChannel;
  */
 public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 
-    private int channels;
+    private final int channels;
 
     public ServerInitializer(int channels) {
         this.channels = channels;

@@ -4,91 +4,41 @@ ZEVMS
  */
 package gui;
 
-import gui.控制台.角色转移工具;
-import gui.控制台.脚本编辑器2;
-import gui.控制台.锻造控制台;
-import gui.控制台.一键还原;
-import gui.控制台.聊天记录显示;
-import gui.控制台.充值卡后台;
-import gui.控制台.快捷面板;
-import gui.控制台.活动控制台;
-import gui.控制台.控制台2号;
-import gui.控制台.控制台1号;
-import gui.控制台.控制台3号;
 import abc.Game;
-import static abc.Game.IP地址;
-import static abc.Game.更新程序;
-import static abc.Game.服务端名称;
-import static abc.Game.服务端授权验证;
-import static abc.Game.测速网速;
-import static abc.Game.版本;
-import static abc.Game.记录通过授权码;
-import static abc.sancu.FileDemo_05.删除文件;
-import client.Class2;
 import com.cyb.MonitorInfoBean;
 import com.cyb.dao.IMonitorService;
 import com.cyb.dao.MonitorServiceImpl;
+import database.DatabaseConnection;
+import database1.DatabaseConnection1;
+import gui.控制台.*;
+import gui.网关.机器人群设置面板;
 import handling.world.MapleParty;
-import java.io.UnsupportedEncodingException;
-import java.util.Properties;
-import java.util.concurrent.ScheduledFuture;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import javazoom.jl.player.Player;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+import java.io.*;
+import java.net.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import javazoom.jl.player.Player;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import database.DatabaseConnection;
-import database1.DatabaseConnection1;
-import gui.Jieya.解压文件;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.Properties;
+import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import static a.用法大全.获取到期时间;
-import java.sql.ResultSet;
-import static a.本地数据库.数据库下载目录;
-import static a.本地数据库.数据库导入目录;
-import static a.本地数据库.数据库解压目录;
-import static a.用法大全.传输版本号;
-import static a.用法大全.传输账户类型;
-import static a.用法大全.关系验证;
-import static a.用法大全.判断容纳人数;
-import static a.用法大全.判断账号存在;
-import static a.用法大全.判断账号密码是否正确;
-import static a.用法大全.判断账户状态;
-import static a.用法大全.开服名字;
-import static a.用法大全.强制更新;
-import static abc.Game.说明;
+import java.util.logging.Logger;
+
+import static abc.Game.*;
 import static gui.Start.GetConfigValues;
-import gui.网关.机器人群设置面板;
-import static gui.ZEVMS.快捷面板;
-import java.text.DateFormat;
 import static tools.FileoutputUtil.CurrentReadable_Time;
 
 public class ZEVMS extends javax.swing.JFrame {
 
-    private static ZEVMS instance = new ZEVMS();
+    private static final ZEVMS instance = new ZEVMS();
     public static 一键还原 一键还原;
     public static 更多应用 更多应用;
     public static 锻造控制台 锻造控制台;
@@ -107,12 +57,12 @@ public class ZEVMS extends javax.swing.JFrame {
     public static final ZEVMS getInstance() {
         return instance;
     }
-    private static ScheduledFuture<?> ts = null;
-    private int minutesLeft = 0;
-    private static Thread t = null;
+    private static final ScheduledFuture<?> ts = null;
+    private final int minutesLeft = 0;
+    private static final Thread t = null;
 
     //启动框架
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         说明();
         System.out.println("○ 服务端开始加载");
         ZEVMS.setDefaultLookAndFeelDecorated(true);
@@ -295,7 +245,7 @@ public class ZEVMS extends javax.swing.JFrame {
 
     private void 启动服务端ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_启动服务端ActionPerformed
         try {
-            Start.instance.startServer();
+            Start.startServer();
         } catch (InterruptedException ex) {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
@@ -307,7 +257,7 @@ public class ZEVMS extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            Start.instance.startServer();
+            Start.startServer();
         } catch (InterruptedException ex) {
             Logger.getLogger(ZEVMS.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
@@ -416,12 +366,12 @@ public class ZEVMS extends javax.swing.JFrame {
             }
         }*/
         //空格
-        System.out.println("");
+        System.out.println();
         //播放音效
         try {
             if (Start.Check) {
                 //启动 startServer
-                Start.instance.startServer();
+                Start.startServer();
                 //记录授权码
                 记录通过授权码();
                 Properties 設定檔 = System.getProperties();
@@ -843,7 +793,7 @@ public class ZEVMS extends javax.swing.JFrame {
             Process p = Runtime.getRuntime().exec("cmd /c tasklist");
             baos = new ByteArrayOutputStream();
             os = p.getInputStream();
-            byte b[] = new byte[256];
+            byte[] b = new byte[256];
             while (os.read(b) > 0) {
                 baos.write(b);
             }

@@ -1,6 +1,7 @@
 package client.inventory;
 
 import constants.GameConstants;
+
 import java.io.Serializable;
 
 public class Item implements IItem, Serializable {

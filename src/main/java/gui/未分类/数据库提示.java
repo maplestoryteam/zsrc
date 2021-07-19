@@ -4,12 +4,10 @@
  * and open the template in the editor.
  */
 package gui.未分类;
-import java.util.Properties;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
+
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import static tools.FileoutputUtil.CurrentReadable_Time;
+
+import javax.swing.*;
 /**
  *
  * @author Administrator
@@ -56,7 +54,7 @@ public class 数据库提示 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         数据库提示.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         try {

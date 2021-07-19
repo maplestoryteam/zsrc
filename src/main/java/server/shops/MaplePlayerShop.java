@@ -1,18 +1,19 @@
 package server.shops;
 
-import java.util.ArrayList;
-import java.util.List;
-import client.inventory.IItem;
-import client.inventory.ItemFlag;
 import client.MapleCharacter;
 import client.MapleClient;
+import client.inventory.IItem;
+import client.inventory.ItemFlag;
 import server.MapleInventoryManipulator;
 import tools.packet.PlayerShopPacket;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MaplePlayerShop extends AbstractPlayerStore {
 
     private int boughtnumber = 0;
-    private List<String> bannedList = new ArrayList<String>();
+    private final List<String> bannedList = new ArrayList<String>();
 
     public MaplePlayerShop(MapleCharacter owner, int itemId, String desc) {
         super(owner, itemId, desc, "", 3);
@@ -99,9 +100,6 @@ public class MaplePlayerShop extends AbstractPlayerStore {
     }
 
     public boolean isBanned(String name) {
-        if (bannedList.contains(name)) {
-            return true;
-        }
-        return false;
+        return bannedList.contains(name);
     }
 }

@@ -2,24 +2,13 @@ package client.messages.commands.a;
 
 import client.MapleCharacter;
 import client.MapleClient;
-import client.inventory.MapleInventoryType;
-import client.inventory.MaplePet;
-import client.inventory.PetDataFactory;
 import client.messages.commands.CommandExecute;
-import constants.ServerConstants.PlayerGMRank;
 import handling.channel.ChannelServer;
-import handling.world.CheaterData;
 import handling.world.World;
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
-import scripting.EventManager;
 import scripting.NPCScriptManager;
-import server.Timer;
-import server.events.MapleEvent;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.StringUtil;
-import tools.packet.PetPacket;
 
 /**
  *
@@ -196,7 +185,7 @@ public class PlayerCommand {
     }
         public static class ¼ì²â extends CommandExecute {
 
-        public int execute(MapleClient c, String splitted[]) {
+        public int execute(MapleClient c, String[] splitted) {
 
             if (splitted.length < 2) {
                 return 0;

@@ -1,16 +1,16 @@
 package handling.world;
 
-import java.awt.Point;
-import java.util.List;
-import java.io.Serializable;
-
 import client.MapleCharacter;
 import server.maps.MapleDoor;
+
+import java.awt.*;
+import java.io.Serializable;
+import java.util.List;
 
 public class MaplePartyCharacter implements Serializable {
 
     private static final long serialVersionUID = 6215463252132450750L;
-    private String name;
+    private final String name;
     private int id;
     private int level;
     private int vip; 
@@ -119,12 +119,7 @@ public class MaplePartyCharacter implements Serializable {
         }
         final MaplePartyCharacter other = (MaplePartyCharacter) obj;
         if (name == null) {
-            if (other.name != null) {
-                return false;
-            }
-        } else if (!name.equals(other.name)) {
-            return false;
-        }
-        return true;
+            return other.name == null;
+        } else return name.equals(other.name);
     }
 }

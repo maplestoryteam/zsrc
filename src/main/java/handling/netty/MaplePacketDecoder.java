@@ -1,30 +1,28 @@
 package handling.netty;
 
 import client.MapleClient;
-import constants.GameConstants;
 import constants.ServerConstants;
 import handling.RecvPacketOpcode;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.AttributeKey;
-import java.nio.ByteBuffer;
-import java.util.List;
-import tools.MapleAESOFB;
-import tools.MapleCustomEncryption;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tools.FileoutputUtil;
 import tools.HexTool;
+import tools.MapleAESOFB;
+import tools.MapleCustomEncryption;
 import tools.data.ByteArrayByteStream;
 import tools.data.LittleEndianAccessor;
+
+import java.util.List;
 
 public class MaplePacketDecoder extends ByteToMessageDecoder {
 
     public static final AttributeKey<DecoderState> DECODER_STATE_KEY = AttributeKey.valueOf(MaplePacketDecoder.class.getName() + ".STATE");
 
-    private static Logger log = LoggerFactory.getLogger(MaplePacketDecoder.class);
+    private static final Logger log = LoggerFactory.getLogger(MaplePacketDecoder.class);
 
     public static class DecoderState {
 
@@ -33,8 +31,8 @@ public class MaplePacketDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext chc, ByteBuf in, List<Object> message) throws Exception {
-        final MapleClient client = (MapleClient) chc.channel().attr(MapleClient.CLIENT_KEY).get();
-        final DecoderState decoderState = (DecoderState) chc.channel().attr(DECODER_STATE_KEY).get();
+        final MapleClient client = chc.channel().attr(MapleClient.CLIENT_KEY).get();
+        final DecoderState decoderState = chc.channel().attr(DECODER_STATE_KEY).get();
 
         if (in.readableBytes() >= 4 && decoderState.packetlength == -1) {
             int packetHeader = in.readInt();
@@ -49,7 +47,7 @@ public class MaplePacketDecoder extends ByteToMessageDecoder {
         }
 
         if (in.readableBytes() >= decoderState.packetlength) {//079
-            byte decryptedPacket[] = new byte[decoderState.packetlength];
+            byte[] decryptedPacket = new byte[decoderState.packetlength];
             in.readBytes(decryptedPacket);
             decoderState.packetlength = -1;
 

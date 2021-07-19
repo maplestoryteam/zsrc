@@ -1,25 +1,26 @@
 package tools.wztosql;
 
 import database.DatabaseConnection;
-import java.awt.Point;
+import provider.MapleData;
+import provider.MapleDataProvider;
+import provider.MapleDataProviderFactory;
+import provider.MapleDataTool;
+
+import java.awt.*;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import provider.MapleData;
-import provider.MapleDataProvider;
-import provider.MapleDataProviderFactory;
-import provider.MapleDataTool;
 
 public class DumpMobSkills {
 
-    private MapleDataProvider skill;
+    private final MapleDataProvider skill;
     protected boolean hadError = false;
     protected boolean update = false;
     protected int id = 0;
-    private Connection con = DatabaseConnection.getConnection();
+    private final Connection con = DatabaseConnection.getConnection();
 
     public DumpMobSkills(boolean update) throws Exception {
         this.update = update;
@@ -104,7 +105,7 @@ public class DumpMobSkills {
                     if (summ.length() > 0) {
                         summ.append(", ");
                     }
-                    summ.append(String.valueOf(summon));
+                    summ.append(summon);
                 }
                 ps.setString(12, summ.toString());
                 if (lvlz.getChildByPath("lt") != null) {

@@ -3,33 +3,33 @@
  */
 package abc;
 
-import constants.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class 增加伤害的装备 {
 
     private static 增加伤害的装备 instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
-    private String ite[];
-    private String ite5[];
-    private String fte5[];
-    private String fte2[];
-    private String ftex[];
-    private String ite10[];
-    private String ite20[];
-    private String boss5[];
-    private String boss10[];
-    private String Xx3[];
-    private String Xx5[];
-    private String Xm3[];
-    private String Xm5[];
-    private String JX1[];
-    private static Logger log = LoggerFactory.getLogger(增加伤害的装备.class);
+    private final Properties itempb_cfg;
+    private String[] ite;
+    private String[] ite5;
+    private String[] fte5;
+    private String[] fte2;
+    private String[] ftex;
+    private String[] ite10;
+    private String[] ite20;
+    private String[] boss5;
+    private String[] boss10;
+    private String[] Xx3;
+    private String[] Xx5;
+    private String[] Xm3;
+    private String[] Xm5;
+    private String[] JX1;
+    private static final Logger log = LoggerFactory.getLogger(增加伤害的装备.class);
 
     public 增加伤害的装备() {
         itempb_cfg = new Properties();

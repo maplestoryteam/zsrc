@@ -20,27 +20,21 @@
  */
 package provider.WzXML;
 
-import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
-import java.awt.image.PixelInterleavedSampleModel;
-import java.awt.image.Raster;
-import java.awt.image.SampleModel;
-import java.awt.image.WritableRaster;
+import provider.MapleCanvas;
+
+import java.awt.*;
+import java.awt.image.*;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
-
-import provider.MapleCanvas;
 
 public class PNGMapleCanvas implements MapleCanvas {
 
     private static final int[] ZAHLEN = new int[]{2, 1, 0, 3};
-    private int height;
-    private int width;
-    private int dataLength;
-    private int format;
-    private byte[] data;
+    private final int height;
+    private final int width;
+    private final int dataLength;
+    private final int format;
+    private final byte[] data;
 
     public PNGMapleCanvas(int width, int height, int dataLength, int format, byte[] data) {
         super();

@@ -2,11 +2,12 @@ package server;
 
 import client.MapleCharacter;
 import handling.channel.ChannelServer;
-import java.util.LinkedList;
-import java.util.List;
-import java.lang.ref.WeakReference;
 import server.maps.MapleMap;
 import tools.MaplePacketCreator;
+
+import java.lang.ref.WeakReference;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Note for this class : MapleCharacter reference must be removed immediately
@@ -16,10 +17,10 @@ import tools.MaplePacketCreator;
  */
 public class MapleCarnivalParty {
 
-    private List<Integer> members = new LinkedList<Integer>();
-    private WeakReference<MapleCharacter> leader;
-    private byte team;
-    private int channel;
+    private final List<Integer> members = new LinkedList<Integer>();
+    private final WeakReference<MapleCharacter> leader;
+    private final byte team;
+    private final int channel;
     private short availableCP = 0, totalCP = 0;
     private boolean winner = false;
 

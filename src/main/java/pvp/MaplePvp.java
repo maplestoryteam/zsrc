@@ -5,19 +5,18 @@ import client.MapleCharacter;
 import client.MapleStat;
 import handling.channel.handler.AttackInfo;
 import handling.world.World;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import static gui.QQMsgServer.sendMsgToQQGroup;
-import static pvp.Pvpskill.SK;
-import static pvp.Pvpskill.群体攻击;
-import static pvp.Pvpskill.近战攻击;
-import static pvp.Pvpskill.远程攻击;
 import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
 import server.maps.MapleMap;
 import tools.MaplePacketCreator;
 import tools.Pair;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
+import static pvp.Pvpskill.*;
 
 public class MaplePvp {
 

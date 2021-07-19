@@ -3,33 +3,34 @@
  */
 package server.shops;
 
+import client.MapleCharacter;
+import client.MapleClient;
 import client.inventory.IItem;
 import client.inventory.ItemFlag;
 import constants.GameConstants;
-import client.MapleCharacter;
-import client.MapleClient;
 import database.DatabaseConnection;
-import server.MapleItemInformationProvider;
 import handling.channel.ChannelServer;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.ScheduledFuture;
 import server.MapleInventoryManipulator;
+import server.MapleItemInformationProvider;
 import server.Timer.EtcTimer;
 import server.maps.MapleMap;
 import server.maps.MapleMapObjectType;
 import tools.MaplePacketCreator;
 import tools.packet.PlayerShopPacket;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
+
 public class HiredMerchant extends AbstractPlayerStore {
 
     public ScheduledFuture<?> schedule;
-    private List<String> blacklist;
+    private final List<String> blacklist;
     private int storeid;
-    private long start;
+    private final long start;
 
     public HiredMerchant(String ownerName, int ownerId, MapleMap map, int x, int y, int itemId, String desc, int channel, int accid) {
         super(ownerName, ownerId, x, y, y, desc, channel, itemId, channel, accid);
@@ -74,7 +75,7 @@ public class HiredMerchant extends AbstractPlayerStore {
 
     @Override
     public void buy(MapleClient c, int item, short quantity) {
-        MaplePlayerShopItem pItem = (MaplePlayerShopItem) this.items.get(item);
+        MaplePlayerShopItem pItem = this.items.get(item);
         IItem shopItem = pItem.item;
         IItem newItem = shopItem.copy();
         short perbundle = newItem.getQuantity();
@@ -216,7 +217,7 @@ public class HiredMerchant extends AbstractPlayerStore {
         c.sendPacket(PlayerShopPacket.MerchantVisitorView(this.visitors));
     }
 
-    public void 修改道具(int a1, int a2, int a3) {;
+    public void 修改道具(int a1, int a2, int a3) {
         PreparedStatement ps1 = null;
         ResultSet rs = null;
         try {

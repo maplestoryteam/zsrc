@@ -4,13 +4,13 @@
 
 package handling.login;
 
-import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
-
 import provider.MapleData;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginInformationProvider {
 

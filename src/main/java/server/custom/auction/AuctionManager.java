@@ -3,18 +3,13 @@ package server.custom.auction;
 import abc.≈ƒ¬Ù––œﬁ÷∆;
 import client.MapleCharacter;
 import client.MapleClient;
-import client.inventory.Equip;
-import client.inventory.IEquip;
-import client.inventory.IItem;
-import client.inventory.Item;
-import client.inventory.ItemFlag;
-import client.inventory.MapleInventoryIdentifier;
-import client.inventory.MapleInventoryType;
-import client.inventory.MaplePet;
-import client.inventory.MapleRing;
+import client.inventory.*;
 import constants.GameConstants;
-import constants.OtherSettings;
 import database.DatabaseConnection;
+import server.MapleInventoryManipulator;
+import server.MapleItemInformationProvider;
+import tools.MaplePacketCreator;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,9 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import tools.MaplePacketCreator;
 
 public class AuctionManager {
 

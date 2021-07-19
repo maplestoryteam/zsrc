@@ -3,21 +3,21 @@
  */
 package abc;
 
-import constants.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ÆÁÄ»¹Ø¼ü×Ö {
 
     private static ÆÁÄ»¹Ø¼ü×Ö instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
+    private final Properties itempb_cfg;
     private String PM;
 
-    private static Logger log = LoggerFactory.getLogger(ÆÁÄ»¹Ø¼ü×Ö.class);
+    private static final Logger log = LoggerFactory.getLogger(ÆÁÄ»¹Ø¼ü×Ö.class);
 
     public ÆÁÄ»¹Ø¼ü×Ö() {
         itempb_cfg = new Properties();

@@ -2,8 +2,8 @@ package gui.Jieya;
 
 
 import java.io.FilterOutputStream;
-import java.io.OutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * This class implements an output stream filter for compressing data in

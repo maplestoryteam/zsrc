@@ -1,16 +1,17 @@
 package handling.world;
 
-import static a.本地数据库.取椅子备注;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import static a.本地数据库.取椅子备注;
+
 public class MapleParty implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;
     private MaplePartyCharacter leader;
-    private List<MaplePartyCharacter> members = new LinkedList<MaplePartyCharacter>();
+    private final List<MaplePartyCharacter> members = new LinkedList<MaplePartyCharacter>();
      public static int 互相伤害 = 0;
     public static int 通缉BOSS = 0;
     public static int 地图回收 = 0;
@@ -178,9 +179,6 @@ public class MapleParty implements Serializable {
             return false;
         }
         final MapleParty other = (MapleParty) obj;
-        if (id != other.id) {
-            return false;
-        }
-        return true;
+        return id == other.id;
     }
 }

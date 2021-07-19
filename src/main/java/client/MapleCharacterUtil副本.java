@@ -2,14 +2,14 @@
 package client;
 
 import constants.GameConstants;
+import database.DatabaseConnection;
+import tools.Pair;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Connection;
-import tools.Pair;
 import java.util.regex.Pattern;
-
-import database.DatabaseConnection;
 
 public class MapleCharacterUtil副本 {
 
@@ -17,10 +17,7 @@ public class MapleCharacterUtil副本 {
     private static final Pattern petPattern = Pattern.compile("[a-zA-Z0-9_-]{4,12}");
 
     public static final boolean canCreateChar(final String name) {
-        if (getIdByName(name) != -1 || !isEligibleCharName(name)) {
-            return false;
-        }
-        return true;
+        return getIdByName(name) == -1 && isEligibleCharName(name);
     }
 
     public static final boolean isEligibleCharName(final String name) {
@@ -92,7 +89,7 @@ public class MapleCharacterUtil副本 {
             ps.setInt(1, accountid);
 
             rs = ps.executeQuery();
-            prompt = rs.next() ? false : true;
+            prompt = !rs.next();
         } catch (SQLException e) {
         } finally {
             try {
@@ -196,10 +193,7 @@ public class MapleCharacterUtil副本 {
             return true;
         } else if (salt == null && LoginCrypto.checkSha1Hash(passhash, pwd)) {
             return true;
-        } else if (LoginCrypto.checkSaltedSha512Hash(passhash, pwd, salt)) {
-            return true;
-        }
-        return false;
+        } else return LoginCrypto.checkSaltedSha512Hash(passhash, pwd, salt);
     }
 
     //id accountid gender

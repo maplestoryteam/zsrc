@@ -1,25 +1,20 @@
 package client.about2;
-import java.awt.*;
+
 import javax.swing.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import javax.swing.border.*;
-import java.util.*;
-import java.awt.geom.*;
-import java.text.*;
-import java.awt.image.*;
-import javax.swing.Timer;
-import java.net.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+import java.util.GregorianCalendar;
 
 class MyPicLabel extends JLabel implements Runnable
 {
 	int id=0;int a=200;
 	boolean flag=false;
 	Thread th=null;
-	Image img[]=new Image[2];
+	Image[] img =new Image[2];
 	BufferedImage bi=null;
 	Graphics gg=null;
-	URL url[]=new URL[]{MyPicLabel.class.getResource("1.jpg"),MyPicLabel.class.getResource("2.jpg")};
+	URL[] url =new URL[]{MyPicLabel.class.getResource("1.jpg"),MyPicLabel.class.getResource("2.jpg")};
 
 	public MyPicLabel()
 	{
@@ -87,7 +82,7 @@ class MyPicLabel extends JLabel implements Runnable
 			repaint();
 			try
 			{
-				Thread.currentThread().sleep(100);
+				Thread.sleep(100);
 			}catch(Exception err){}
 		}
 	}

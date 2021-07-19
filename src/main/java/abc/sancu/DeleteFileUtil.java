@@ -18,8 +18,8 @@ public class DeleteFileUtil {
         System.out.println("É¾³ý" + count + "¸öÎÄ¼þ");
     }
 
-    private SimpleFileVisitor<Path> sFileVisitor;
-    private String datasOrginalPath;
+    private final SimpleFileVisitor<Path> sFileVisitor;
+    private final String datasOrginalPath;
 
     private DeleteFileUtil(int type, String oldPath, String fileSuffixes, boolean delSubFile,
             boolean keepEmptyFolder) {

@@ -3,11 +3,11 @@
  */
 package handling.channel.handler;
 
-import client.MapleClient;
 import client.MapleCharacterUtil;
+import client.MapleClient;
 import constants.ServerConstants;
-import scripting.NPCScriptManager;
 import scripting.EventManager;
+import scripting.NPCScriptManager;
 import tools.MaplePacketCreator;
 import tools.data.LittleEndianAccessor;
 

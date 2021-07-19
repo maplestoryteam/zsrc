@@ -3,23 +3,22 @@
  */
 package abc;
 
-import abc.*;
-import constants.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ¹Ø¼ü×ÖÆÁ±Î {
 
     private static ¹Ø¼ü×ÖÆÁ±Î instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
+    private final Properties itempb_cfg;
     private String PM;
     private String PMM;
 
-    private static Logger log = LoggerFactory.getLogger(¹Ø¼ü×ÖÆÁ±Î.class);
+    private static final Logger log = LoggerFactory.getLogger(¹Ø¼ü×ÖÆÁ±Î.class);
 
     public ¹Ø¼ü×ÖÆÁ±Î() {
         itempb_cfg = new Properties();

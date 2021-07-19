@@ -2,11 +2,11 @@ package client.anticheat;
 
 public class CheatingOffenseEntry {
 
-    private CheatingOffense offense;
+    private final CheatingOffense offense;
     private int count = 0;
-    private int characterid;
+    private final int characterid;
     private long lastOffense;
-    private long firstOffense;
+    private final long firstOffense;
     private String param;
     private int dbid = -1;
 
@@ -35,10 +35,7 @@ public class CheatingOffenseEntry {
     }
 
     public boolean isExpired() {
-        if (lastOffense < (System.currentTimeMillis() - offense.getValidityDuration())) {
-            return true;
-        }
-        return false;
+        return lastOffense < (System.currentTimeMillis() - offense.getValidityDuration());
     }
 
     public int getPoints() {

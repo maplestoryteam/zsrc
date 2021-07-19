@@ -1,6 +1,7 @@
 package client.about2;
-import java.awt.*;
+
 import javax.swing.*;
+import java.awt.*;
 
 class MyDongcLabel extends JLabel implements Runnable
 {
@@ -30,7 +31,7 @@ class MyDongcLabel extends JLabel implements Runnable
 			repaint();
 			try
 			{
-				Thread.currentThread().sleep(11);
+				Thread.sleep(11);
 			}catch(Exception e){}
 
 		}

@@ -3,35 +3,30 @@
  */
 package handling.channel.handler;
 
-import java.rmi.RemoteException;
-import java.util.List;
-import java.util.ArrayList;
+import client.MapleCharacter;
+import client.MapleClient;
+import client.inventory.IItem;
+import client.inventory.ItemLoader;
+import client.inventory.MapleInventoryType;
+import constants.GameConstants;
+import database.DatabaseConnection;
+import handling.world.World;
+import server.MapleInventoryManipulator;
+import server.MapleItemInformationProvider;
+import server.MerchItemPackage;
+import tools.FileoutputUtil;
+import tools.MaplePacketCreator;
+import tools.Pair;
+import tools.data.LittleEndianAccessor;
+import tools.packet.PlayerShopPacket;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import client.inventory.IItem;
-import client.inventory.MapleInventoryType;
-import client.MapleClient;
-import client.MapleCharacter;
-import client.inventory.IEquip;
-import constants.GameConstants;
-import client.inventory.ItemLoader;
-import database.DatabaseConnection;
-import handling.world.World;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import scripting.NPCScriptManager;
-import server.MapleInventoryManipulator;
-import server.MerchItemPackage;
-import server.MapleItemInformationProvider;
-import server.ServerProperties;
-import tools.FileoutputUtil;
-import tools.MaplePacketCreator;
-import tools.Pair;
-import tools.StringUtil;
-import tools.packet.PlayerShopPacket;
-import tools.data.LittleEndianAccessor;
 
 public class HiredMerchantHandler {
 
@@ -281,14 +276,11 @@ public class HiredMerchantHandler {
             }
 
         }
-        if (chr.getInventory(MapleInventoryType.EQUIP).getNumFreeSlot() <= eq
-                || chr.getInventory(MapleInventoryType.USE).getNumFreeSlot() <= use
-                || chr.getInventory(MapleInventoryType.SETUP).getNumFreeSlot() <= setup
-                || chr.getInventory(MapleInventoryType.ETC).getNumFreeSlot() <= etc
-                || chr.getInventory(MapleInventoryType.CASH).getNumFreeSlot() <= cash) {
-            return false;
-        }
-        return true;
+        return chr.getInventory(MapleInventoryType.EQUIP).getNumFreeSlot() > eq
+                && chr.getInventory(MapleInventoryType.USE).getNumFreeSlot() > use
+                && chr.getInventory(MapleInventoryType.SETUP).getNumFreeSlot() > setup
+                && chr.getInventory(MapleInventoryType.ETC).getNumFreeSlot() > etc
+                && chr.getInventory(MapleInventoryType.CASH).getNumFreeSlot() > cash;
     }
 
     private static final boolean deletePackage(final int charid, final int accid, final int packageid) {

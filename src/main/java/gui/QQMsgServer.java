@@ -3,11 +3,6 @@ QQ机器人
  */
 package gui;
 
-import static a.本地数据库.查询QQ下是否有封禁账号;
-import static a.用法大全.取账号绑定的QQ;
-import static a.用法大全.角色ID取角色名;
-import static a.用法大全.角色ID取账号ID;
-import static a.用法大全.账号ID取账号;
 import abc.注册白名单;
 import abc.注册黑名单;
 import client.LoginCrypto;
@@ -17,14 +12,17 @@ import client.inventory.MapleInventoryType;
 import constants.GameConstants;
 import database.DatabaseConnection;
 import database1.DatabaseConnection1;
-import static gui.QQ通信.通信;
-import static gui.Start.CashShopServer;
-import static gui.控制台.快捷面板.账号ID取绑定QQ;
 import gui.控制台.控制台1号;
 import handling.channel.ChannelServer;
 import handling.login.handler.AutoRegister;
 import handling.world.MapleParty;
 import handling.world.World;
+import server.MapleInventoryManipulator;
+import server.MapleItemInformationProvider;
+import server.ServerProperties;
+import tools.FileoutputUtil;
+import tools.MaplePacketCreator;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.DatagramPacket;
@@ -38,22 +36,16 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static scripting.NPCConversationManager.变更银行点券;
-import static scripting.NPCConversationManager.变更银行金币;
-import static scripting.NPCConversationManager.角色名字取ID;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import server.ServerProperties;
-import static scripting.NPCConversationManager.账号取绑定QQ;
-import static scripting.NPCConversationManager.银行开户人;
-import static scripting.NPCConversationManager.银行点券余额;
-import static scripting.NPCConversationManager.银行账号;
-import static scripting.NPCConversationManager.银行账号密码;
-import static scripting.NPCConversationManager.银行金币余额;
-import server.maps.MapleMap;
-import tools.FileoutputUtil;
+
+import static a.本地数据库.查询QQ下是否有封禁账号;
+import static a.用法大全.角色ID取账号ID;
+import static a.用法大全.账号ID取账号;
+import static a.用法大全.*;
+import static gui.QQ通信.通信;
+import static gui.Start.CashShopServer;
+import static gui.控制台.快捷面板.账号ID取绑定QQ;
+import static scripting.NPCConversationManager.*;
 import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
 
 /**
  *
@@ -61,15 +53,15 @@ import tools.MaplePacketCreator;
  */
 public class QQMsgServer implements Runnable {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         new Thread(QQMsgServer.getInstance()).start();
          System.err.println("QQ");
     }
     private static final int INPORT = 9001;
     private static final int PeerPort = 9000;
 
-    private byte[] buf = new byte[1024];
-    private DatagramPacket dp = new DatagramPacket(buf, buf.length);
+    private final byte[] buf = new byte[1024];
+    private final DatagramPacket dp = new DatagramPacket(buf, buf.length);
     private static DatagramSocket socket;
     private static final QQMsgServer instance = new QQMsgServer();
 
@@ -97,7 +89,7 @@ public class QQMsgServer implements Runnable {
                 // 接收到来自QQ机器人的消息
                 String rcvd = new String(dp.getData(), 0, dp.getLength());
                 //System.out.println("QQ: " + rcvd);
-                String msgArr[] = rcvd.split("_");
+                String[] msgArr = rcvd.split("_");
                 String msgType = msgArr[0];
                 if (msgType.equals("P")) { // 私人
                     int index = msgType.length() + 1;
@@ -105,7 +97,7 @@ public class QQMsgServer implements Runnable {
                     index += fromQQ.length() + 1;
                     String token = msgArr[2];
                     index += token.length() + 1;
-                    String msg[] = rcvd.substring(index).trim().split("\\s+");
+                    String[] msg = rcvd.substring(index).trim().split("\\s+");
                     switch (msg[0]) {
                         case "*查询银行余额":
                             if (msg.length > 2) {
@@ -1121,7 +1113,7 @@ public class QQMsgServer implements Runnable {
                 + "绑定QQ：" + token + "\r\n"
                 // + "信誉积分：100\r\n"
                 + "账号数量：" + a + "\r\n"
-                + "" + sb.toString(), token);
+                + "" + sb, token);
     }
 
     private static void 查询账号2(final String qq, final String zhanghao, final String token) {
@@ -1212,7 +1204,7 @@ public class QQMsgServer implements Runnable {
             }
             sendMsg("所有在线角色：\r\n"
                     + "数量：" + a + "\r\n\r\n"
-                    + "" + sb.toString(), token);
+                    + "" + sb, token);
         }
     }
 

@@ -6,13 +6,11 @@
 package gui;
 
 import gui.控制台.控制台2号;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
 import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import static gui.ZEVMS.一键还原;
-import static gui.ZEVMS.角色转移工具;
-import static gui.ZEVMS.锻造控制台;
+
+import javax.swing.*;
+
+import static gui.ZEVMS.*;
 import static gui.ZEVMS2.脚本编辑器2;
 
 /**
@@ -116,7 +114,7 @@ public class 更多应用 extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -128,7 +126,7 @@ public class 更多应用 extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(控制台2号.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        更多应用.setDefaultLookAndFeelDecorated(true);
+        setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());

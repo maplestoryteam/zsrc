@@ -2,18 +2,15 @@ package handling.world.guild;
 
 import database.DatabaseConnection;
 import handling.world.World;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import tools.MaplePacketCreator;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import tools.MaplePacketCreator;
 
 public class MapleGuildAlliance implements java.io.Serializable {
 
-    private static enum GAOp {
+    private enum GAOp {
 
         NONE, DISBAND, NEWGUILD
     }
@@ -22,7 +19,7 @@ public class MapleGuildAlliance implements java.io.Serializable {
     private final int[] guilds = new int[5];
     private int allianceid, leaderid, capacity; //make SQL for this auto-increment
     private String name, notice;
-    private String ranks[] = new String[5];
+    private String[] ranks = new String[5];
 
     public MapleGuildAlliance(final int id) {
         super();

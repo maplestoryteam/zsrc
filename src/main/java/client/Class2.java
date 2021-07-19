@@ -1,9 +1,14 @@
 package client;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
 import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class Class2 {
 
@@ -22,7 +27,7 @@ public class Class2 {
             conn.setDoOutput(true);
 
             OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("v", v);
             writer.write(getPostDataString(postDataParams));
@@ -64,7 +69,7 @@ public class Class2 {
             conn.setDoOutput(true);
 
             OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("v", "check_version");
             postDataParams.put("version", String.valueOf(version));
@@ -107,7 +112,7 @@ public class Class2 {
             conn.setDoOutput(true);
 
             OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("v", "get_version");
             writer.write(getPostDataString(postDataParams));
@@ -149,7 +154,7 @@ public class Class2 {
             conn.setDoOutput(true);
 
             OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("v", "feedback");
             postDataParams.put("path", path);
@@ -193,7 +198,7 @@ public class Class2 {
             conn.setDoOutput(true);
 
             OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             HashMap<String, String> postDataParams = new HashMap<>();
             postDataParams.put("v", "get_blacklist");
             writer.write(getPostDataString(postDataParams));

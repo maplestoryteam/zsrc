@@ -1,8 +1,10 @@
 package gui.未分类;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Vector;
 
 //******************************************************************************
 
@@ -12,8 +14,8 @@ public class HttpDownload {
 
     //public HttpDownload() {}
     //==========================================================================
-    private Vector vRemoteHttpURL = new Vector();
-    private Vector vLocalSaveFile = new Vector();
+    private final Vector vRemoteHttpURL = new Vector();
+    private final Vector vLocalSaveFile = new Vector();
 
     //==========================================================================
     /**
@@ -136,7 +138,7 @@ public class HttpDownload {
     // * 主方法(用于测试)
     // * @param argv String[]
     // */
-    public static void main(String argv[]) {
+    public static void main(String[] argv) {
         saveToFile("http://123.207.53.97:8082/服务端控制/配置检测开关.txt","I:/");
         
         /*HttpDownload tHttpDownload = new HttpDownload();

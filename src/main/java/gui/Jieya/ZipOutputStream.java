@@ -8,12 +8,11 @@ package gui.Jieya;
  */
 
 
-import gui.Jieya.ZipConstants;
-import java.io.OutputStream;
 import java.io.IOException;
-import java.util.Vector;
-import java.util.Hashtable;
+import java.io.OutputStream;
 import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
 import java.util.zip.CRC32;
 import java.util.zip.ZipException;
 
@@ -29,10 +28,10 @@ public
 class ZipOutputStream extends DeflaterOutputStream implements ZipConstants {
     private ZipEntry entry;
     @SuppressWarnings("unchecked")
-	private Vector entries = new Vector();
+	private final Vector entries = new Vector();
     @SuppressWarnings("unchecked")
-	private Hashtable names = new Hashtable();
-    private CRC32 crc = new CRC32();
+	private final Hashtable names = new Hashtable();
+    private final CRC32 crc = new CRC32();
     private long written = 0;
     private long locoff = 0;
     private String comment;

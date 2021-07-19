@@ -1,6 +1,9 @@
 package client;
 
 import database.DatabaseConnection;
+import tools.Pair;
+import tools.data.MaplePacketLittleEndianWriter;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,14 +11,12 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import tools.Pair;
-import tools.data.MaplePacketLittleEndianWriter;
 
 public class MapleKeyLayout implements Serializable {
 
-    private static long serialVersionUID = 9179541993413738569L;
+    private static final long serialVersionUID = 9179541993413738569L;
     private boolean changed = false;
-    private Map<Integer, Pair<Byte, Integer>> keymap;
+    private final Map<Integer, Pair<Byte, Integer>> keymap;
 
     public MapleKeyLayout() {
         keymap = new HashMap<>();

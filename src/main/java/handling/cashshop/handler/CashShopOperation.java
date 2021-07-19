@@ -3,49 +3,42 @@
  */
 package handling.cashshop.handler;
 
-import static a.用法大全.验证商城物品;
-import abc.商城检测文件;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.HashMap;
-import constants.GameConstants;
-import client.MapleClient;
 import client.MapleCharacter;
 import client.MapleCharacterUtil;
-import client.inventory.*;
+import client.MapleClient;
+import client.inventory.IItem;
+import client.inventory.ItemFlag;
+import client.inventory.MapleInventoryType;
+import client.inventory.MapleRing;
+import constants.GameConstants;
 import database.DatabaseConnection;
-import gui.控制台.游戏商城登陆显示窗;
 import handling.cashshop.CashShopServer;
 import handling.channel.ChannelServer;
-import static handling.channel.handler.InterServerHandler.角色ID取账号ID;
 import handling.login.LoginServer;
-import static handling.login.handler.CharLoginHandler.Gaincharacterz;
-import static handling.login.handler.CharLoginHandler.Getcharacterz;
 import handling.world.CharacterTransfer;
 import handling.world.MapleParty;
 import handling.world.World;
+import server.*;
+import server.custom.bossrank.BossRankManager;
+import tools.FileoutputUtil;
+import tools.MaplePacketCreator;
+import tools.Pair;
+import tools.data.LittleEndianAccessor;
+import tools.packet.MTSCSPacket;
+
 import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
-import scripting.NPCConversationManager;
-import static scripting.NPCConversationManager.提取点券库存;
-import static scripting.NPCConversationManager.账号ID取账号;
-import server.CashItemFactory;
-import server.CashItemInfo;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import static gui.QQMsgServer.sendMsg;
+import java.sql.SQLException;
 import java.util.Calendar;
-import server.ServerProperties;
-import server.custom.bossrank.BossRankManager;
-import tools.FileoutputUtil;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static a.用法大全.验证商城物品;
+import static gui.QQMsgServer.sendMsg;
 import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
-import tools.packet.MTSCSPacket;
-import tools.Pair;
-import tools.data.LittleEndianAccessor;
 
 public class CashShopOperation {
 
@@ -58,7 +51,7 @@ public class CashShopOperation {
         CashShopServer.getPlayerStorage().deregisterPlayer(chr);
         //c.getChannelServer().removePlayer(c.getPlayer());  
         String ip = c.getSessionIPAddress();
-        LoginServer.putLoginAuth(chr.getId(), ip.substring(ip.indexOf('/') + 1, ip.length()), c.getTempIP(), c.getChannel());
+        LoginServer.putLoginAuth(chr.getId(), ip.substring(ip.indexOf('/') + 1), c.getTempIP(), c.getChannel());
         c.updateLoginState(1, ip);
         //  c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION, c.getSessionIPAddress());
         String 输出 = "[服务端]" + CurrentReadable_Time() + " : 退出商城 玩家 : " + c.getPlayer().getName() + " ";

@@ -1,29 +1,25 @@
 package server.quest;
 
-import constants.GameConstants;
-import java.io.File;
-import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import client.MapleCharacter;
 import client.MapleQuestStatus;
-import java.util.ArrayList;
-import scripting.NPCScriptManager;
+import constants.GameConstants;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
+import scripting.NPCScriptManager;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.Pair;
-import tools.packet.UIPacket;
+
+import java.io.File;
+import java.io.Serializable;
+import java.util.*;
 
 public class MapleQuest implements Serializable {
 
     private static final long serialVersionUID = 9179541993413738569L;
-    private static Map<Integer, MapleQuest> quests = new LinkedHashMap<Integer, MapleQuest>();
+    private static final Map<Integer, MapleQuest> quests = new LinkedHashMap<Integer, MapleQuest>();
     protected int id;
     protected List<MapleQuestRequirement> startReqs;
     protected List<MapleQuestRequirement> completeReqs;
@@ -323,7 +319,7 @@ public class MapleQuest implements Serializable {
     }
 
     //勋章任务
-    public static enum MedalQuest {
+    public enum MedalQuest {
         新手冒险家(29005, 29015, 10, new int[]{//15
             104000000, 104010001, 100000006, 104020000, 100000000, 100010000, 100040000, 100040100,
             101010103, 101020000, 101000000, 102000000, 101030104, 101030406, 102020300, 103000000,
@@ -360,7 +356,7 @@ public class MapleQuest implements Serializable {
         public int questid, level, lquestid;
         public int[] maps;
 
-        private MedalQuest(int questid, int lquestid, int level, int[] maps) {
+        MedalQuest(int questid, int lquestid, int level, int[] maps) {
             this.questid = questid;
             this.level = level;
             this.lquestid = lquestid;

@@ -1,47 +1,28 @@
 package server;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.io.Serializable;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ScheduledFuture;
-
+import client.*;
 import client.inventory.IItem;
-import client.ISkill;
-import constants.GameConstants;
-import client.MapleBuffStat;
-import client.MapleCharacter;
-import client.MapleCoolDownValueHolder;
-import client.MapleDisease;
 import client.inventory.MapleInventory;
 import client.inventory.MapleInventoryType;
-import client.MapleStat;
-import client.SkillFactory;
-import client.PlayerStats;
 import client.status.MonsterStatus;
 import client.status.MonsterStatusEffect;
+import constants.GameConstants;
 import handling.channel.ChannelServer;
 import provider.MapleData;
 import provider.MapleDataTool;
-import server.life.MapleMonster;
-import server.maps.MapleDoor;
-import server.maps.MapleMap;
-import server.maps.MapleMapObject;
-import server.maps.MapleMapObjectType;
-import server.maps.MapleMist;
-import server.maps.MapleSummon;
-import server.maps.SummonMovementType;
-import java.util.EnumMap;
 import server.MapleCarnivalFactory.MCSkill;
 import server.Timer.BuffTimer;
-import sun.audio.AudioPlayer;
+import server.life.MapleMonster;
+import server.maps.*;
 import tools.MaplePacketCreator;
 import tools.Pair;
+
+import java.awt.*;
+import java.io.Serializable;
+import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.*;
+import java.util.concurrent.ScheduledFuture;
 
 public class MapleStatEffect implements Serializable {
 
@@ -1029,7 +1010,6 @@ public class MapleStatEffect implements Serializable {
 
     private final void removeMonsterBuff(final MapleCharacter applyfrom) {
         List<MonsterStatus> cancel = new ArrayList<MonsterStatus>();
-        ;
         switch (sourceid) {
             case 1111007://·ÀÓù±À»µ
                 cancel.add(MonsterStatus.WDEF);
@@ -1295,7 +1275,7 @@ public class MapleStatEffect implements Serializable {
                     int mountid = parseMountInfo(applyto, sourceid);
                     int mountid2 = parseMountInfo_Pure(applyto, sourceid);
                     if (sourceid == 1013 && applyto.getMountId() != 0) {
-                        mountid = applyto.getMountId();;
+                        mountid = applyto.getMountId();
                         mountid2 = applyto.getMountId();
                     }
                     if (mountid != 0 && mountid2 != 0) {

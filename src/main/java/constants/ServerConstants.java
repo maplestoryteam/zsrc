@@ -71,7 +71,7 @@ public class ServerConstants {
         return 0;
     }
 
-    public static enum PlayerGMRank {//管理符号
+    public enum PlayerGMRank {//管理符号
         玩家指令('@', 0),
         巡查管理('*', 1),
         活动管理('*', 2),
@@ -81,10 +81,10 @@ public class ServerConstants {
         GM('!', 2),
         ADMIN('!', 3);
         SUPERADMIN('!', 3);*/
-        private char commandPrefix;
-        private int level;
+        private final char commandPrefix;
+        private final int level;
 
-        private PlayerGMRank(char ch, int level) {
+        PlayerGMRank(char ch, int level) {
             commandPrefix = ch;
             this.level = level;
         }
@@ -99,13 +99,13 @@ public class ServerConstants {
 
     }
 
-    public static enum CommandType {
+    public enum CommandType {
 
         玩家指令(0),
         TRADE(1);
-        private int level;
+        private final int level;
 
-        private CommandType(int level) {
+        CommandType(int level) {
             this.level = level;
         }
 

@@ -1,21 +1,12 @@
 package server.life;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-
-import provider.MapleData;
-import provider.MapleDataDirectoryEntry;
-import provider.MapleDataFileEntry;
-import provider.MapleDataProvider;
-import provider.MapleDataProviderFactory;
-import provider.MapleDataTool;
+import provider.*;
 import provider.WzXML.MapleDataType;
 import tools.Pair;
 import tools.StringUtil;
+
+import java.io.File;
+import java.util.*;
 
 public class MapleLifeFactory {
 
@@ -25,10 +16,10 @@ public class MapleLifeFactory {
     private static final MapleData mobStringData = stringDataWZ.getData("Mob.img");
     private static final MapleData npcStringData = stringDataWZ.getData("Npc.img");
     private static final MapleData npclocData = etcDataWZ.getData("NpcLocation.img");
-    private static Map<Integer, String> npcNames = new HashMap<Integer, String>();
-    private static Map<Integer, MapleMonsterStats> monsterStats = new HashMap<Integer, MapleMonsterStats>();
-    private static Map<Integer, Integer> NPCLoc = new HashMap<Integer, Integer>();
-    private static Map<Integer, List<Integer>> questCount = new HashMap<Integer, List<Integer>>();
+    private static final Map<Integer, String> npcNames = new HashMap<Integer, String>();
+    private static final Map<Integer, MapleMonsterStats> monsterStats = new HashMap<Integer, MapleMonsterStats>();
+    private static final Map<Integer, Integer> NPCLoc = new HashMap<Integer, Integer>();
+    private static final Map<Integer, List<Integer>> questCount = new HashMap<Integer, List<Integer>>();
 
     public static AbstractLoadedMapleLife getLife(int id, String type) {
         if (type.equalsIgnoreCase("n")) {
@@ -45,7 +36,7 @@ public class MapleLifeFactory {
         if (NPCLoc.containsKey(npcid)) {
             return NPCLoc.get(npcid);
         }
-        final int map = MapleDataTool.getIntConvert(Integer.toString(npcid) + "/0", npclocData, -1);
+        final int map = MapleDataTool.getIntConvert(npcid + "/0", npclocData, -1);
         NPCLoc.put(npcid, map);
         return map;
     }
@@ -81,7 +72,7 @@ public class MapleLifeFactory {
         MapleMonsterStats stats = monsterStats.get(Integer.valueOf(mid));
 
         if (stats == null) {
-            MapleData monsterData = data.getData(StringUtil.getLeftPaddedStr(Integer.toString(mid) + ".img", '0', 11));
+            MapleData monsterData = data.getData(StringUtil.getLeftPaddedStr(mid + ".img", '0', 11));
             if (monsterData == null) {
                 System.out.println("" + monsterData + "不存在");
                 return null;
@@ -207,7 +198,7 @@ public class MapleLifeFactory {
         MapleMonsterStats stats = monsterStats.get(Integer.valueOf(mid));
 
         if (stats == null) {
-            MapleData monsterData = data.getData(StringUtil.getLeftPaddedStr(Integer.toString(mid) + ".img", '0', 11));
+            MapleData monsterData = data.getData(StringUtil.getLeftPaddedStr(mid + ".img", '0', 11));
             if (monsterData == null) {
                 System.out.println("" + monsterData + "不存在");
                 return null;

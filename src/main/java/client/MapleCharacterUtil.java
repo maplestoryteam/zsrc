@@ -4,15 +4,15 @@
 package client;
 
 import constants.GameConstants;
+import database.DatabaseConnection;
+import tools.Pair;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Connection;
-import tools.Pair;
-import java.util.regex.Pattern;
-
-import database.DatabaseConnection;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MapleCharacterUtil {
 
@@ -29,7 +29,7 @@ public class MapleCharacterUtil {
         return matcher.matches();
     }
     
-    public static void main(final String args[]) {
+    public static void main(final String[] args) {
         String str = "Ò»¶þÈýÚà";
         boolean isOk = canCreateChar(str);
         System.out.printf("" + isOk);
@@ -39,10 +39,7 @@ public class MapleCharacterUtil {
         if (!match(namePattern, name)) {
             return false;
         }
-        if (getIdByName(name) != -1 || !isEligibleCharName(name)) {
-            return false;
-        }
-        return true;
+        return getIdByName(name) == -1 && isEligibleCharName(name);
     }
 
     public static final boolean isEligibleCharName(final String name) {
@@ -114,7 +111,7 @@ public class MapleCharacterUtil {
             ps.setInt(1, accountid);
 
             rs = ps.executeQuery();
-            prompt = rs.next() ? false : true;
+            prompt = !rs.next();
         } catch (SQLException e) {
         } finally {
             try {
@@ -218,10 +215,7 @@ public class MapleCharacterUtil {
             return true;
         } else if (salt == null && LoginCrypto.checkSha1Hash(passhash, pwd)) {
             return true;
-        } else if (LoginCrypto.checkSaltedSha512Hash(passhash, pwd, salt)) {
-            return true;
-        }
-        return false;
+        } else return LoginCrypto.checkSaltedSha512Hash(passhash, pwd, salt);
     }
 
     //id accountid gender

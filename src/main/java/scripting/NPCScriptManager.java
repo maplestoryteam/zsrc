@@ -3,34 +3,21 @@ NPC报错
  */
 package scripting;
 
-import static abc.Game2.传送相关;
-import static abc.Game.NPC前缀;
-import static abc.Game.NPC错误文本提示;
-import static abc.Game2.zevms;
-import static abc.Game2.冒险百科;
-import static abc.Game2.女神塔;
-import static abc.Game2.废弃都市;
-import static abc.Game2.月妙;
-import static abc.Game2.每日任务;
-import static abc.Game2.毒雾森林;
-import static abc.Game2.活动相关;
-import static abc.Game2.海盗船;
-import static abc.Game2.消耗箱子;
-import static abc.Game2.玩具塔;
-import static abc.Game2.礼包NPC;
-import static abc.Game2.罗密欧与朱丽叶;
-import static abc.Game2.英语村;
-import static abc.Game2.飞天猪;
 import abc.PNPC;
-import java.util.Map;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
 import client.MapleClient;
-import java.util.WeakHashMap;
-import java.util.concurrent.locks.Lock;
 import server.quest.MapleQuest;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
+
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.concurrent.locks.Lock;
+
+import static abc.Game.NPC前缀;
+import static abc.Game.NPC错误文本提示;
+import static abc.Game2.*;
 
 public class NPCScriptManager extends AbstractScriptManager {
 
@@ -282,7 +269,7 @@ public class NPCScriptManager extends AbstractScriptManager {
     }
 
     public void action(final MapleClient c, final byte mode, final byte type, final int selection) {
-        action(c, (byte) mode, (byte) type, selection, 0);
+        action(c, mode, type, selection, 0);
     }
 
     public final void action(final MapleClient c, final byte mode, final byte type, final int selection, int wh) {

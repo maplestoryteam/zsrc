@@ -3,19 +3,19 @@
 */
 package server.events;
 
-import static abc.Game.上楼活动时间;
-import java.util.concurrent.ScheduledFuture;
 import client.MapleCharacter;
 import server.Randomizer;
 import server.Timer.EventTimer;
 import tools.MaplePacketCreator;
-import server.maps.MapleMap;
-import server.maps.SavedLocationType;
+
+import java.util.concurrent.ScheduledFuture;
+
+import static abc.Game.上楼活动时间;
 
 public class MapleOla extends MapleEvent {
 
     private static final long serialVersionUID = 845748150824L;
-    private long time = 上楼活动时间; //reduce for less time
+    private final long time = 上楼活动时间; //reduce for less time
     private long timeStarted = 0;
     private transient ScheduledFuture<?> olaSchedule;
     private int[] stages = new int[3];

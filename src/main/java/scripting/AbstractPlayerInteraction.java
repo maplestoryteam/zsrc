@@ -3,48 +3,21 @@
  */
 package scripting;
 
-import java.awt.Point;
-import java.util.List;
-import server.maps.MapleMapFactory;
-import server.Timer.*;
-import client.inventory.Equip;
-import client.SkillFactory;
-import constants.GameConstants;
-import client.ISkill;
-import client.MapleCharacter;
-import client.MapleClient;
-import client.inventory.MapleInventoryType;
-import client.inventory.MaplePet;
-import client.MapleQuestStatus;
+import client.*;
 import client.inventory.*;
+import constants.GameConstants;
 import database.DatabaseConnection;
 import handling.channel.ChannelServer;
 import handling.world.MapleParty;
 import handling.world.MaplePartyCharacter;
+import handling.world.World;
 import handling.world.guild.MapleGuild;
-import server.Randomizer;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
-import server.maps.MapleMap;
-import server.maps.MapleReactor;
-import server.maps.MapleMapObject;
-import server.maps.SavedLocationType;
-import server.maps.Event_DojoAgent;
-import server.life.MapleMonster;
-import server.life.MapleLifeFactory;
-import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
-import tools.packet.PetPacket;
-import tools.packet.UIPacket;
-import handling.world.World;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedHashSet;
-import server.*;
+import server.MaplePortal;
+import server.Randomizer;
+import server.Timer.EtcTimer;
+import server.Timer.MapTimer;
 import server.custom.auction.AuctionItem;
 import server.custom.auction.AuctionManager;
 import server.custom.auction.AuctionPoint;
@@ -61,6 +34,8 @@ import server.custom.bossrank.BossRankInfo;
 import server.custom.bossrank.BossRankManager;
 import server.custom.bossrank1.BossRankInfo1;
 import server.custom.bossrank1.BossRankManager1;
+import server.custom.bossrank10.BossRankInfo10;
+import server.custom.bossrank10.BossRankManager10;
 import server.custom.bossrank2.BossRankInfo2;
 import server.custom.bossrank2.BossRankManager2;
 import server.custom.bossrank3.BossRankInfo3;
@@ -77,14 +52,29 @@ import server.custom.bossrank8.BossRankInfo8;
 import server.custom.bossrank8.BossRankManager8;
 import server.custom.bossrank9.BossRankInfo9;
 import server.custom.bossrank9.BossRankManager9;
-import server.custom.bossrank10.BossRankInfo10;
-import server.custom.bossrank10.BossRankManager10;
 import server.events.MapleEvent;
 import server.events.MapleEventType;
+import server.life.MapleLifeFactory;
+import server.life.MapleMonster;
+import server.maps.*;
+import server.quest.MapleQuest;
+import tools.MaplePacketCreator;
+import tools.packet.PetPacket;
+import tools.packet.UIPacket;
+
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 public abstract class AbstractPlayerInteraction {
 
-    private MapleClient c;
+    private final MapleClient c;
 
     public AbstractPlayerInteraction(final MapleClient c) {
         this.c = c;
@@ -765,7 +755,7 @@ public abstract class AbstractPlayerInteraction {
     }
 
     public final void gainItem(final int id, final short quantity, final long period, byte Flag) {
-        gainItem(id, quantity, false, period, -1, "", (byte) Flag);
+        gainItem(id, quantity, false, period, -1, "", Flag);
     }
 
     public final void gainItem(final int id, final short quantity, final boolean randomStats) {
@@ -2066,10 +2056,7 @@ public abstract class AbstractPlayerInteraction {
         if (this.c.getPlayer().getInventory(MapleInventoryType.ETC).getNextFreeSlot() > -1 && A == 4) {
             return true;
         }
-        if (this.c.getPlayer().getInventory(MapleInventoryType.CASH).getNextFreeSlot() > -1 && A == 5) {
-            return true;
-        }
-        return false;
+        return this.c.getPlayer().getInventory(MapleInventoryType.CASH).getNextFreeSlot() > -1 && A == 5;
     }
 
     public boolean beibao(int A, int kw) {
@@ -2085,10 +2072,7 @@ public abstract class AbstractPlayerInteraction {
         if (this.c.getPlayer().getInventory(MapleInventoryType.ETC).getNextFreeSlot() > kw && A == 4) {
             return true;
         }
-        if (this.c.getPlayer().getInventory(MapleInventoryType.CASH).getNextFreeSlot() > kw && A == 5) {
-            return true;
-        }
-        return false;
+        return this.c.getPlayer().getInventory(MapleInventoryType.CASH).getNextFreeSlot() > kw && A == 5;
     }
 
     public final void startAriantPQ(int mapid) {

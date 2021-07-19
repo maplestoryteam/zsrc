@@ -1,14 +1,17 @@
 package server;
 
-import java.io.FileReader;
+import database.DatabaseConnection;
+
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-import database.DatabaseConnection;
+
 import static gui.ZEVMS.ºÏ≤‚Œƒº˛3;
-import java.io.*;
 
 /**
  * ≈‰÷√Ã®
@@ -59,7 +62,7 @@ public class ServerProperties {
         for (String s : toLoad) {
             InputStreamReader fr;
             try {
-                fr = new InputStreamReader(new FileInputStream(s), "UTF-8");//UTF-8
+                fr = new InputStreamReader(new FileInputStream(s), StandardCharsets.UTF_8);//UTF-8
                 props.load(fr);
                 fr.close();
             } catch (IOException ex) {

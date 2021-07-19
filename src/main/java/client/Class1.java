@@ -5,12 +5,7 @@
  */
 package client;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -131,7 +126,7 @@ public class Class1 {
                 md.update(result[i]);
             }
             byte[] hash = md.digest();
-            StringBuffer d = new StringBuffer("");
+            StringBuffer d = new StringBuffer();
             for (int i = 0; i < hash.length; i++) {
                 int v = hash[i] & 0xFF;
                 if (v < 16) {

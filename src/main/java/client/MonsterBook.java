@@ -1,27 +1,26 @@
 package client;
 
 import constants.GameConstants;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import database.DatabaseConnection;
+import server.MapleItemInformationProvider;
+import tools.data.MaplePacketLittleEndianWriter;
+import tools.packet.MonsterBookPacket;
+
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.io.Serializable;
-
-import database.DatabaseConnection;
-import server.MapleItemInformationProvider;
-import tools.MaplePacketCreator;
-import tools.data.MaplePacketLittleEndianWriter;
-import tools.packet.MonsterBookPacket;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class MonsterBook implements Serializable {
 
     private static final long serialVersionUID = 7179541993413738569L;
     private boolean changed = false;
     private int SpecialCard = 0, NormalCard = 0, BookLevel = 1;
-    private Map<Integer, Integer> cards;
+    private final Map<Integer, Integer> cards;
 
     public MonsterBook(Map<Integer, Integer> cards) {
         this.cards = cards;

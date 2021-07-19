@@ -7,10 +7,10 @@ public class CashItemInfo {
     private int itemId;
     private int count;
     private int price;
-    private int sn;
+    private final int sn;
     private int expire;
     private int gender;
-    private boolean onSale;
+    private final boolean onSale;
     private String name;
 
     public CashItemInfo(int itemId, int count, int price, int sn, int expire, int gender, boolean sale) {
@@ -188,7 +188,7 @@ public class CashItemInfo {
                 gen = gender;
             }
             if (!showUp) {
-                onSale = (backup == null ? false : backup.onSale());
+                onSale = (backup != null && backup.onSale());
             } else {
                 onSale = showUp;
             }

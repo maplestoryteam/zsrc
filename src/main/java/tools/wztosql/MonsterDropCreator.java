@@ -1,21 +1,5 @@
 package tools.wztosql;
 
-import java.io.Console;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.rmi.NotBoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import javax.management.InstanceAlreadyExistsException;
-import javax.management.MBeanRegistrationException;
-import javax.management.MalformedObjectNameException;
-import javax.management.NotCompliantMBeanException;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
@@ -23,13 +7,27 @@ import provider.MapleDataTool;
 import tools.Pair;
 import tools.StringUtil;
 
+import javax.management.InstanceAlreadyExistsException;
+import javax.management.MBeanRegistrationException;
+import javax.management.MalformedObjectNameException;
+import javax.management.NotCompliantMBeanException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MonsterDropCreator {
 
     private static final int COMMON_ETC_RATE = 600000;
     private static final int SUPER_BOSS_ITEM_RATE = 300000;
     private static final int POTION_RATE = 20000;
     private static final int ARROWS_RATE = 25000;
-    private static int lastmonstercardid = 2388070;
+    private static final int lastmonstercardid = 2388070;
     private static boolean addFlagData = false;
     protected static String monsterQueryData = "drop_data";
     protected static List<Pair<Integer, String>> itemNameCache = new ArrayList();
@@ -38,7 +36,7 @@ public class MonsterDropCreator {
     protected static final MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/String.wz"));
     protected static final MapleDataProvider mobData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Mob.wz"));
 
-    public static void main(String[] args) throws FileNotFoundException, IOException, NotBoundException, InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
+    public static void main(String[] args) throws IOException, NotBoundException, InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
         //  MapleData data = MapleDataProviderFactory.getDataProvider(new File(new StringBuilder().append(System.getProperty("net.sf.odinms.wzpath","wz")).append("String.wz").toString())).getData("MonsterBook.img");
         System.out.println("準備提取數據!");
         System.out.println("按任意鍵繼續...");
@@ -271,7 +269,7 @@ public class MonsterDropCreator {
         long time = System.currentTimeMillis() - currtime;
         time /= 1000L;
 
-        System.out.println(new StringBuilder().append("Time taken : ").append(time).toString());
+        System.out.println(new StringBuilder().append("Time taken : ").append(time));
     }
 
     private static void retriveNLogItemName(StringBuilder sb, int id) {
@@ -642,7 +640,7 @@ public class MonsterDropCreator {
                 }
                 return 2000;
         }
-        System.out.println(new StringBuilder().append("未處理的數據, ID : ").append(id).toString());
+        System.out.println(new StringBuilder().append("未處理的數據, ID : ").append(id));
         return 999999;
     }
 
@@ -849,7 +847,7 @@ public class MonsterDropCreator {
         for (MapleData itemFolder : mob.getChildren()) {
             int id = Integer.parseInt(itemFolder.getName());
             try {
-                MapleData monsterData = mobData.getData(StringUtil.getLeftPaddedStr(new StringBuilder().append(Integer.toString(id)).append(".img").toString(), '0', 11));
+                MapleData monsterData = mobData.getData(StringUtil.getLeftPaddedStr(new StringBuilder().append(id).append(".img").toString(), '0', 11));
                 int boss = id == 8810018 ? 1 : MapleDataTool.getIntConvert("boss", monsterData.getChildByPath("info"), 0);
 
                 if (boss > 0) {

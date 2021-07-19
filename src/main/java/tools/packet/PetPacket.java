@@ -20,18 +20,17 @@
  */
 package tools.packet;
 
-import client.inventory.IItem;
-import java.util.List;
-
-import client.inventory.MaplePet;
-import client.MapleStat;
 import client.MapleCharacter;
+import client.MapleStat;
+import client.inventory.IItem;
+import client.inventory.MaplePet;
 import constants.ServerConstants;
 import handling.SendPacketOpcode;
 import server.movement.LifeMovementFragment;
-import tools.HexTool;
 import tools.MaplePacketCreator;
 import tools.data.MaplePacketLittleEndianWriter;
+
+import java.util.List;
 
 public class PetPacket {
 

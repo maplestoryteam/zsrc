@@ -1,14 +1,9 @@
 package download;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
-import static scripting.NPCConversationManager.downLoadFromUrl;
 
 public class Toupdate {
 

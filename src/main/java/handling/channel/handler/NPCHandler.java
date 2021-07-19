@@ -5,40 +5,31 @@
 package handling.channel.handler;
 
 import abc.任务修复;
-import abc.拍卖行限制;
-import client.inventory.Equip;
-import client.inventory.IItem;
-import client.inventory.MapleInventoryType;
-import client.MapleClient;
 import client.MapleCharacter;
-import constants.GameConstants;
+import client.MapleClient;
 import client.MapleQuestStatus;
 import client.RockPaperScissors;
+import client.inventory.Equip;
+import client.inventory.IItem;
 import client.inventory.ItemFlag;
+import client.inventory.MapleInventoryType;
+import constants.GameConstants;
 import handling.SendPacketOpcode;
 import handling.world.MapleParty;
 import handling.world.World;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import static quest.Quest.Quest;
-import static quest.Quest.canForfeit;
-import server.AutobanManager;
-import server.MapleShop;
-import server.MapleInventoryManipulator;
-import server.MapleStorage;
-import server.life.MapleNPC;
-import server.quest.MapleQuest;
-import scripting.NPCScriptManager;
 import scripting.NPCConversationManager;
-import server.MapleItemInformationProvider;
-import server.ServerProperties;
+import scripting.NPCScriptManager;
+import server.*;
+import server.life.MapleNPC;
 import server.maps.MapleMap;
+import server.quest.MapleQuest;
 import tools.ArrayMap;
 import tools.MaplePacketCreator;
-import tools.Pair;
 import tools.data.LittleEndianAccessor;
 import tools.data.MaplePacketLittleEndianWriter;
+
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class NPCHandler {
 
@@ -91,7 +82,7 @@ public class NPCHandler {
             mplew.write(slea.read(length - 13));
         } else {
             if (c.getPlayer().isAdmin()) {
-                c.getPlayer().dropMessage("NPC, 小包裹:" + slea.toString());
+                c.getPlayer().dropMessage("NPC, 小包裹:" + slea);
             }
             return;
         }

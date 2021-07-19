@@ -1,12 +1,8 @@
 package gui;
 
-import handling.world.MapleParty;
-import handling.world.World;
-import java.util.Calendar;
-import java.util.concurrent.ScheduledFuture;
 import server.Timer;
-import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
+
+import java.util.concurrent.ScheduledFuture;
 
 /**
  *
@@ -20,7 +16,7 @@ public class 冒险股票系统 {
     public static Boolean 一 = false;
     public static Boolean 特 = false;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         彩票线程();
     }
 

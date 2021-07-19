@@ -1,9 +1,10 @@
 package gui.ͼƬ.gui1;
 
+import javazoom.jl.player.Player;
+
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import javazoom.jl.player.Player;
 
 public class TestURL {
 

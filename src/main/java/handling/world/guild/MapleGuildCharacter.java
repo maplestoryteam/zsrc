@@ -1,26 +1,23 @@
 package handling.world.guild;
 
 import client.MapleCharacter;
-import database.DatabaseConnection;
-import handling.channel.ChannelServer;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class MapleGuildCharacter implements java.io.Serializable { // alias for a character
 
     public static final long serialVersionUID = 2058609046116597760L;
     private byte channel = -1, guildrank, allianceRank;
     private short level;
-    private int id, jobid, guildid;
+    private final int id;
+    private int jobid;
+    private int guildid;
     private boolean online;
-    private String name;
+    private final String name;
 
     // either read from active character...
     // if it's online
     public MapleGuildCharacter(final MapleCharacter c) {
         name = c.getName();
-        level = (short) c.getLevel();
+        level = c.getLevel();
         id = c.getId();
         channel = (byte) c.getClient().getChannel();
         jobid = c.getJob();

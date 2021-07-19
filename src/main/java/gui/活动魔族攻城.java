@@ -2,27 +2,25 @@ package gui;
 
 import client.MapleCharacter;
 import database.DatabaseConnection;
-import static gui.QQ通信.群通知;
-import static gui.活动魔族攻城1.A1坐标;
-import static gui.活动魔族攻城1.A2坐标;
-import static gui.活动魔族攻城1.A3坐标;
-import static gui.活动魔族攻城1.蝙蝠魔;
 import handling.channel.ChannelServer;
 import handling.world.MapleParty;
 import handling.world.World;
-import java.awt.Point;
+import server.Timer;
+import server.life.MapleLifeFactory;
+import server.life.MapleMonster;
+import server.maps.MapleMap;
+import tools.MaplePacketCreator;
+
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.concurrent.ScheduledFuture;
-import server.Timer;
-import server.life.MapleLifeFactory;
-import server.life.MapleMonster;
-import server.maps.MapleMap;
+
+import static gui.QQ通信.群通知;
 import static tools.FileoutputUtil.CurrentReadable_Time;
-import tools.MaplePacketCreator;
 
 public class 活动魔族攻城 {
 

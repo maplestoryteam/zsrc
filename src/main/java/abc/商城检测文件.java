@@ -3,21 +3,21 @@
  */
 package abc;
 
-import constants.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class 商城检测文件 {
 
     private static 商城检测文件 instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
+    private final Properties itempb_cfg;
     private String id;
     private String idz;
-    private static Logger log = LoggerFactory.getLogger(商城检测文件.class);
+    private static final Logger log = LoggerFactory.getLogger(商城检测文件.class);
 
     public 商城检测文件() {
         itempb_cfg = new Properties();

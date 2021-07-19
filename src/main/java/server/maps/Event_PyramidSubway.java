@@ -7,17 +7,23 @@ import client.MapleCharacter;
 import client.MapleQuestStatus;
 import handling.channel.ChannelServer;
 import handling.world.MaplePartyCharacter;
-import java.awt.Point;
-import java.util.concurrent.ScheduledFuture;
 import server.Randomizer;
 import server.Timer.MapTimer;
-import server.quest.MapleQuest;
 import server.life.MapleLifeFactory;
+import server.quest.MapleQuest;
 import tools.MaplePacketCreator;
+
+import java.awt.*;
+import java.util.concurrent.ScheduledFuture;
 
 public class Event_PyramidSubway {
 
-    private int kill = 0, cool = 0, miss = 0, skill = 0, type, energybar = 100;
+    private int kill = 0;
+    private int cool = 0;
+    private int miss = 0;
+    private int skill = 0;
+    private final int type;
+    private int energybar = 100;
     private boolean broaded = false;
     private ScheduledFuture<?> energyBarDecrease, timerSchedule, yetiSchedule;
     //type: -1 = subway, 0-3 = difficulty of nett's pyramid.

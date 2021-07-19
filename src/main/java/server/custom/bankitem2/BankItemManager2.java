@@ -2,19 +2,18 @@ package server.custom.bankitem2;
 
 import client.MapleCharacter;
 import client.inventory.IItem;
-import client.inventory.ItemFlag;
 import client.inventory.MapleInventoryType;
 import constants.GameConstants;
 import database.DatabaseConnection;
+import server.MapleInventoryManipulator;
+import server.MapleItemInformationProvider;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import tools.MaplePacketCreator;
 
 /**
  *

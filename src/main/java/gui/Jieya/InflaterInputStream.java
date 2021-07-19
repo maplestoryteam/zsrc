@@ -7,10 +7,10 @@ package gui.Jieya;
  * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
-import java.io.FilterInputStream;
-import java.io.InputStream;
-import java.io.IOException;
 import java.io.EOFException;
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 import java.util.zip.ZipException;
@@ -95,7 +95,7 @@ class InflaterInputStream extends FilterInputStream {
         usesDefaultInflater = true;
     }
 
-    private byte[] singleByteBuf = new byte[1];
+    private final byte[] singleByteBuf = new byte[1];
 
     /**
      * Reads a byte of uncompressed data. This method will block until
@@ -163,7 +163,7 @@ class InflaterInputStream extends FilterInputStream {
         }
     }
 
-    private byte[] b = new byte[512];
+    private final byte[] b = new byte[512];
 
     /**
      * Skips specified number of bytes of uncompressed data.

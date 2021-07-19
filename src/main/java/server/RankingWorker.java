@@ -1,15 +1,12 @@
 package server;
 
+import database.DatabaseConnection;
+import server.Timer.WorldTimer;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import database.DatabaseConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import server.Timer.WorldTimer;
+import java.util.*;
 
 public class RankingWorker {
 

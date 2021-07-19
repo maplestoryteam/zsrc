@@ -3,27 +3,27 @@
  */
 package server.life;
 
-import constants.GameConstants;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.LinkedList;
-
 import client.MapleCharacter;
 import client.MapleDisease;
 import client.status.MonsterStatus;
-import handling.world.MapleParty;
-import java.util.EnumMap;
+import constants.GameConstants;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import server.maps.MapleMist;
 
+import java.awt.*;
+import java.util.List;
+import java.util.*;
+
 public class MobSkill {
 
-    private int skillId, skillLevel, mpCon, spawnEffect, hp, x, y;
+    private final int skillId;
+    private final int skillLevel;
+    private int mpCon;
+    private int spawnEffect;
+    private int hp;
+    private int x;
+    private int y;
     private long duration, cooltime;
     private float prop;
 //    private short effect_delay;

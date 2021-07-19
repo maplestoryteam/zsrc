@@ -4,21 +4,15 @@ import client.Class1;
 import client.Class2;
 import client.脚本编辑器;
 import database.DatabaseConnection;
-import static download.Toupdate.下载文件;
 import handling.world.MapleParty;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.SocketException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.UnknownHostException;
+import server.ServerProperties;
+import tools.FileoutputUtil;
+
+import javax.swing.*;
+import java.io.*;
+import java.net.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,9 +20,8 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import server.ServerProperties;
-import tools.FileoutputUtil;
+
+import static download.Toupdate.下载文件;
 import static tools.FileoutputUtil.CurrentReadable_Date;
 import static tools.FileoutputUtil.CurrentReadable_Time;
 
@@ -514,7 +507,7 @@ public class Game {
     public static void 说明() {
 
 
-        System.out.println("");
+        System.out.println();
     }
 
     //友情链接
@@ -592,11 +585,11 @@ public class Game {
         }
         return false;
     }
-    private static final int 黑名单[] = {159502199
+    private static final int[] 黑名单 = {159502199
 
     };
     //, "gonggao"
-    public static String 事件[] = {"Gailou", "Laba", "MonsterPark", "GoldTempleBoss", "szsl", "SkyPark", "WitchTower_Hard", "WitchTower_Med", "WitchTower_EASY",
+    public static String[] 事件 = {"Gailou", "Laba", "MonsterPark", "GoldTempleBoss", "szsl", "SkyPark", "WitchTower_Hard", "WitchTower_Med", "WitchTower_EASY",
         "CWKPQ", "Relic", "HontalePQ", "HorntailBattle", "cpq2", "elevator", "Christmas", "FireDemon", "Amoria", "cpq", "AutomatedEvent", "Flight",
         "English", "English0", "English1", "English2", "WuGongPQ", "ElementThanatos", "4jberserk", "4jrush", "Trains", "Geenie", "AirPlane", "Boats",
         "OrbisPQ", "HenesysPQ", "Romeo", "Juliet", "Pirate", "Ellin", "DollHouse", "BossBalrog_NORMAL", "Nibergen", "PinkBeanBattle", "ZakumBattle",
@@ -604,7 +597,7 @@ public class Game {
         "ProtectPig", "ScarTarBattle", "Relic", "QiajiPQ", "BossBalrog", "s4resurrection", "s4resurrection2", "s4nest", "s4aWorld", "DLPracticeField",
         "BossQuestEASY", "shaoling"};
 
-    public static boolean 服务端授权验证() throws UnknownHostException, SocketException, UnsupportedEncodingException, IOException {
+    public static boolean 服务端授权验证() throws IOException {
         String i = MapleParty.IP地址;
         String a = Class1.Aa();
         //System.out.println(a);
@@ -616,22 +609,18 @@ public class Game {
         String d = new SimpleDateFormat("M" + "dH").format(new Date());
         String f = Class1.M(v + d);
 
-        if (r.equals(f)) {
-            /*System.out.println("○ 验证服务端授权通过");
+        /*System.out.println("○ 验证服务端授权通过");
             FileoutputUtil.logToZev("服务端信息文件/授权码记录"
                     + "/" + 开服名字 + ".txt",
                     "时间:" + CurrentReadable_Date() + "\r\n"
                     + "授权码:" + f + "\r\n"
                     + "配置IP:" + 服务端IP地址 + "\r\n\r\n");*/
-            return true;
-        } else {
-            //JOptionPane.showMessageDialog(null, "" + 验证失败信息 + ""
-            // );
-            return false;
-        }
+        //JOptionPane.showMessageDialog(null, "" + 验证失败信息 + ""
+        // );
+        return r.equals(f);
     }
 
-    public static boolean 编辑器授权() throws UnknownHostException, SocketException, UnsupportedEncodingException, IOException {
+    public static boolean 编辑器授权() throws IOException {
         String i = MapleParty.IP地址;
         String a = Class1.Aa();
         String c = Class1.C();
@@ -648,7 +637,7 @@ public class Game {
         }
     }
 
-    public static boolean 记录通过授权码() throws UnknownHostException, SocketException, UnsupportedEncodingException, IOException {
+    public static boolean 记录通过授权码() throws IOException {
         String i = MapleParty.IP地址;
         String a = Class1.Aa();
         //System.out.println(a);
@@ -669,7 +658,7 @@ public class Game {
         return true;
     }
 
-    public static boolean 服务端授权验证2() throws UnknownHostException, SocketException, UnsupportedEncodingException, IOException {
+    public static boolean 服务端授权验证2() throws IOException {
         String i = MapleParty.IP地址;
         String a = Class1.Aa();
         //System.out.println(a);
@@ -690,7 +679,7 @@ public class Game {
         }
     }
 
-    public static boolean 服务端启动记录() throws UnknownHostException, SocketException, UnsupportedEncodingException, IOException {
+    public static boolean 服务端启动记录() throws IOException {
         String i = MapleParty.IP地址;
         String a = Class1.Aa();
         //System.out.println(a);
@@ -925,7 +914,7 @@ public class Game {
         System.out.println("○ 检测服务端运行文件完成，" + now + "");
     }
 
-    public static boolean 授权码() throws UnknownHostException, SocketException, UnsupportedEncodingException, IOException {
+    public static boolean 授权码() throws IOException {
         String i = ServerProperties.getProperty("ZEV.QQ1");
         String a = Class1.Aa();
         String c = Class1.C();

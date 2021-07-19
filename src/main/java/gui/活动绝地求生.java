@@ -1,12 +1,11 @@
 package gui;
 
 import handling.channel.ChannelServer;
-import java.awt.Point;
-import java.util.concurrent.ScheduledFuture;
 import server.Timer;
 import server.maps.MapleMap;
-import java.util.Arrays;
-import java.util.Scanner;
+
+import java.awt.*;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * <»î¶¯

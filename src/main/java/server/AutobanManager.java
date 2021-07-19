@@ -3,18 +3,15 @@
  */
 package server;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import client.MapleClient;
 import handling.world.World;
-import java.util.concurrent.locks.ReentrantLock;
-import static gui.QQMsgServer.sendMsgToQQGroup;
 import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
+
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
 
 public class AutobanManager implements Runnable {
 
@@ -43,11 +40,11 @@ public class AutobanManager implements Runnable {
             return (time == ee.time && points == ee.points && acc == ee.acc);
         }
     }
-    private Map<Integer, Integer> points = new HashMap<Integer, Integer>();
-    private Map<Integer, List<String>> reasons = new HashMap<Integer, List<String>>();
-    private Set<ExpirationEntry> expirations = new TreeSet<ExpirationEntry>();
+    private final Map<Integer, Integer> points = new HashMap<Integer, Integer>();
+    private final Map<Integer, List<String>> reasons = new HashMap<Integer, List<String>>();
+    private final Set<ExpirationEntry> expirations = new TreeSet<ExpirationEntry>();
     private static final int AUTOBAN_POINTS = 5000;
-    private static AutobanManager instance = new AutobanManager();
+    private static final AutobanManager instance = new AutobanManager();
     private final ReentrantLock lock = new ReentrantLock(true);
 
     public static final AutobanManager getInstance() {

@@ -3,18 +3,17 @@
  */
 package handling.channel.handler;
 
-import java.rmi.RemoteException;
-import java.util.Iterator;
-
 import client.MapleCharacter;
 import client.MapleClient;
-import client.inventory.MaplePet;
 import handling.world.World;
-import handling.world.guild.*;
-import static tools.FileoutputUtil.CurrentReadable_Time;
+import handling.world.guild.MapleGuild;
+import handling.world.guild.MapleGuildResponse;
 import tools.MaplePacketCreator;
 import tools.data.LittleEndianAccessor;
-import tools.packet.PetPacket;
+
+import java.util.Iterator;
+
+import static tools.FileoutputUtil.CurrentReadable_Time;
 
 public class GuildHandler {
 
@@ -29,10 +28,7 @@ public class GuildHandler {
         if (name.length() > 15) {
             return false;
         }
-        if (name.length() < 3) {
-            return false;
-        }
-        return true;
+        return name.length() >= 3;
     }
 
     private static final void respawnPlayer(final MapleCharacter mc) {
@@ -105,7 +101,7 @@ public class GuildHandler {
                 c.sendPacket(MaplePacketCreator.showGuildInfo(c.getPlayer()));
                 World.Guild.setGuildMemberOnline(c.getPlayer().getMGC(), true, c.getChannel());
                 c.getPlayer().dropMessage(1, "恭喜你成功创建一个家族.");
-                World.Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(6, "恭喜家族 < "+guildName+" > 在 " + CurrentReadable_Time() + " 成立了,创建者是 " + c.getPlayer().getName().toString()));
+                World.Broadcast.broadcastMessage(MaplePacketCreator.serverNotice(6, "恭喜家族 < "+guildName+" > 在 " + CurrentReadable_Time() + " 成立了,创建者是 " + c.getPlayer().getName()));
                 
                 respawnPlayer(c.getPlayer());
                 break;
@@ -188,7 +184,7 @@ public class GuildHandler {
                 if (c.getPlayer().getGuildId() <= 0 || c.getPlayer().getGuildRank() != 1) {
                     return;
                 }
-                String ranks[] = new String[5];
+                String[] ranks = new String[5];
                 for (int i = 0; i < 5; i++) {
                     ranks[i] = slea.readMapleAsciiString();
                 }

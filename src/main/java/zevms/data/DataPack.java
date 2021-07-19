@@ -1,7 +1,7 @@
 package zevms.data;
 
-import java.io.*;
 import javax.swing.*;
+import java.io.Serializable;
 public class DataPack implements Serializable
 {
 	public int optype=0; //1是登陆 2是发送内容 3是离开 4是新用户登陆 5是系统广播信息

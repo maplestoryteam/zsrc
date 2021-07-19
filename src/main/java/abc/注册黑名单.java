@@ -3,21 +3,21 @@
  */
 package abc;
 
-import constants.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class 注册黑名单 {
 
     private static 注册黑名单 instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
+    private final Properties itempb_cfg;
     private String QQ;
 
-    private static Logger log = LoggerFactory.getLogger(注册黑名单.class);
+    private static final Logger log = LoggerFactory.getLogger(注册黑名单.class);
 
     public 注册黑名单() {
         itempb_cfg = new Properties();

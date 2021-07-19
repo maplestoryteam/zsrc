@@ -4,65 +4,41 @@
  */
 package handling.channel.handler;
 
-import gui.Start;
-import java.util.Map;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ArrayList;
-import java.awt.Point;
-import client.inventory.Equip;
-import client.inventory.IEquip;
+import abc.物品丢弃检测;
+import client.*;
+import client.inventory.*;
 import client.inventory.IEquip.ScrollResult;
-import client.inventory.IItem;
-import client.ISkill;
-import client.inventory.ItemFlag;
-import client.inventory.MaplePet;
 import client.inventory.MaplePet.PetFlag;
-import client.inventory.MapleMount;
-import client.MapleCharacter;
-import client.MapleClient;
-import client.inventory.MapleInventoryType;
-import client.inventory.MapleInventory;
-import client.MapleStat;
-import client.PlayerStats;
 import constants.GameConstants;
-import client.SkillFactory;
+import gui.Start;
+import handling.channel.ChannelServer;
+import handling.world.MapleParty;
 import handling.world.MaplePartyCharacter;
 import handling.world.World;
-import java.awt.Rectangle;
-import java.util.Collections;
-import java.util.concurrent.locks.Lock;
-import server.AutobanManager;
-import server.Randomizer;
-import abc.物品丢弃检测;
-import static gui.QQMsgServer.sendMsgToQQGroup;
-import handling.world.MapleParty;
-import server.MapleShopFactory;
-import server.MapleItemInformationProvider;
-import server.MapleInventoryManipulator;
-import server.quest.MapleQuest;
-import server.maps.FieldLimitType;
-import server.maps.MapleMap;
-import server.maps.MapleMapItem;
-import server.maps.MapleMapObject;
-import server.maps.MapleMapObjectType;
-import server.life.MapleMonster;
-import server.life.MapleLifeFactory;
+import scripting.NPCConversationManager;
 import scripting.NPCScriptManager;
 import server.*;
-import handling.channel.ChannelServer;
-import scripting.NPCConversationManager;
-import static scripting.NPCConversationManager.角色ID取名字;
+import server.life.MapleLifeFactory;
+import server.life.MapleMonster;
 import server.maps.*;
+import server.quest.MapleQuest;
 import server.shops.HiredMerchant;
 import server.shops.IMaplePlayerShop;
-import static tools.FileoutputUtil.CurrentReadable_Time;
+import tools.MaplePacketCreator;
 import tools.Pair;
+import tools.data.LittleEndianAccessor;
 import tools.packet.MTSCSPacket;
 import tools.packet.PetPacket;
-import tools.data.LittleEndianAccessor;
-import tools.MaplePacketCreator;
 import tools.packet.PlayerShopPacket;
+
+import java.awt.*;
+import java.util.List;
+import java.util.*;
+import java.util.concurrent.locks.Lock;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
+import static scripting.NPCConversationManager.角色ID取名字;
+import static tools.FileoutputUtil.CurrentReadable_Time;
 
 public class InventoryHandler {
 
@@ -70,7 +46,7 @@ public class InventoryHandler {
         if (mxmxdDaKongFuMo != null && mxmxdDaKongFuMo.length() == 0) {
             return;
         }
-        String arr1[] = mxmxdDaKongFuMo.split(",");
+        String[] arr1 = mxmxdDaKongFuMo.split(",");
         for (int i = 0; i < arr1.length; i++) {
             String pair = arr1[i];
             if (pair.contains(":")) {
@@ -82,11 +58,11 @@ public class InventoryHandler {
                 } else if (i == 2) {
                     kongInfo = "（③）";
                 }*/
-                String arr2[] = pair.split(":");
+                String[] arr2 = pair.split(":");
                 int fumoType = Integer.parseInt(arr2[0]);
                 int fumoVal = Integer.parseInt(arr2[1]);
                 if (fumoType > 0 && Start.FuMoInfoMap.containsKey(fumoType)) {
-                    String infoArr[] = Start.FuMoInfoMap.get(fumoType);
+                    String[] infoArr = Start.FuMoInfoMap.get(fumoType);
                     String fumoName = infoArr[0];
                     String fumoInfo = infoArr[1];
                     kongInfo += fumoName + " " + String.format(fumoInfo, fumoVal);
@@ -1162,7 +1138,7 @@ public class InventoryHandler {
                 c.getPlayer().dropMessage(5, "你已经拥有了这个技能.");
             } else if (expiration_days > 0) {
                 MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (byte) 1, false);
-                c.getPlayer().changeSkillLevel(SkillFactory.getSkill(mountid), (byte) 1, (byte) 1, System.currentTimeMillis() + (long) (expiration_days * 24 * 60 * 60 * 1000));
+                c.getPlayer().changeSkillLevel(SkillFactory.getSkill(mountid), (byte) 1, (byte) 1, System.currentTimeMillis() + (expiration_days * 24 * 60 * 60 * 1000));
                 c.getPlayer().dropMessage(5, "已经达到的技能.");
             }
         }
@@ -2740,7 +2716,7 @@ public class InventoryHandler {
                     sb.append(" : ");
                     sb.append(message);
                     final boolean ear = slea.readByte() != 0;//ServerProperties.getProperty("ZEV.pbzh").split(",")
-                    if (c.getPlayer().isPlayer() && message.indexOf("幹") != -1 || message.indexOf("豬") != -1 || message.indexOf("笨") != -1 || message.indexOf("靠") != -1 || message.indexOf("腦包") != -1 || message.indexOf("腦") != -1 || message.indexOf("智障") != -1 || message.indexOf("白目") != -1 || message.indexOf("白吃") != -1) {;
+                    if (c.getPlayer().isPlayer() && message.indexOf("幹") != -1 || message.indexOf("豬") != -1 || message.indexOf("笨") != -1 || message.indexOf("靠") != -1 || message.indexOf("腦包") != -1 || message.indexOf("腦") != -1 || message.indexOf("智障") != -1 || message.indexOf("白目") != -1 || message.indexOf("白吃") != -1) {
                         c.getPlayer().dropMessage("请文明说话。");
                         c.sendPacket(MaplePacketCreator.enableActions());
                         return;
@@ -3263,7 +3239,7 @@ public class InventoryHandler {
         if (chr == null) {
             return;
         }
-        final byte petz = (byte) c.getPlayer().getPetIndex((int) slea.readLong());
+        final byte petz = c.getPlayer().getPetIndex((int) slea.readLong());
         final MaplePet pet = chr.getPet(petz);
         slea.skip(1); // [4] Zero, [4] Seems to be tickcount, [1] Always zero
         chr.updateTick(slea.readInt());
@@ -3733,7 +3709,7 @@ public class InventoryHandler {
                 //c.sendPacket(MaplePacketCreator.test豆豆机111(1, (short) 0, (byte) 0, (short) 0));
                 break;
             default:
-                System.out.println("类型:" + type + " " + slea.toString());
+                System.out.println("类型:" + type + " " + slea);
                 break;
             //
 

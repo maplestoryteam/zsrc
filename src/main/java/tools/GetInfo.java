@@ -67,8 +67,8 @@ public class GetInfo {
     public static void Config(){
         try{
             InetAddress addr = InetAddress.getLocalHost(); 
-            String ip=addr.getHostAddress().toString(); //獲取本機ip
-            String hostName=addr.getHostName().toString(); //獲取本機計算機名稱
+            String ip= addr.getHostAddress(); //獲取本機ip
+            String hostName= addr.getHostName(); //獲取本機計算機名稱
             System.out.println("本機IP："+ip+"\n本機名稱:"+hostName);
             Properties 設定檔=System.getProperties();
             System.out.println("操作系統的名稱："+設定檔.getProperty("os.name"));

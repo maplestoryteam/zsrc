@@ -1,15 +1,7 @@
 package gui.图片.xiazai;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;  
-import java.io.RandomAccessFile;  
-
-import javax.swing.JProgressBar;
+import javax.swing.*;
+import java.io.*;
   
 public class DownThread extends Thread {  
       
@@ -17,25 +9,25 @@ public class DownThread extends Thread {
     private final int BUFF_LEN = 100;  
       
     // 定义下载的原始起始点  
-    private long start;  
+    private final long start;
     
     // 定义下载的实际起始点  
     private long downloadstart;  
       
     // 定义下载的结束点  
-    private long end;  
+    private final long end;
       
     // 下载资源对应的输入流  
-    private InputStream inputStream;  
+    private final InputStream inputStream;
       
     // 将下载到的字节输出到raf中  
-    private RandomAccessFile raf;  
+    private final RandomAccessFile raf;
     
     // 进度条
-    private JProgressBar jpb;
+    private final JProgressBar jpb;
     
     // 断点下载配置文件
-    private String cfgFileName;
+    private final String cfgFileName;
       
     // 构造器，传入输入流，输出流和下载起始点、结束点  
     public DownThread(String name, long start, long end, InputStream is, RandomAccessFile raf, JProgressBar jp, String fileName) {  

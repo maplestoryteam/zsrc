@@ -3,65 +3,40 @@
  */
 package handling.channel;
 
-import static abc.Game.事件;
-import static abc.Game.私服滚动公告;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import client.MapleCharacter;
 import client.MapleClient;
 import client.inventory.IItem;
-import client.inventory.Item;
 import client.inventory.ItemLoader;
 import client.inventory.MapleInventoryType;
 import database.DatabaseConnection;
-import gui.ZevmsLauncherServer;
 import handling.MapleServerHandler;
 import handling.cashshop.CashShopServer;
-import handling.channel.handler.HiredMerchantHandler;
 import handling.login.LoginServer;
 import handling.netty.ServerConnection;
 import handling.world.CheaterData;
 import handling.world.MapleParty;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import scripting.EventScriptManager;
 import server.MapleSquad;
 import server.MapleSquad.MapleSquadType;
+import server.ServerProperties;
+import server.events.*;
+import server.life.PlayerNPC;
+import server.maps.MapleMap;
 import server.maps.MapleMapFactory;
 import server.shops.HiredMerchant;
-import tools.MaplePacketCreator;
-import server.life.PlayerNPC;
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.Set;
-import server.ServerProperties;
-import server.events.MapleCoconut;
-import server.events.MapleEvent;
-import server.events.MapleEventType;
-import server.events.MapleFitness;
-import server.events.MapleOla;
-import server.events.MapleOxQuiz;
-import server.events.MapleSnowball;
-import server.maps.MapleMap;
 import server.shops.MaplePlayerShopItem;
 import tools.CollectionUtil;
 import tools.ConcurrentEnumMap;
+import tools.MaplePacketCreator;
 import tools.Pair;
 import tools.packet.PlayerShopPacket;
+
+import java.io.Serializable;
+import java.sql.*;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import static abc.Game.私服滚动公告;
 
 public class ChannelServer implements Serializable {
 
@@ -72,7 +47,9 @@ public class ChannelServer implements Serializable {
     private int doubleDrop = 1;
     private short port = 7574;
     private static final short DEFAULT_PORT = 7574;
-    private int channel, running_MerchantID = 0, flags = 0;
+    private final int channel;
+    private int running_MerchantID = 0;
+    private int flags = 0;
     private String serverMessage, key, ip, serverName;
     private boolean shutdown = false, finishedShutdown = false, MegaphoneMuteState = false, adminOnly = false;
     private PlayerStorage players;
@@ -88,7 +65,7 @@ public class ChannelServer implements Serializable {
     private final ReentrantReadWriteLock squadLock = new ReentrantReadWriteLock(); //squad
     private int eventmap = -1;
     private final Map<MapleEventType, MapleEvent> events = new EnumMap<>(MapleEventType.class);
-    private boolean debugMode = false;
+    private final boolean debugMode = false;
     private int instanceId = 0;
 
 //    public Map<Long, IoSession> getSessions() {
@@ -919,7 +896,7 @@ public class ChannelServer implements Serializable {
                         //删除雇佣信息
                         map.addMapObject(shop);
                         if (shop.getShopType() == 1) {
-                            HiredMerchant merchant = (HiredMerchant) shop;
+                            HiredMerchant merchant = shop;
                             merchant.setAvailable(true);
                             merchant.setOpen(true);
                             addMerchant(merchant);

@@ -1,22 +1,21 @@
 package gui.控制台;
 
 import database.DatabaseConnection;
-import java.util.Properties;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
 import gui.Start;
-import static gui.Start.instance;
 import gui.ZEVMS2;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import server.MapleItemInformationProvider;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import server.MapleItemInformationProvider;
+
+import static gui.Start.instance;
 
 public class 快捷面板 extends javax.swing.JFrame {
 
@@ -203,7 +202,7 @@ public class 快捷面板 extends javax.swing.JFrame {
                 "玩家", "数量", "QQ"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -237,7 +236,7 @@ public class 快捷面板 extends javax.swing.JFrame {
                 "玩家", "数量", "QQ"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -280,7 +279,7 @@ public class 快捷面板 extends javax.swing.JFrame {
                 "玩家", "数量", "QQ"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -314,7 +313,7 @@ public class 快捷面板 extends javax.swing.JFrame {
                 "玩家", "数量", "QQ"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -348,7 +347,7 @@ public class 快捷面板 extends javax.swing.JFrame {
                 "玩家", "数量", "QQ"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -387,7 +386,7 @@ public class 快捷面板 extends javax.swing.JFrame {
                 "玩家", "数量", "QQ"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -434,7 +433,7 @@ public class 快捷面板 extends javax.swing.JFrame {
     }//GEN-LAST:event_查询ActionPerformed
 
     private void 刷新家族仓库() {
-        for (int i = ((DefaultTableModel) (this.家族仓库.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.家族仓库.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.家族仓库.getModel())).removeRow(i);
         }
         try {
@@ -475,7 +474,7 @@ public class 快捷面板 extends javax.swing.JFrame {
     }
 
     private void 刷新随身仓库() {
-        for (int i = ((DefaultTableModel) (this.随身仓库.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.随身仓库.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.随身仓库.getModel())).removeRow(i);
         }
         try {
@@ -498,7 +497,7 @@ public class 快捷面板 extends javax.swing.JFrame {
     }
 
     private void 刷新点券排卖行() {
-        for (int i = ((DefaultTableModel) (this.拍卖行金币1.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.拍卖行金币1.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.拍卖行金币1.getModel())).removeRow(i);
         }
         try {
@@ -521,7 +520,7 @@ public class 快捷面板 extends javax.swing.JFrame {
     }
 
     private void 刷新金币排卖行() {
-        for (int i = ((DefaultTableModel) (this.拍卖行金币.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.拍卖行金币.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.拍卖行金币.getModel())).removeRow(i);
         }
         try {
@@ -546,7 +545,7 @@ public class 快捷面板 extends javax.swing.JFrame {
     }
 
     private void 刷新物品背包数量() {
-        for (int i = ((DefaultTableModel) (this.玩家拥有数量.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩家拥有数量.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩家拥有数量.getModel())).removeRow(i);
         }
         try {
@@ -571,7 +570,7 @@ public class 快捷面板 extends javax.swing.JFrame {
     }
 
     private void 刷新物品背包数量2() {
-        for (int i = ((DefaultTableModel) (this.玩家拥有数量1.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.玩家拥有数量1.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.玩家拥有数量1.getModel())).removeRow(i);
         }
         try {
@@ -649,7 +648,7 @@ public class 快捷面板 extends javax.swing.JFrame {
         return data;
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         快捷面板.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         try {

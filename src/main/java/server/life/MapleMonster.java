@@ -3,40 +3,20 @@
  */
 package server.life;
 
+import client.*;
 import client.inventory.Equip;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ScheduledFuture;
-import constants.GameConstants;
 import client.inventory.IItem;
-import client.ISkill;
 import client.inventory.Item;
-import client.MapleDisease;
-import client.MapleBuffStat;
-import client.MapleCharacter;
 import client.inventory.MapleInventoryType;
-import client.MapleClient;
-import handling.channel.ChannelServer;
-import client.SkillFactory;
 import client.status.MonsterStatus;
 import client.status.MonsterStatusEffect;
+import constants.GameConstants;
 import constants.ServerConstants;
-import static gui.QQMsgServer.sendMsgToQQGroup;
+import handling.channel.ChannelServer;
 import handling.world.MapleParty;
 import handling.world.MaplePartyCharacter;
 import handling.world.World;
-import java.awt.Point;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import scripting.EventInstanceManager;
-import static scripting.NPCConversationManager.角色ID取名字;
-import server.AutobanManager;
 import server.MapleItemInformationProvider;
 import server.Randomizer;
 import server.Timer.MobTimer;
@@ -44,9 +24,18 @@ import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import tools.ConcurrentEnumMap;
-import tools.Pair;
 import tools.MaplePacketCreator;
+import tools.Pair;
 import tools.packet.MobPacket;
+
+import java.lang.ref.WeakReference;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
+import static scripting.NPCConversationManager.角色ID取名字;
 
 public class MapleMonster extends AbstractLoadedMapleLife {
 
@@ -265,7 +254,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
                     sponge.get().hp -= rDamage;
 
                     if (sponge.get().hp <= 0) {
-                        map.broadcastMessage(MobPacket.showBossHP(((MapleMonster) this.sponge.get()).getId(), -1L, ((MapleMonster) this.sponge.get()).getMobMaxHp()));
+                        map.broadcastMessage(MobPacket.showBossHP(this.sponge.get().getId(), -1L, this.sponge.get().getMobMaxHp()));
                         map.killMonster(sponge.get(), from, true, false, (byte) 1, lastSkill);
                     } else {
                         map.broadcastMessage(MobPacket.showBossHP(sponge.get()));
@@ -453,7 +442,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
             }
             //怪物的经验
             exp *= attacker.getEXPMod() * (int) (attacker.getStat().expBuff / 100.0);
-            exp = (int) Math.min(Integer.MAX_VALUE, exp * (attacker.getLevel() < 10 ? GameConstants.getExpRate_Below10(attacker.getJob()) : ChannelServer.getInstance(map.getChannel()).getExpRate()));
+            exp = Math.min(Integer.MAX_VALUE, exp * (attacker.getLevel() < 10 ? GameConstants.getExpRate_Below10(attacker.getJob()) : ChannelServer.getInstance(map.getChannel()).getExpRate()));
 
             //未知经验加成?似乎没作用
             int Class_Bonus_EXP = 0;
@@ -1255,7 +1244,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 
     private static class AttackingMapleCharacter {
 
-        private MapleCharacter attacker;
+        private final MapleCharacter attacker;
         private long lastAttackTime;
 
         public AttackingMapleCharacter(final MapleCharacter attacker, final long lastAttackTime) {
@@ -1281,21 +1270,21 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 
         List<AttackingMapleCharacter> getAttackers();
 
-        public void addDamage(MapleCharacter from, long damage, boolean updateAttackTime);
+        void addDamage(MapleCharacter from, long damage, boolean updateAttackTime);
 
-        public long getDamage();
+        long getDamage();
 
-        public boolean contains(MapleCharacter chr);
+        boolean contains(MapleCharacter chr);
 
-        public void killedMob(MapleMap map, int baseExp, boolean mostDamage, int lastSkill);
+        void killedMob(MapleMap map, int baseExp, boolean mostDamage, int lastSkill);
     }
 
     private final class SingleAttackerEntry implements AttackerEntry {
 
         private long damage = 0;
-        private int chrid;
+        private final int chrid;
         private long lastAttackTime;
-        private int channel;
+        private final int channel;
 
         public SingleAttackerEntry(final MapleCharacter from, final int cserv) {
             this.chrid = from.getId();
@@ -1395,8 +1384,8 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 
         private long totDamage;
         private final Map<Integer, OnePartyAttacker> attackers = new HashMap<Integer, OnePartyAttacker>(6);
-        private int partyid;
-        private int channel;
+        private final int partyid;
+        private final int channel;
 
         public PartyAttackerEntry(final int partyid, final int cserv) {
             this.partyid = partyid;
@@ -1555,7 +1544,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
             ExpMap expmap;
             for (final Entry<MapleCharacter, ExpMap> expReceiver : expMap.entrySet()) {
                 expmap = expReceiver.getValue();
-                giveExpToCharacter(expReceiver.getKey(), expmap.exp, mostDamage ? expReceiver.getKey() == highest : false, expMap.size(), expmap.ptysize, expmap.Class_Bonus_EXP, expmap.Premium_Bonus_EXP, lastSkill);
+                giveExpToCharacter(expReceiver.getKey(), expmap.exp, mostDamage && expReceiver.getKey() == highest, expMap.size(), expmap.ptysize, expmap.Class_Bonus_EXP, expmap.Premium_Bonus_EXP, lastSkill);
             }
         }
 
@@ -1579,10 +1568,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
                 return false;
             }
             final PartyAttackerEntry other = (PartyAttackerEntry) obj;
-            if (partyid != other.partyid) {
-                return false;
-            }
-            return true;
+            return partyid == other.partyid;
         }
     }
 

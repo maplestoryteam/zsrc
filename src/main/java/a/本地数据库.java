@@ -1,11 +1,9 @@
 package a;
 
 import database.DatabaseConnection;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -133,15 +131,15 @@ public class 本地数据库 {
             Process child = rt.exec("mysql -uroot -pzevms zevms");
             OutputStream out = child.getOutputStream();
             String inStr;
-            StringBuffer sb = new StringBuffer("");
+            StringBuffer sb = new StringBuffer();
             String outStr;
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fPath), "utf8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fPath), StandardCharsets.UTF_8));
             while ((inStr = br.readLine()) != null) {
                 sb.append(inStr + "\r\n");
             }
             outStr = sb.toString();
 
-            OutputStreamWriter writer = new OutputStreamWriter(out, "utf8");
+            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
             writer.write(outStr);
             writer.flush();
 

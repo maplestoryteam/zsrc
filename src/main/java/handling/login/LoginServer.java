@@ -1,18 +1,16 @@
 package handling.login;
 
-import static a.用法大全.判断容纳人数;
-import gui.ZevmsLauncherServer;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.Map;
-import handling.MapleServerHandler;
 import handling.netty.ServerConnection;
 import handling.world.MapleParty;
-import java.util.HashSet;
-import java.util.List;
 import server.ServerProperties;
 import tools.Triple;
+
+import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import static a.用法大全.判断容纳人数;
 
 public class LoginServer {
 
@@ -26,7 +24,7 @@ public class LoginServer {
     private static boolean finishedShutdown = true, adminOnly = false;
     private static final HashMap<Integer, Triple<String, String, Integer>> loginAuth = new HashMap();
     private static final HashSet<String> loginIPAuth = new HashSet();
-    private static LoginServer instance = new LoginServer();
+    private static final LoginServer instance = new LoginServer();
 
     public static LoginServer getInstance() {
         return instance;
@@ -38,7 +36,7 @@ public class LoginServer {
     }
 
     public static Triple<String, String, Integer> getLoginAuth(int chrid) {
-        return (Triple) loginAuth.remove(chrid);
+        return loginAuth.remove(chrid);
     }
 
     public static boolean containsIPAuth(String ip) {

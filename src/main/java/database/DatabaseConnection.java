@@ -3,25 +3,24 @@
  */
 package database;
 
-import static abc.Game.说明;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.locks.ReentrantLock;
-import javazoom.jl.player.Player;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import gui.未分类.数据库提示;
-import server.Randomizer;
+ import gui.未分类.数据库提示;
+ import javazoom.jl.player.Player;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+
+ import java.io.BufferedInputStream;
+ import java.io.ByteArrayOutputStream;
+ import java.io.FileInputStream;
+ import java.io.InputStream;
+ import java.sql.Connection;
+ import java.sql.DriverManager;
+ import java.sql.PreparedStatement;
+ import java.sql.SQLException;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.List;
+ import java.util.Properties;
+ import java.util.concurrent.locks.ReentrantLock;
 
 public class DatabaseConnection {
 
@@ -241,7 +240,7 @@ public class DatabaseConnection {
             Properties 設定檔 = System.getProperties();
             Process process = null;
             os = p.getInputStream();
-            byte b[] = new byte[256];
+            byte[] b = new byte[256];
             while (os.read(b) > 0) {
                 baos.write(b);
             }

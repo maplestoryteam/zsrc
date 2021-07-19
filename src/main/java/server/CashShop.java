@@ -1,38 +1,31 @@
 package server;
 
-import static abc.Game.一天时限时道具;
-import static abc.Game.七天时限时道具;
-import static abc.Game.三小时限时道具;
-import static abc.Game.两小时限时道具;
 import client.MapleCharacter;
+import client.MapleClient;
+import client.inventory.*;
+import constants.GameConstants;
+import database.DatabaseConnection;
+import tools.Pair;
+import tools.packet.MTSCSPacket;
+
 import java.io.Serializable;
-import client.inventory.Equip;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import client.inventory.IItem;
-import constants.GameConstants;
-import client.inventory.MaplePet;
-import client.inventory.Item;
-import client.inventory.ItemLoader;
-import client.MapleClient;
-import client.inventory.MapleRing;
-import client.inventory.MapleInventoryIdentifier;
-import client.inventory.MapleInventoryType;
-import database.DatabaseConnection;
-import tools.packet.MTSCSPacket;
-import tools.Pair;
+
+import static abc.Game.*;
 
 public class CashShop implements Serializable {
 
     private static final long serialVersionUID = 231541893513373579L;
-    private int accountId, characterId;
-    private ItemLoader factory;
-    private List<IItem> inventory = new ArrayList<IItem>();
-    private List<Integer> uniqueids = new ArrayList<Integer>();
+    private final int accountId;
+    private final int characterId;
+    private final ItemLoader factory;
+    private final List<IItem> inventory = new ArrayList<IItem>();
+    private final List<Integer> uniqueids = new ArrayList<Integer>();
 
     public CashShop(int accountId, int characterId, int jobType) throws SQLException {
         this.accountId = accountId;
@@ -115,7 +108,7 @@ public class CashShop implements Serializable {
         if (GameConstants.getInventoryType(cItem.getId()) == MapleInventoryType.EQUIP) {
             Equip eq = (Equip) MapleItemInformationProvider.getInstance().getEquipById(cItem.getId());
             eq.setUniqueId(uniqueid);
-            eq.setExpiration((long) (System.currentTimeMillis() + (long) (period * 24 * 60 * 60 * 1000)));
+            eq.setExpiration(System.currentTimeMillis() + (period * 24 * 60 * 60 * 1000));
             eq.setGiftFrom(gift);
             if (GameConstants.isEffectRing(cItem.getId()) && uniqueid > 0) {
                 MapleRing ring = MapleRing.loadFromDb(uniqueid);
@@ -126,7 +119,7 @@ public class CashShop implements Serializable {
             ret = eq.copy();
         } else {
             Item item = new Item(cItem.getId(), (byte) 0, (short) cItem.getCount(), (byte) 0, uniqueid);
-            item.setExpiration((long) (System.currentTimeMillis() + (long) (period * 24 * 60 * 60 * 1000)));
+            item.setExpiration(System.currentTimeMillis() + (period * 24 * 60 * 60 * 1000));
             item.setGiftFrom(gift);
             if (GameConstants.isPet(cItem.getId())) {
                 final MaplePet pet = MaplePet.createPet(cItem.getId(), uniqueid);
@@ -170,7 +163,7 @@ public class CashShop implements Serializable {
             Equip eq = (Equip) MapleItemInformationProvider.getInstance().getEquipById(cItem.getId());
             eq.setUniqueId(uniqueid);
             if (GameConstants.isPet(cItem.getId()) || period > 0) {
-                eq.setExpiration((long) (System.currentTimeMillis() + (long) (period * 24 * 60 * 60 * 1000)));
+                eq.setExpiration(System.currentTimeMillis() + (period * 24 * 60 * 60 * 1000));
             }
             eq.setGiftFrom(gift);
             if (GameConstants.isEffectRing(cItem.getId()) && uniqueid > 0) {
@@ -183,25 +176,25 @@ public class CashShop implements Serializable {
         } else {
             Item item = new Item(cItem.getId(), (byte) 0, (short) cItem.getCount(), (byte) 0, uniqueid);
             if (period > 0) {
-                item.setExpiration((long) (System.currentTimeMillis() + (long) (period * 24 * 60 * 60 * 1000)));
+                item.setExpiration(System.currentTimeMillis() + (period * 24 * 60 * 60 * 1000));
             }
 
             if (三小时限时道具(cItem.getId())) {
-                item.setExpiration((long) (System.currentTimeMillis() + (long) (3 * 60 * 60 * 1000)));
+                item.setExpiration(System.currentTimeMillis() + (long) (3 * 60 * 60 * 1000));
             } else if (两小时限时道具(cItem.getId())) {
-                item.setExpiration((long) (System.currentTimeMillis() + (long) (2 * 60 * 60 * 1000)));
+                item.setExpiration(System.currentTimeMillis() + (long) (2 * 60 * 60 * 1000));
             } else if (一天时限时道具(cItem.getId())) {
-                item.setExpiration((long) (System.currentTimeMillis() + (long) (1 * 24 * 60 * 60 * 1000)));
+                item.setExpiration(System.currentTimeMillis() + (long) (1 * 24 * 60 * 60 * 1000));
             } else if (七天时限时道具(cItem.getId())) {
-                item.setExpiration((long) (System.currentTimeMillis() + (long) (7 * 24 * 60 * 60 * 1000)));
+                item.setExpiration(System.currentTimeMillis() + (long) (7 * 24 * 60 * 60 * 1000));
             }
 
             //周末4小时卡
             if (cItem.getId() == 5211108) {
-                item.setExpiration((long) (System.currentTimeMillis() + (long) (4 * 60 * 60 * 1000)));
+                item.setExpiration(System.currentTimeMillis() + (long) (4 * 60 * 60 * 1000));
             }
             if (cItem.getId() == 5211109) {
-                item.setExpiration((long) (System.currentTimeMillis() + (long) (4 * 60 * 60 * 1000)));
+                item.setExpiration(System.currentTimeMillis() + (long) (4 * 60 * 60 * 1000));
             }
 
             //  System.out.println(new Date(System.currentTimeMillis() + (long) (3 * 60 * 60 * 1000)));

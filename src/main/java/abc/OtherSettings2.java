@@ -3,24 +3,24 @@
  */
 package abc;
 
-import constants.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Properties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class OtherSettings2 {
 
     private static OtherSettings2 instance = null;
     private static boolean CANLOG;
-    private Properties itempb_cfg;
-    private String itempb_id[];
-    private String itemjy_id[];
-    private String itemgy_id[];
+    private final Properties itempb_cfg;
+    private String[] itempb_id;
+    private String[] itemjy_id;
+    private String[] itemgy_id;
     //private String фа╠нндвж[];
-    private String mappb_id[];
-    private static Logger log = LoggerFactory.getLogger(OtherSettings2.class);
+    private String[] mappb_id;
+    private static final Logger log = LoggerFactory.getLogger(OtherSettings2.class);
 
     public OtherSettings2() {
         itempb_cfg = new Properties();

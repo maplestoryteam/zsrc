@@ -5,9 +5,12 @@
  */
 package gui.控制台;
 
-import gui.控制台.控制台2号;
-import static abc.Game.窗口标题;
 import database.DatabaseConnection;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import server.MapleItemInformationProvider;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -16,13 +19,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import server.MapleItemInformationProvider;
+
+import static abc.Game.窗口标题;
 
 /**
  *
@@ -200,7 +198,7 @@ public class 锻造控制台 extends javax.swing.JFrame {
                 "序号", "编号", "物品代码", "材料名称", "材料数量"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
@@ -346,7 +344,7 @@ public class 锻造控制台 extends javax.swing.JFrame {
                 "序号", "编号", "物品代码", "材料名称", "材料数量", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
@@ -811,7 +809,7 @@ public class 锻造控制台 extends javax.swing.JFrame {
      JOptionPane.showMessageDialog(null, "请在应用下载区域，下载“锻造模板”脚本。");
     }//GEN-LAST:event_jButton2ActionPerformed
     public void 刷新锻造所需材料() {
-        for (int i = ((DefaultTableModel) (this.锻造所需材料.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.锻造所需材料.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.锻造所需材料.getModel())).removeRow(i);
         }
         try {
@@ -849,7 +847,7 @@ public class 锻造控制台 extends javax.swing.JFrame {
     }
 
     public void 刷新锻造奖励() {
-        for (int i = ((DefaultTableModel) (this.锻造完成物品.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.锻造完成物品.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.锻造完成物品.getModel())).removeRow(i);
         }
         try {
@@ -937,7 +935,7 @@ public class 锻造控制台 extends javax.swing.JFrame {
         });
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

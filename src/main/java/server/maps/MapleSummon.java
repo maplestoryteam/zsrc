@@ -1,15 +1,12 @@
 
 package server.maps;
 
-import java.awt.Point;
-
 import client.MapleCharacter;
 import client.MapleClient;
-import constants.GameConstants;
-import client.anticheat.CheatingOffense;
-import handling.channel.ChannelServer;
 import server.MapleStatEffect;
 import tools.MaplePacketCreator;
+
+import java.awt.*;
 
 public class MapleSummon extends AbstractAnimatedMapleMapObject {
 
@@ -18,7 +15,7 @@ public class MapleSummon extends AbstractAnimatedMapleMapObject {
     private MapleMap map; //required for instanceMaps
     private short hp;
     private boolean changedMap = false;
-    private SummonMovementType movementType;
+    private final SummonMovementType movementType;
     // Since player can have more than 1 summon [Pirate] 
     // Let's put it here instead of cheat tracker
     private int lastSummonTickCount;

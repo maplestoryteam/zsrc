@@ -1,9 +1,7 @@
 package gui.ͼƬ.gui1;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.*;
 
 public class TestCmd {
 
@@ -16,7 +14,7 @@ public class TestCmd {
             Process p = Runtime.getRuntime().exec("cmd /c tasklist");
             baos = new ByteArrayOutputStream();
             os = p.getInputStream();
-            byte b[] = new byte[256];
+            byte[] b = new byte[256];
             while (os.read(b) > 0) {
                 baos.write(b);
             }

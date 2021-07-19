@@ -1,18 +1,18 @@
 package server;
 
+import tools.FileoutputUtil;
+
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import tools.FileoutputUtil;
-
 public abstract class Timer {
 
     public static class WorldTimer extends Timer {
 
-        private static WorldTimer instance = new WorldTimer();
+        private static final WorldTimer instance = new WorldTimer();
 
         private WorldTimer() {
             name = "Worldtimer";
@@ -25,7 +25,7 @@ public abstract class Timer {
 
     public static class MapTimer extends Timer {
 
-        private static MapTimer instance = new MapTimer();
+        private static final MapTimer instance = new MapTimer();
 
         private MapTimer() {
             name = "Maptimer";
@@ -38,7 +38,7 @@ public abstract class Timer {
 
     public static class BuffTimer extends Timer {
 
-        private static BuffTimer instance = new BuffTimer();
+        private static final BuffTimer instance = new BuffTimer();
 
         private BuffTimer() {
             name = "Bufftimer";
@@ -51,7 +51,7 @@ public abstract class Timer {
 
     public static class EventTimer extends Timer {
 
-        private static EventTimer instance = new EventTimer();
+        private static final EventTimer instance = new EventTimer();
 
         private EventTimer() {
             name = "Eventtimer";
@@ -64,7 +64,7 @@ public abstract class Timer {
 
     public static class CloneTimer extends Timer {
 
-        private static CloneTimer instance = new CloneTimer();
+        private static final CloneTimer instance = new CloneTimer();
 
         private CloneTimer() {
             name = "Clonetimer";
@@ -77,7 +77,7 @@ public abstract class Timer {
 
     public static class EtcTimer extends Timer {
 
-        private static EtcTimer instance = new EtcTimer();
+        private static final EtcTimer instance = new EtcTimer();
 
         private EtcTimer() {
             name = "Etctimer";
@@ -90,7 +90,7 @@ public abstract class Timer {
 
     public static class MobTimer extends Timer {
 
-        private static MobTimer instance = new MobTimer();
+        private static final MobTimer instance = new MobTimer();
 
         private MobTimer() {
             name = "Mobtimer";
@@ -103,7 +103,7 @@ public abstract class Timer {
 
     public static class RespawnTimer extends Timer {
 
-        private static RespawnTimer instance = new RespawnTimer();
+        private static final RespawnTimer instance = new RespawnTimer();
 
         private RespawnTimer() {
             name = "RespawnTimer";
@@ -116,7 +116,7 @@ public abstract class Timer {
 
     public static class CheatTimer extends Timer {
 
-        private static CheatTimer instance = new CheatTimer();
+        private static final CheatTimer instance = new CheatTimer();
 
         private CheatTimer() {
             name = "Cheattimer";
@@ -129,7 +129,7 @@ public abstract class Timer {
 
     public static class PingTimer extends Timer {
 
-        private static PingTimer instance = new PingTimer();
+        private static final PingTimer instance = new PingTimer();
 
         private PingTimer() {
             name = "Pingtimer";

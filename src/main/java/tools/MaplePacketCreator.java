@@ -4,58 +4,31 @@
 package tools;
 
 import client.*;
-import java.awt.Point;
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import client.inventory.MapleMount;
-import client.inventory.IItem;
-import constants.GameConstants;
-import client.inventory.MapleInventoryType;
-import client.inventory.MaplePet;
 import client.inventory.IEquip.ScrollResult;
-import client.inventory.MapleRing;
 import client.inventory.*;
-import handling.SendPacketOpcode;
+import constants.GameConstants;
 import constants.ServerConstants;
+import handling.SendPacketOpcode;
 import handling.channel.MapleGuildRanking;
+import handling.channel.MapleGuildRanking.GuildRankingInfo;
+import handling.channel.handler.InventoryHandler;
+import handling.login.Balloon;
 import handling.world.MapleParty;
 import handling.world.MaplePartyCharacter;
 import handling.world.PartyOperation;
-import handling.world.guild.MapleGuild;
-import handling.world.guild.MapleGuildCharacter;
-import handling.channel.MapleGuildRanking.GuildRankingInfo;
-import handling.channel.handler.InventoryHandler;
 import handling.world.World;
 import handling.world.guild.MapleBBSThread;
 import handling.world.guild.MapleBBSThread.MapleBBSReply;
+import handling.world.guild.MapleGuild;
 import handling.world.guild.MapleGuildAlliance;
-import java.net.UnknownHostException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import server.MapleItemInformationProvider;
-import server.MapleShopItem;
-import server.MapleStatEffect;
-import server.MapleTrade;
-import server.MapleDueyActions;
-import server.Randomizer;
-import server.life.SummonAttackEntry;
-import server.maps.MapleSummon;
-import server.life.MapleNPC;
-import server.life.PlayerNPC;
-import server.maps.MapleMap;
-import server.maps.MapleReactor;
-import server.maps.MapleMist;
-import server.maps.MapleMapItem;
+import handling.world.guild.MapleGuildCharacter;
+import server.*;
 import server.events.MapleSnowball.MapleSnowballs;
 import server.life.MapleMonster;
-import server.maps.MapleDragon;
+import server.life.MapleNPC;
+import server.life.PlayerNPC;
+import server.life.SummonAttackEntry;
+import server.maps.*;
 import server.maps.MapleNodes.MapleNodeInfo;
 import server.maps.MapleNodes.MaplePlatform;
 import server.movement.LifeMovementFragment;
@@ -63,8 +36,17 @@ import server.shops.HiredMerchant;
 import server.shops.MaplePlayerShopItem;
 import tools.data.MaplePacketLittleEndianWriter;
 import tools.packet.PacketHelper;
+
+import java.awt.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
+
 import static abc.Game.ต๗สิ;
-import handling.login.Balloon;
 
 public class MaplePacketCreator {
 
@@ -122,7 +104,7 @@ public class MaplePacketCreator {
 
     public static byte[] sendYellowTip(String message) {
         MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
-        mplew.writeShort((int) 0x4A);
+        mplew.writeShort(0x4A);
         mplew.write(5);
         mplew.writeMapleAsciiString(message);
         return mplew.getPacket();

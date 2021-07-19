@@ -5,20 +5,19 @@
  */
 package gui.控制台;
 
-import static abc.Game.窗口标题;
 import database.DatabaseConnection;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+
+import static abc.Game.窗口标题;
 
 /**
  *
@@ -80,7 +79,7 @@ public class 角色转移工具 extends javax.swing.JFrame {
                 "账号ID", "游戏账号", "绑定QQ"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -139,7 +138,7 @@ public class 角色转移工具 extends javax.swing.JFrame {
                 "*", "角色"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false
             };
 
@@ -190,7 +189,7 @@ public class 角色转移工具 extends javax.swing.JFrame {
                 "*", "角色"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false
             };
 
@@ -271,7 +270,7 @@ public class 角色转移工具 extends javax.swing.JFrame {
     }
 
     private void 刷新账号信息() {
-        for (int i = ((DefaultTableModel) (this.显示游戏账号.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.显示游戏账号.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.显示游戏账号.getModel())).removeRow(i);
         }
         try {
@@ -305,7 +304,7 @@ public class 角色转移工具 extends javax.swing.JFrame {
     }
 
     private void 刷新账号角色1() {
-        for (int i = ((DefaultTableModel) (this.显示角色1.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.显示角色1.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.显示角色1.getModel())).removeRow(i);
         }
         try {
@@ -333,7 +332,7 @@ public class 角色转移工具 extends javax.swing.JFrame {
     }
 
     private void 刷新账号角色2() {
-        for (int i = ((DefaultTableModel) (this.显示角色2.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.显示角色2.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.显示角色2.getModel())).removeRow(i);
         }
         try {
@@ -367,7 +366,7 @@ public class 角色转移工具 extends javax.swing.JFrame {
         return data;
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

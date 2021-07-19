@@ -15,12 +15,13 @@
  */
 package tools;
 
-import java.math.*;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Map;
 
 public final class Eval {
 
-    public static enum Type {
+    public enum Type {
 
         ARITHMETIC("arithmetic"), BOOLEAN("boolean");
         final String name;
@@ -257,7 +258,7 @@ public final class Eval {
         }
     }
 
-    public static enum Operator {
+    public enum Operator {
 
         /**
          * End of string reached.

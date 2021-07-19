@@ -1,16 +1,11 @@
 package gui.ͼƬ.xiazai;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.InputStream;  
-import java.io.RandomAccessFile;  
-import java.net.URL;  
+import javax.swing.*;
+import java.io.*;
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JProgressBar;
   
 public class MultiDown {
 	

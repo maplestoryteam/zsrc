@@ -3,31 +3,23 @@
  */
 package handling.channel.handler;
 
-import client.inventory.IItem;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleLieDetector;
-import client.inventory.MapleInventoryType;
 import client.MapleStat;
 import client.anticheat.CheatingOffense;
+import client.inventory.IItem;
+import client.inventory.MapleInventoryType;
 import constants.GameConstants;
-import java.util.Iterator;
 import scripting.NPCScriptManager;
 import scripting.ReactorScriptManager;
-import server.events.MapleCoconut;
-import server.events.MapleCoconut.MapleCoconuts;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
-import server.custom.bossrank.BossRankManager;
+import server.events.MapleCoconut;
+import server.events.MapleCoconut.MapleCoconuts;
 import server.events.MapleEventType;
-import server.maps.FieldLimitType;
-import server.maps.MapleDoor;
-import server.maps.MapleMap;
-import server.maps.MapleMapObject;
-import server.maps.MapleMapObjectType;
-import server.maps.MapleReactor;
+import server.maps.*;
 import server.quest.MapleQuest;
-import tools.FileoutputUtil;
 import tools.MaplePacketCreator;
 import tools.data.LittleEndianAccessor;
 
@@ -219,10 +211,10 @@ public class PlayersHandler {
             ReactorScriptManager.getInstance().act(c, reactor);
         } else if ((reactor.getTouch() == 1) && (!reactor.isTimerActive())) {
             if (reactor.getReactorType() == 100) {
-                int itemid = GameConstants.getCustomReactItem(reactor.getReactorId(), ((Integer) reactor.getReactItem().getLeft()).intValue());
-                if (c.getPlayer().haveItem(itemid, ((Integer) reactor.getReactItem().getRight()).intValue())) {
+                int itemid = GameConstants.getCustomReactItem(reactor.getReactorId(), reactor.getReactItem().getLeft().intValue());
+                if (c.getPlayer().haveItem(itemid, reactor.getReactItem().getRight().intValue())) {
                     if (reactor.getArea().contains(c.getPlayer().getTruePosition())) {
-                        MapleInventoryManipulator.removeById(c, GameConstants.getInventoryType(itemid), itemid, ((Integer) reactor.getReactItem().getRight()).intValue(), true, false);
+                        MapleInventoryManipulator.removeById(c, GameConstants.getInventoryType(itemid), itemid, reactor.getReactItem().getRight().intValue(), true, false);
                         reactor.hitReactor(c);
                     } else {
                         c.getPlayer().dropMessage(5, "距离太远。请靠近后重新尝试。");
@@ -478,7 +470,7 @@ public class PlayersHandler {
             }*/
         slot = (byte) slea.readShort();
         int itemId = slea.readInt();
-        IItem toUse = chr.getInventory(MapleInventoryType.USE).getItem((short) slot);
+        IItem toUse = chr.getInventory(MapleInventoryType.USE).getItem(slot);
         if ((toUse == null) || (toUse.getQuantity() <= 0) || (toUse.getItemId() != itemId) || (itemId != 2190000)) {
             c.sendPacket(MaplePacketCreator.enableActions());
             return;
@@ -519,7 +511,7 @@ public class PlayersHandler {
             return;
         }
         if (isItem) {
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, (short) slot, (short) 1, false);
+            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
         }
         search_chr.dropMessage(5, new StringBuilder().append(chr.getName()).append(" 对你使用了测谎仪.").toString());
 //        } else {

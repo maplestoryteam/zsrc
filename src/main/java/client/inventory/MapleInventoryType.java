@@ -20,7 +20,7 @@ public enum MapleInventoryType {
     EQUIPPED(-1);
     final byte type;
 
-    private MapleInventoryType(int type) {
+    MapleInventoryType(int type) {
         this.type = (byte) type;
     }
 

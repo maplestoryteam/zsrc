@@ -1,33 +1,36 @@
 package gui;
 
-import static a.本地数据库.任务更新下载目录;
-import static a.本地数据库.任务更新导入目录;
-import static a.本地数据库.任务更新解压目录;
-import static a.用法大全.传输在线时长;
-import static a.用法大全.关系验证;
-import static a.用法大全.判断容纳人数;
+import client.LoginCrypto;
 import client.MapleCharacter;
-import client.inventory.Equip;
-import client.inventory.ItemFlag;
-import client.inventory.MapleInventoryType;
+import client.inventory.*;
 import constants.GameConstants;
 import database.DatabaseConnection;
-import static gui.ZEVMS.jButton1111;
-import static gui.ZEVMS.网关;
-import static gui.ZEVMS.jButton11112;
-import static gui.ZEVMS.jButton11113;
-import static gui.ZEVMS.jButton11115;
-import static gui.ZEVMS.服务端功能开关;
-import static gui.ZEVMS.脚本编辑器2;
-import gui.控制台.控制台3号;
+import database1.DatabaseConnection1;
+import gui.Jieya.解压文件;
 import gui.控制台.活动控制台;
-import gui.控制台.控制台2号;
-import gui.控制台.充值卡后台;
-import gui.控制台.控制台1号;
 import gui.控制台.脚本编辑器2;
+import gui.控制台.*;
+import gui.网关.机器人群设置面板;
 import handling.channel.ChannelServer;
 import handling.login.handler.AutoRegister;
+import handling.world.MapleParty;
 import handling.world.World;
+import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
+import provider.MapleData;
+import provider.MapleDataProvider;
+import provider.MapleDataProviderFactory;
+import provider.MapleDataTool;
+import scripting.NPCConversationManager;
+import scripting.PortalScriptManager;
+import scripting.ReactorScriptManager;
+import server.Timer;
+import server.*;
+import server.life.MapleMonsterInformationProvider;
+import tools.MaplePacketCreator;
+import tools.Pair;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -35,57 +38,26 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import provider.MapleData;
-import provider.MapleDataProvider;
-import provider.MapleDataProviderFactory;
-import provider.MapleDataTool;
-import scripting.PortalScriptManager;
-import scripting.ReactorScriptManager;
-import server.CashItemFactory;
-import server.CashItemInfo;
-import server.MapleInventoryManipulator;
-import server.MapleItemInformationProvider;
-import server.MapleShopFactory;
-import server.life.MapleMonsterInformationProvider;
-import tools.MaplePacketCreator;
-import client.LoginCrypto;
-import java.util.concurrent.ScheduledFuture;
-import javax.swing.JDialog;
-import javax.swing.UIManager;
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import server.ShutdownServer;
-import server.Timer;
-import static handling.cashshop.handler.CashShopOperation.Gaincharacter7;
-import static handling.cashshop.handler.CashShopOperation.Getcharacter7;
-import handling.world.MapleParty;
-import scripting.NPCConversationManager;
-import static gui.QQMsgServer.sendMsgToQQGroup;
-import static a.用法大全.获取到期时间;
-import static gui.ZEVMS2.经济控制台;
-import static abc.Game.窗口标题;
-import static abc.sancu.FileDemo_05.删除文件;
-import client.inventory.IItem;
-import client.inventory.ItemLoader;
-import database1.DatabaseConnection1;
-import gui.Jieya.解压文件;
-import static gui.Start.GetCloudBacklist;
-import static gui.Start.读取技能PVP伤害;
-import static gui.ZEVMS.下载文件;
-import static gui.ZEVMS.快捷面板;
-import static server.MapleCarnivalChallenge.getJobNameById;
-import gui.网关.机器人群设置面板;
-import static gui.ZEVMS.更多应用;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import server.MerchItemPackage;
-import tools.Pair;
+import java.util.Properties;
+import java.util.concurrent.ScheduledFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static a.本地数据库.*;
+import static a.用法大全.判断容纳人数;
+import static a.用法大全.获取到期时间;
+import static abc.sancu.FileDemo_05.删除文件;
+import static gui.QQMsgServer.sendMsgToQQGroup;
+import static gui.Start.GetCloudBacklist;
+import static gui.Start.读取技能PVP伤害;
+import static gui.ZEVMS.更多应用;
+import static gui.ZEVMS.*;
+import static handling.cashshop.handler.CashShopOperation.Gaincharacter7;
+import static handling.cashshop.handler.CashShopOperation.Getcharacter7;
+import static server.MapleCarnivalChallenge.getJobNameById;
 
 public final class ZEVMS2 extends javax.swing.JFrame {
 
@@ -111,8 +83,8 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     MapleData skill = stringProvider.getData("Skill.img");
     MapleData npc = stringProvider.getData("Npc.img");
 
-    private MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Etc.wz"));
-    private MapleData commodities = this.data.getData("Commodity.img");
+    private final MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("net.sf.odinms.wzpath","wz") + "/Etc.wz"));
+    private final MapleData commodities = this.data.getData("Commodity.img");
 
     public ZEVMS2() {
         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("gui/图片/pp/2.png"));
@@ -889,10 +861,10 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "商品编码", "物品代码", "道具名称", "数量", "价格", "限时/天", "出售状态", "上/下架", "已售出", "库存", "反馈/%", "每日限购"
             }
         ) {
-            Class[] types = new Class [] {
+            final Class[] types = new Class [] {
                 java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false
             };
 
@@ -1071,7 +1043,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "背包扩充价格"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false
             };
 
@@ -1580,10 +1552,10 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "账号ID", "账号", "IP地址", "MAC地址", "绑定QQ", "点券", "抵用", "最近上线", "在线", "封号", "GM"
             }
         ) {
-            Class[] types = new Class [] {
+            final Class[] types = new Class [] {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false
             };
 
@@ -1872,7 +1844,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "角色ID", "账号ID", "角色昵称", "职业", "等级", "力量", "敏捷", "智力", "运气", "MaxHP", "MaxMP", "金币", "所在地图", "在线时长", "状态", "GM", "发型", "脸型"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
@@ -2220,7 +2192,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -2301,7 +2273,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -2382,7 +2354,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字", "物品数量"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -2465,7 +2437,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字", "物品数量"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -2548,7 +2520,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字", "物品数量"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -2631,7 +2603,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字", "物品数量"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -2714,7 +2686,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字", "物品数量"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -2797,7 +2769,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字", "物品数量"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -2879,7 +2851,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字", "物品数量"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -2962,7 +2934,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "物品代码", "物品名字"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -3047,7 +3019,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "技能名字", "技能代码", "目前等级", "最高等级"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
@@ -3176,7 +3148,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "商品编号", "卖家", "商品状态", "买家", "商品价格", "商品名称"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -3222,7 +3194,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "商品编号", "卖家", "商品状态", "买家", "商品价格", "商品名称"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
 
@@ -3644,7 +3616,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "名字", "代码"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -3740,7 +3712,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "类型", "数值"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -3853,7 +3825,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "序号", "类型", "数值"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false
             };
 
@@ -4005,7 +3977,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "家族ID", "家族名称", "族长/角色ID", "成员1", "成员2", "成员3", "成员4", "成员5", "家族GP"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
             };
 
@@ -4172,7 +4144,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "编号", "技能ID", "技能伤害", "技能名"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -4288,7 +4260,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                 "日期", "版本", "简介", "null*"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -4679,7 +4651,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新账号信息() {
-        for (int i = ((DefaultTableModel) (this.账号信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.账号信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.账号信息.getModel())).removeRow(i);
         }
         try {
@@ -4733,7 +4705,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     private void 查找QQ() {
 
-        for (int i = ((DefaultTableModel) (this.账号信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.账号信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.账号信息.getModel())).removeRow(i);
         }
         try {
@@ -4799,7 +4771,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     private void 查找账号() {
 
-        for (int i = ((DefaultTableModel) (this.账号信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.账号信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.账号信息.getModel())).removeRow(i);
         }
         try {
@@ -4875,7 +4847,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
             Logger.getLogger(ZEVMS2.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        for (int i = ((DefaultTableModel) (this.家族信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.家族信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.家族信息.getModel())).removeRow(i);
         }
         try {
@@ -4929,7 +4901,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     private void 刷新技能信息() {
         boolean result1 = this.角色ID.getText().matches("[0-9]+");
         if (result1) {
-            for (int i = ((DefaultTableModel) (this.技能信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.技能信息.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.技能信息.getModel())).removeRow(i);
             }
             try {
@@ -4986,7 +4958,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     private void 刷新角色信息() {
         String 输出 = "";
-        for (int i = ((DefaultTableModel) (this.角色信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色信息.getModel())).removeRow(i);
         }
         try {
@@ -5067,7 +5039,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色背包穿戴() {
-        for (int i = ((DefaultTableModel) (this.角色背包穿戴.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色背包穿戴.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色背包穿戴.getModel())).removeRow(i);
         }
         try {
@@ -5102,7 +5074,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色装备背包() {
-        for (int i = ((DefaultTableModel) (this.角色装备背包.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色装备背包.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色装备背包.getModel())).removeRow(i);
         }
         try {
@@ -5137,7 +5109,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色消耗背包() {
-        for (int i = ((DefaultTableModel) (this.角色消耗背包.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色消耗背包.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色消耗背包.getModel())).removeRow(i);
         }
         try {
@@ -5172,7 +5144,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色特殊背包() {
-        for (int i = ((DefaultTableModel) (this.角色特殊背包.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色特殊背包.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色特殊背包.getModel())).removeRow(i);
         }
         try {
@@ -5206,7 +5178,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色游戏仓库() {
-        for (int i = ((DefaultTableModel) (this.角色游戏仓库.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色游戏仓库.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色游戏仓库.getModel())).removeRow(i);
         }
         try {
@@ -5240,7 +5212,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色商城仓库() {
-        for (int i = ((DefaultTableModel) (this.角色商城仓库.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色商城仓库.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色商城仓库.getModel())).removeRow(i);
         }
         try {
@@ -5274,7 +5246,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色点券拍卖行() {
-        for (int i = ((DefaultTableModel) (this.角色点券拍卖行.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色点券拍卖行.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色点券拍卖行.getModel())).removeRow(i);
         }
         try {
@@ -5304,7 +5276,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色金币拍卖行() {
-        for (int i = ((DefaultTableModel) (this.角色金币拍卖行.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色金币拍卖行.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色金币拍卖行.getModel())).removeRow(i);
         }
         try {
@@ -5334,7 +5306,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色其他背包() {
-        for (int i = ((DefaultTableModel) (this.角色其他背包.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色其他背包.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色其他背包.getModel())).removeRow(i);
         }
         try {
@@ -5368,7 +5340,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色设置背包() {
-        for (int i = ((DefaultTableModel) (this.角色设置背包.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色设置背包.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色设置背包.getModel())).removeRow(i);
         }
         try {
@@ -5402,7 +5374,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新角色信息2() {
-        for (int i = ((DefaultTableModel) (this.角色信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色信息.getModel())).removeRow(i);
         }
         try {
@@ -5943,7 +5915,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_充值卡后台ActionPerformed
     public void 刷新泡点设置() {
-        for (int i = ((DefaultTableModel) (this.在线泡点设置.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.在线泡点设置.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.在线泡点设置.getModel())).removeRow(i);
         }
         try {
@@ -5972,7 +5944,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     public void 刷新雇佣泡点设置() {
-        for (int i = ((DefaultTableModel) (this.雇佣在线泡点设置.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.雇佣在线泡点设置.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.雇佣在线泡点设置.getModel())).removeRow(i);
         }
         try {
@@ -7013,7 +6985,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     private void 显示管理角色ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_显示管理角色ActionPerformed
         显示在线玩家.setText("在线玩家; " + 在线玩家() + "");
-        for (int i = ((DefaultTableModel) (this.角色信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色信息.getModel())).removeRow(i);
         }
         try {
@@ -7160,7 +7132,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     private void 已封账号ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_已封账号ActionPerformed
         显示在线账号.setText("账号在线; " + 在线账号() + "");
         账号提示语言.setText("[信息]:显示游戏所有已被封禁的玩家账号信息。");
-        for (int i = ((DefaultTableModel) (this.账号信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.账号信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.账号信息.getModel())).removeRow(i);
         }
         try {
@@ -7236,7 +7208,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     private void 离线账号ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_离线账号ActionPerformed
         显示在线账号.setText("账号在线; " + 在线账号() + "");
         账号提示语言.setText("[信息]:显示游戏所有离线玩家账号信息。");
-        for (int i = ((DefaultTableModel) (this.账号信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.账号信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.账号信息.getModel())).removeRow(i);
         }
         try {
@@ -7288,7 +7260,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     private void 在线账号ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_在线账号ActionPerformed
         显示在线账号.setText("账号在线; " + 在线账号() + "");
         账号提示语言.setText("[信息]:显示游戏所有在线玩家账号信息。");
-        for (int i = ((DefaultTableModel) (this.账号信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.账号信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.账号信息.getModel())).removeRow(i);
         }
         try {
@@ -7808,7 +7780,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
         ResultSet rs = null;
         try {
             //清楚table数据
-            for (int i = ((DefaultTableModel) (this.charTable.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.charTable.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.charTable.getModel())).removeRow(i);
             }
             ps = DatabaseConnection.getConnection().prepareStatement("UPDATE cashshop_modified_items SET showup = ?, itemid = ?, priority = ?, period = ?, gender = ?, count = ?, meso = ?, discount_price = ?, mark = ?, unk_1 = ?, unk_2 = ?, unk_3 = ? WHERE serial = ?");
@@ -8020,7 +7992,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     private void 离线角色ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_离线角色ActionPerformed
         显示在线玩家.setText("在线玩家; " + 在线玩家() + "");
-        for (int i = ((DefaultTableModel) (this.角色信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色信息.getModel())).removeRow(i);
         }
         try {
@@ -8064,7 +8036,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     private void 在线角色ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_在线角色ActionPerformed
         显示在线玩家.setText("在线玩家; " + 在线玩家() + "");
-        for (int i = ((DefaultTableModel) (this.角色信息.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.角色信息.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.角色信息.getModel())).removeRow(i);
         }
         try {
@@ -8105,7 +8077,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_在线角色ActionPerformed
 
-    private static int 下载冷却 = 0;
+    private static final int 下载冷却 = 0;
     private void 新增个人ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_新增个人ActionPerformed
         boolean result1 = this.jTextField1.getText().matches("[0-9]+");
         if (result1) {
@@ -8433,7 +8405,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
         if (!result1) {
             return;
         }
-        for (int i = ((DefaultTableModel) (this.PVP技能设置.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.PVP技能设置.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.PVP技能设置.getModel())).removeRow(i);
         }
         try {
@@ -8724,7 +8696,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     public void 刷新PVP技能设置() {
-        for (int i = ((DefaultTableModel) (this.PVP技能设置.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.PVP技能设置.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.PVP技能设置.getModel())).removeRow(i);
         }
         try {
@@ -8771,7 +8743,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     public void 刷新个人() {
-        for (int i = ((DefaultTableModel) (this.存储发送物品.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.存储发送物品.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.存储发送物品.getModel())).removeRow(i);
         }
         try {
@@ -8807,7 +8779,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     public void 刷新通用() {
-        for (int i = ((DefaultTableModel) (this.存储发送物品.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.存储发送物品.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.存储发送物品.getModel())).removeRow(i);
         }
         try {
@@ -8862,7 +8834,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     private void 刷新更新记录() {
 
-        for (int i = ((DefaultTableModel) (this.更新记录.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.更新记录.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.更新记录.getModel())).removeRow(i);
         }
         try {
@@ -8898,7 +8870,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     private void 刷新金币拍卖行() {
-        for (int i = ((DefaultTableModel) (this.金币拍卖行.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.金币拍卖行.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.金币拍卖行.getModel())).removeRow(i);
         }
         try {
@@ -8948,7 +8920,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     private void 刷新点券拍卖行() {
 
-        for (int i = ((DefaultTableModel) (this.点券拍卖行.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.点券拍卖行.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.点券拍卖行.getModel())).removeRow(i);
         }
         try {
@@ -9055,7 +9027,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     public void 刷新商城扩充价格() {
-        for (int i = ((DefaultTableModel) (this.商城扩充价格.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.商城扩充价格.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.商城扩充价格.getModel())).removeRow(i);
         }
         try {
@@ -9083,7 +9055,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
                     switch (a) {
                         case 1:
                             //顶端公告
-                            World.Broadcast.broadcastMessage(MaplePacketCreator.serverMessage(str.toString()));
+                            World.Broadcast.broadcastMessage(MaplePacketCreator.serverMessage(str));
                             break;
                         case 2:
                             //弹窗公告
@@ -9355,7 +9327,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
         try {
             int SN_ = Integer.parseInt(String.valueOf(this.charTable.getValueAt(this.charTable.getSelectedRow(), 0)));
             //清楚table数据
-            for (int i = ((DefaultTableModel) (this.charTable.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.charTable.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.charTable.getModel())).removeRow(i);
             }
             int OnSale_ = 1;
@@ -9377,7 +9349,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
         try {
             int SN_ = Integer.parseInt(String.valueOf(this.charTable.getValueAt(this.charTable.getSelectedRow(), 0)));
             //清楚table数据
-            for (int i = ((DefaultTableModel) (this.charTable.getModel())).getRowCount() - 1; i >= 0; i--) {
+            for (int i = this.charTable.getModel().getRowCount() - 1; i >= 0; i--) {
                 ((DefaultTableModel) (this.charTable.getModel())).removeRow(i);
             }
             int OnSale_ = 0;
@@ -9414,7 +9386,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
     }
 
     public void 读取商品(final int a, int b, int c, int d) {
-        for (int i = ((DefaultTableModel) (this.charTable.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.charTable.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.charTable.getModel())).removeRow(i);
         }
         商品编码.setText("" + a + "");
@@ -9649,7 +9621,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
 
     public void initCharacterPannel() {
         long start = System.currentTimeMillis();
-        for (int i = ((DefaultTableModel) (this.charTable.getModel())).getRowCount() - 1; i >= 0; i--) {
+        for (int i = this.charTable.getModel().getRowCount() - 1; i >= 0; i--) {
             ((DefaultTableModel) (this.charTable.getModel())).removeRow(i);
         }
         try {
@@ -9760,7 +9732,7 @@ public final class ZEVMS2 extends javax.swing.JFrame {
         });
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         ZEVMS2.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         try {

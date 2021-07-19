@@ -9,7 +9,7 @@ import java.io.*;
 
 public class DownLoad {
 
-    private DefaultHttpClient httpClient = new DefaultHttpClient();
+    private final DefaultHttpClient httpClient = new DefaultHttpClient();
 
     public void downLoad(String url, String dst) {
         try {
@@ -41,7 +41,7 @@ public class DownLoad {
         out.close();
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         DownLoad downLoad = new DownLoad();
         String url = "http://123.207.53.97:8082/数据库文件/accountsz.frm";
         downLoad.downLoad(url, "I:/ZEVMS服务端/accountsz.frm");

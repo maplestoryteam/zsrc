@@ -1,19 +1,6 @@
 package server.maps;
 
 import database.DatabaseConnection;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.io.File;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.locks.ReentrantLock;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
@@ -26,6 +13,15 @@ import server.life.MapleNPC;
 import server.maps.MapleNodes.MapleNodeInfo;
 import server.maps.MapleNodes.MaplePlatform;
 import tools.StringUtil;
+
+import java.awt.*;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MapleMapFactory {
 
@@ -553,7 +549,7 @@ public class MapleMapFactory {
 
     public static void loadCustomLife() {
         try {
-            Connection con = (Connection) DatabaseConnection.getConnection();
+            Connection con = DatabaseConnection.getConnection();
             try (java.sql.PreparedStatement ps = con.prepareStatement("SELECT * FROM `”Œœ∑NPCπ‹¿Ì`"); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     final int mapid = rs.getInt("mid");

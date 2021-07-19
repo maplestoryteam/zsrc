@@ -9,9 +9,11 @@ import handling.world.World.Alliance;
 import handling.world.World.Broadcast;
 import handling.world.World.Family;
 import handling.world.World.Guild;
-import java.util.Set;
-import static gui.QQMsgServer.sendMsgToQQGroup;
 import tools.MaplePacketCreator;
+
+import java.util.Set;
+
+import static gui.QQMsgServer.sendMsgToQQGroup;
 
 public class ShutdownServer implements Runnable {
 
@@ -109,7 +111,7 @@ public class ShutdownServer implements Runnable {
                 cs.setFinishShutdown();
                 cs.shutdown();
             } catch (Exception e) {
-                System.out.println("ÆµµÀ" + String.valueOf(channel) + " ¹Ø±Õ´íÎó.");
+                System.out.println("ÆµµÀ" + channel + " ¹Ø±Õ´íÎó.");
             }
         }
 

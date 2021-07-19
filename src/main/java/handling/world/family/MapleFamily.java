@@ -4,30 +4,22 @@
 */
 package handling.world.family;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Iterator;
-
 import client.MapleCharacter;
 import database.DatabaseConnection;
 import handling.world.World;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import tools.MaplePacketCreator;
 import tools.packet.FamilyPacket;
 
+import java.sql.*;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class MapleFamily implements java.io.Serializable {
 
-    public static enum FCOp {
+    public enum FCOp {
 
-        NONE, DISBAND;
+        NONE, DISBAND
     }
     public static final long serialVersionUID = 6322150443228168192L;
     //does not need to be in order :) CID -> MFC
@@ -446,7 +438,7 @@ public class MapleFamily implements java.io.Serializable {
             int old_level = member.getLevel();
             int old_job = member.getJobId();
             member.setJobId(mgc.getJob());
-            member.setLevel((short) mgc.getLevel());
+            member.setLevel(mgc.getLevel());
             if (old_level != mgc.getLevel()) {
                 this.broadcast(MaplePacketCreator.sendLevelup(true, mgc.getLevel(), mgc.getName()), mgc.getId(), mgc.getId() == leaderid ? null : member.getPedigree());
             }

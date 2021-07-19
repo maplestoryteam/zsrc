@@ -1,12 +1,13 @@
 package server;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PredictCardFactory {
 
@@ -57,7 +58,7 @@ public class PredictCardFactory {
         if (!this.predictCard.containsKey(Integer.valueOf(id))) {
             return null;
         }
-        return (PredictCard) this.predictCard.get(Integer.valueOf(id));
+        return this.predictCard.get(Integer.valueOf(id));
     }
 
     public PredictCardComment getPredictCardComment(int id) {
@@ -65,7 +66,7 @@ public class PredictCardFactory {
         if (!this.predictCardComment.containsKey(Integer.valueOf(id))) {
             return null;
         }
-        return (PredictCardComment) this.predictCardComment.get(Integer.valueOf(id));
+        return this.predictCardComment.get(Integer.valueOf(id));
     }
 
     public PredictCardComment RandomCardComment() {

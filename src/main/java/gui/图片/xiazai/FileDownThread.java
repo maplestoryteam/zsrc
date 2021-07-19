@@ -1,9 +1,8 @@
-package gui.ͼƬ.xiazai;  
+package gui.ͼƬ.xiazai;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;  
 public class FileDownThread extends Thread  
 {  
 	List<DownloadFile> downloadFileList;
