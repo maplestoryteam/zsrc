@@ -20,7 +20,6 @@
  */
 package tools.data;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import tools.HexTool;
 
 import java.io.IOException;

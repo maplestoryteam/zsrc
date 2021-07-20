@@ -58,20 +58,6 @@
         </dependency>
         <dependency>
             <groupId>com.zsrc</groupId>
-            <artifactId>local_policy.jar</artifactId>
-            <systemPath>${project.basedir}/lib/local_policy.jar</systemPath>
-            <version>1.0</version>
-            <scope>system</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.zsrc</groupId>
-            <artifactId>mina-core-2.0.9.jar</artifactId>
-            <systemPath>${project.basedir}/lib/mina-core-2.0.9.jar</systemPath>
-            <version>1.0</version>
-            <scope>system</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.zsrc</groupId>
             <artifactId>mysql-connector-java-bin.jar</artifactId>
             <systemPath>${project.basedir}/lib/mysql-connector-java-bin.jar</systemPath>
             <version>1.0</version>
@@ -102,13 +88,6 @@
             <groupId>com.zsrc</groupId>
             <artifactId>substance.jar</artifactId>
             <systemPath>${project.basedir}/lib/substance.jar</systemPath>
-            <version>1.0</version>
-            <scope>system</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.zsrc</groupId>
-            <artifactId>US_export_policy.jar</artifactId>
-            <systemPath>${project.basedir}/lib/US_export_policy.jar</systemPath>
             <version>1.0</version>
             <scope>system</scope>
         </dependency>
